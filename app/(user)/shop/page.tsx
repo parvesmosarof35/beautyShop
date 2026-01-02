@@ -1,0 +1,82 @@
+import ShopContent from './ShopContent';
+import { Metadata } from 'next';
+import { getBaseUrl } from '@/app/store/config/envConfig';
+
+export const metadata: Metadata = {
+  title: 'Shop | LUNEL Beauty',
+  description: 'Shop our full collection of beauty products. Find your perfect match in skincare, makeup, and more.',
+};
+
+async function getProducts(searchParams: any) {
+  const params = new URLSearchParams({
+    page: searchParams.page || '1',
+    limit: '12',
+    sort: getBackendSort(searchParams.sort || 'popularity'),
+  });
+
+  if (searchParams.collection) {
+    // The backend expects 'collections' array, passing single ID for now as per previous logic
+    params.append('collections', searchParams.collection);
+  }
+
+  try {
+    const res = await fetch(`${getBaseUrl()}product?${params.toString()}`, {
+      next: { tags: ['product'] },
+      cache: 'force-cache'
+    });
+    
+    if (!res.ok) return { products: [], meta: null };
+    
+    const data = await res.json();
+    return {
+        products: data?.data || [],
+        meta: data?.meta
+    };
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    return { products: [], meta: null };
+  }
+}
+
+async function getCollections() {
+  try {
+    const res = await fetch(`${getBaseUrl()}collection`, {
+      next: { tags: ['collection'] },
+      cache: 'force-cache'
+    });
+    
+    if (!res.ok) return [];
+    
+    const data = await res.json();
+    return data?.data || [];
+  } catch (error) {
+    console.error('Failed to fetch collections:', error);
+    return [];
+  }
+}
+
+// Helper to map frontend sort to backend sort keys (duplicated from ShopContent for server usage)
+const getBackendSort = (sort: string) => {
+  switch (sort) {
+    case 'price-low': return 'priceLowToHigh';
+    case 'price-high': return 'priceHighToLow';
+    case 'rating': return 'bestRating';
+    case 'newest': return 'newest';
+    case 'popularity': return 'bestSelling';
+    default: return 'bestSelling';
+  }
+};
+
+export default async function ShopPage({ searchParams }: { searchParams: { page?: string, sort?: string, collection?: string } }) {
+  const { products, meta } = await getProducts(searchParams);
+  const collections = await getCollections();
+  
+  return (
+    <ShopContent 
+      initialProducts={products} 
+      initialMeta={meta} 
+      collections={collections}
+      initialParams={searchParams}
+    />
+  );
+}
