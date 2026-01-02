@@ -30,7 +30,7 @@ A modern, full-featured e-commerce platform for beauty and skincare products bui
 ### Core Technologies
 - **Framework**: [Next.js 16](https://nextjs.org/) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Library**: [React 18](https://react.dev/)
+- **UI Library**: [react 19](https://react.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 
 ### State Management & Data Fetching
