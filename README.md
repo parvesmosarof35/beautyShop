@@ -1,6 +1,6 @@
 # LUNEL Beauty - E-Commerce Frontend
 
-A modern, full-featured e-commerce platform for beauty and skincare products built with Next.js 14, TypeScript, and Redux Toolkit.
+A modern, full-featured e-commerce platform for beauty and skincare products built with next.js 16, TypeScript, and Redux Toolkit.
 
 ## 🌟 Features
 
@@ -28,7 +28,7 @@ A modern, full-featured e-commerce platform for beauty and skincare products bui
 ## 🛠️ Tech Stack
 
 ### Core Technologies
-- **Framework**: [Next.js 14](https://nextjs.org/) with App Router
+- **Framework**: [Next.js 16](https://nextjs.org/) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **UI Library**: [React 18](https://react.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
