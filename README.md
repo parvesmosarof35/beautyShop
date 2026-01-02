@@ -1,4 +1,6 @@
-# LUNEL Beauty - E-Commerce Frontend
+# beauty Shop - E-Commerce Frontend
+
+live : https://lunel-beauty.vercel.app/
 
 A modern, full-featured e-commerce platform for beauty and skincare products built with next.js 16, TypeScript, and Redux Toolkit.
 
