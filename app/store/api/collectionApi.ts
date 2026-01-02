@@ -9,7 +9,7 @@ export const collectionApi = baseApi.injectEndpoints({
                 method: "POST",
                 body: formData,
             }),
-            invalidatesTags: ["collection"],
+            invalidatesTags: ["collection", "dashboard"],
         }),
 
         // Get all collection
@@ -39,7 +39,7 @@ export const collectionApi = baseApi.injectEndpoints({
                 url: `collection/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: ["collection"],
+            invalidatesTags: ["collection", "dashboard"],
         }),
     }),
 });

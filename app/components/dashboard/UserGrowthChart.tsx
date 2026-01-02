@@ -9,52 +9,37 @@ import {
     ResponsiveContainer,
     Legend,
 } from "recharts";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Select, Spin } from "antd";
-// Mocking the API hook since we don't have access to the redux store structure referenced
-const useGetUserGrowthByYearQuery = (year: number) => {
-    // Simulate API response
-    const [isLoading, setIsLoading] = useState(false);
-    const data = useMemo(() => ({
-        data: {
-            monthlyStats: Array.from({ length: 12 }, (_, i) => ({
-                month: i + 1,
-                count: Math.floor(Math.random() * 100) + 10
-            }))
-        }
-    }), [year]);
+import { UserGrowthData } from "@/app/store/api/dashboardStatsApi";
 
-    return { data, isLoading };
-};
+interface UserGrowthChartProps {
+    data: UserGrowthData | undefined;
+    year: number;
+    setYear: (year: number) => void;
+    isLoading: boolean;
+}
 
-const UserGrowthChart = () => {
+const UserGrowthChart = ({ data, year, setYear, isLoading }: UserGrowthChartProps) => {
     const currentYear = new Date().getFullYear();
-    const [year, setYear] = useState(currentYear);
-    const [years] = useState(
-        Array.from({ length: 5 }, (_, i) => currentYear - i).reverse()
-    );
+    // Generate last 5 years
+    const years = useMemo(() => 
+        Array.from({ length: 5 }, (_, i) => currentYear - i), 
+    [currentYear]);
 
-    const { data, isLoading } = useGetUserGrowthByYearQuery(year);
+    // Format data for Recharts
+    const { chartData, maxUsers } = useMemo(() => {
+        if (!data?.monthlyData) return { chartData: [], maxUsers: 0 };
 
-    const monthMap: Record<number, string> = {
-        1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
-        7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec",
-    };
-
-    const { monthlyData, maxUsers } = useMemo(() => {
-        if (!data?.data?.monthlyStats) return { monthlyData: [], maxUsers: 0 };
-
-        const stats = data.data.monthlyStats;
-
-        const monthlyData = stats.map((item) => ({
-            name: monthMap[item.month],
-            totalUser: item.count,
+        const monthlyData = data.monthlyData.map((item) => ({
+            name: item.month,
+            totalUser: item.totalUsers,
         }));
 
         const maxUsers =
-            Math.max(...stats.map((item) => item.count), 0) + 5;
+            Math.max(...data.monthlyData.map((item) => item.totalUsers), 0) + 5;
 
-        return { monthlyData, maxUsers };
+        return { chartData: monthlyData, maxUsers };
     }, [data]);
 
     return (
@@ -78,7 +63,7 @@ const UserGrowthChart = () => {
                     placeholder="Select year"
                     onChange={setYear}
                     style={{ width: "150px" }}
-                    options={years.map((item) => ({ value: item, label: item }))}
+                    options={years.map((item) => ({ value: item, label: String(item) }))}
                 />
             </div>
 
@@ -89,7 +74,7 @@ const UserGrowthChart = () => {
             ) : (
                 <ResponsiveContainer width="100%" height="85%">
                     <BarChart
-                        data={monthlyData}
+                        data={chartData}
                         margin={{ top: 20, right: 20, left: 0, bottom: 10 }}
                     >
                         <defs>

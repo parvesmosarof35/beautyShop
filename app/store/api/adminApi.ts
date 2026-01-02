@@ -9,7 +9,7 @@ export const adminApi = baseApi.injectEndpoints({
                 method: "POST",
                 body: userData, // expects JSON
             }),
-            invalidatesTags: ["admin"],
+            invalidatesTags: ["admin", "dashboard"],
         }),
         // Get all admins with pagination
         getAllAdmins: builder.query({
@@ -23,7 +23,7 @@ export const adminApi = baseApi.injectEndpoints({
                 url: `user/delete_user/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: ["admin"],
+            invalidatesTags: ["admin", "dashboard"],
         }),
     }),
 });

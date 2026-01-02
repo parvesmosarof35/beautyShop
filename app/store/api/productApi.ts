@@ -19,7 +19,7 @@ export const productApi = baseApi.injectEndpoints({
                 method: "POST",
                 body: formData,
             }),
-            invalidatesTags: ["product"],
+            invalidatesTags: ["product", "dashboard"],
         }),
 
         //  update product
@@ -38,7 +38,7 @@ export const productApi = baseApi.injectEndpoints({
                 url: `product/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: ["product"],
+            invalidatesTags: ["product", "dashboard"],
         }),
         getFeaturedProducts: builder.query({
             query: () => ({

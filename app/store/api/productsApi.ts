@@ -8,7 +8,7 @@ export const productsApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["products", "collection"],
+      invalidatesTags: ["products", "collection", "dashboard"],
     }),
     getAllProducts: build.query({
       query: (arg: Record<string, any>) => ({
@@ -46,7 +46,7 @@ export const productsApi = baseApi.injectEndpoints({
         url: `/product/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["products", "collection"],
+      invalidatesTags: ["products", "collection", "dashboard"],
     }),
     getProductsByCollection: build.query({
       query: (collectionId) => ({

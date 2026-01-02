@@ -19,7 +19,7 @@ const authApi = baseApi.injectEndpoints({
             method: "POST",
             body: data,
           }),
-          invalidatesTags: ["User"],
+          invalidatesTags: ["User", "dashboard"],
         }),
       
         
