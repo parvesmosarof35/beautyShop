@@ -1,0 +1,123 @@
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FaInstagram, FaFacebookF, FaTwitter, FaPinterestP } from 'react-icons/fa';
+const socialLinks = [
+    { name: 'Instagram', href: '#', icon: <FaInstagram /> },
+    { name: 'Facebook', href: '#', icon: <FaFacebookF /> },
+    { name: 'Twitter', href: '#', icon: <FaTwitter /> },
+    { name: 'Pinterest', href: '#', icon: <FaPinterestP /> },
+];
+
+const footerLinks = [
+    {
+        title: 'Shop',
+        links: [
+            { name: 'All Products', href: '/products' },
+            { name: 'Latest Arrivals', href: '/shop' },
+            { name: 'My Wishlist', href: '/wishlist' },
+            { name: 'My Cart', href: '/cart' },
+        ],
+    },
+    {
+        title: 'About',
+        links: [
+            { name: 'Our Story', href: '/about' },
+            { name: 'Blog', href: '/blog' },
+            { name: 'Contact Us', href: '/contact' },
+        ],
+    },
+    {
+        title: 'Support',
+        links: [
+            { name: 'FAQs', href: '/faq' },
+            { name: 'Privacy Policy', href: '/privacy' },
+            { name: 'Terms & Conditions', href: '/terms' },
+        ],
+    },
+];
+
+const Footer = () => {
+    return (
+        <footer className="bg-[#1a1a1a] text-white pt-16 pb-8">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+                    <div className="lg:col-span-2">
+                        <div className="flex items-center mb-6">
+                            <Link href="/">
+                            <div className="relative w-40 h-14 md:w-48 md:h-16 mr-3">
+                                    
+                                <Image
+                                    src="/images/logo.png"
+                                    alt="Lunel Beauty"
+                                    fill
+                                    sizes="(max-width: 768px) 10rem, 12rem"
+                                    className="object-contain"
+                                />
+                            </div>
+                            </Link>
+                        </div>
+                        <p className="text-gray-400 mb-6">
+                            Elevate your beauty routine with our natural, effective skincare products.
+                            Crafted with care for you and the planet.
+                        </p>
+                        <div className="flex space-x-4">
+                            {socialLinks.map((social) => (
+                                <a
+                                    key={social.name}
+                                    href={social.href}
+                                    className="flex items-center justify-center w-10 h-10 rounded-full border border-white text-white hover:bg-white hover:text-gray-900 transition-colors"
+                                    aria-label={social.name}
+                                >
+                                    {social.icon}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    {footerLinks.map((section) => (
+                        <div key={section.title}>
+                            <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
+                            <ul className="space-y-3">
+                                {section.links.map((link) => (
+                                    <li key={link.name}>
+                                        <Link href={link.href}>
+                                            <span className="text-gray-400 hover:text-white transition-colors cursor-pointer">
+                                                {link.name}
+                                            </span>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p className="text-gray-400 text-sm mb-4 md:mb-0">
+                        © {new Date().getFullYear()} Lunel Beauty. All rights reserved.
+                    </p>
+                    <div className="flex space-x-6">
+                        <Link href="/privacy">
+                            <span className="text-gray-400 hover:text-white text-sm cursor-pointer">
+                                Privacy Policy
+                            </span>
+                        </Link>
+                        <Link href="/terms">
+                            <span className="text-gray-400 hover:text-white text-sm cursor-pointer">
+                                Terms of Service
+                            </span>
+                        </Link>
+                        <Link href="/cookies">
+                            <span className="text-gray-400 hover:text-white text-sm cursor-pointer">
+                                Cookies
+                            </span>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    );
+};
+
+export default Footer;
