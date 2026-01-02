@@ -160,4 +160,3 @@ LUNEL Beauty Development Team
 
 **Built with ❤️ using Next.js and TypeScript**
 # beautyShop
-# beautyShop
