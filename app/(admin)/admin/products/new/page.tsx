@@ -202,6 +202,67 @@ const AddProductPage = () => {
         }
     };
 
+
+
+
+
+
+
+
+
+
+        //  <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 shadow-lg">
+        //                 <h3 className="text-lg font-semibold text-neutral-200 mb-4">Specifications</h3>
+        //                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        //                     {/* Skin Type */}
+        //                     <div>
+        //                         <label className="block text-sm font-medium text-neutral-400 mb-2">Skin Type</label>
+        //                         <select
+        //                             name="skintype"
+        //                             value={formData.skintype}
+        //                             onChange={handleChange}
+        //                             className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#D4A574]"
+        //                         >
+        //                             <option value="">Select Skin Type</option>
+        //                             {SKIN_TYPES.map(type => (
+        //                                 <option key={type} value={type}>{type}</option>
+        //                             ))}
+        //                         </select>
+        //                     </div>
+        //                 </div>
+
+        //                 {/* Ingredients */}
+        //                 <div className="mt-6">
+        //                     <label className="block text-sm font-medium text-neutral-400 mb-2">Key Ingredients</label>
+        //                     <div className="flex flex-wrap gap-3">
+        //                         {INGREDIENTS.map(ingredient => (
+        //                             <button
+        //                                 key={ingredient}
+        //                                 type="button"
+        //                                 onClick={() => toggleIngredient(ingredient)}
+        //                                 className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${formData.ingredients.includes(ingredient)
+        //                                     ? 'bg-neutral-200 text-neutral-900 border-neutral-200'
+        //                                     : 'bg-transparent text-neutral-400 border-neutral-700 hover:border-neutral-500'
+        //                                     }`}
+        //                             >
+        //                                 {ingredient}
+        //                             </button>
+        //                         ))}
+        //                     </div>
+        //                 </div>
+        //             </div>
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <form onSubmit={handleSubmit} className="max-w-6xl mx-auto pb-10">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -312,46 +373,7 @@ const AddProductPage = () => {
                     </div>
 
                     {/* Specifications */}
-                    <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 shadow-lg">
-                        <h3 className="text-lg font-semibold text-neutral-200 mb-4">Specifications</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Skin Type */}
-                            <div>
-                                <label className="block text-sm font-medium text-neutral-400 mb-2">Skin Type</label>
-                                <select
-                                    name="skintype"
-                                    value={formData.skintype}
-                                    onChange={handleChange}
-                                    className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#D4A574]"
-                                >
-                                    <option value="">Select Skin Type</option>
-                                    {SKIN_TYPES.map(type => (
-                                        <option key={type} value={type}>{type}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-
-                        {/* Ingredients */}
-                        <div className="mt-6">
-                            <label className="block text-sm font-medium text-neutral-400 mb-2">Key Ingredients</label>
-                            <div className="flex flex-wrap gap-3">
-                                {INGREDIENTS.map(ingredient => (
-                                    <button
-                                        key={ingredient}
-                                        type="button"
-                                        onClick={() => toggleIngredient(ingredient)}
-                                        className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${formData.ingredients.includes(ingredient)
-                                            ? 'bg-neutral-200 text-neutral-900 border-neutral-200'
-                                            : 'bg-transparent text-neutral-400 border-neutral-700 hover:border-neutral-500'
-                                            }`}
-                                    >
-                                        {ingredient}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+               
                 </div>
 
                 {/* Right Column - Status & Pricing */}

@@ -10,6 +10,8 @@ import { useAuthState, useAuthActions } from '@/app/store/hooks';
 import { useGetSearchProductsQuery } from '@/app/store/api/productsApi';
 import { useGetMyCartQuery } from '@/app/store/api/cartApi';
 import { useGetMyWishlistQuery } from '@/app/store/api/wishlistApi';
+import { useGetAllCollectionsQuery } from '@/app/store/api/collectionApi';
+import { FiChevronDown } from 'react-icons/fi';
 
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -70,6 +72,9 @@ const Header = () => {
   const { data: searchResults, isLoading: isSearchLoading } = useGetSearchProductsQuery(debouncedSearchQuery, {
     skip: !debouncedSearchQuery.trim(),
   });
+
+  // Fetch Collections for Dropdown
+  const { data: collectionsData } = useGetAllCollectionsQuery({});
 
   useEffect(() => {
     if (debouncedSearchQuery.trim() && searchResults?.data?.length > 0) {
@@ -358,12 +363,45 @@ const Header = () => {
           </Link>
  
           <div className="w-full flex justify-between items-center px-4 md:px-0 font-montserrat mt-5">
-            {/* <div>
-         
-            </div> */}
-            <nav className="flex justify-center space-x-6 lg:space-x-12">
+            <nav className="flex justify-center space-x-6 lg:space-x-12 z-50">
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="text-white hover:text-white transition-colors font-montserrat" onClick={handleNavigation}>{link.label}</Link>
+                link.label === 'Products' ? (
+                  <div key={link.href} className="relative group">
+                    <Link 
+                      href={link.href} 
+                      className="text-white hover:text-white transition-colors font-montserrat flex items-center gap-1 py-4" 
+                      onClick={handleNavigation}
+                    >
+                      {link.label}
+                      <FiChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                    </Link>
+                    
+                    {/* Hover Dropdown */}
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full w-48 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
+                      <div className="py-2">
+                        <Link 
+                          href="/products" 
+                          className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+                          onClick={handleNavigation}
+                        >
+                          All Products
+                        </Link>
+                        {collectionsData?.data?.map((collection: any) => (
+                          <Link
+                            key={collection._id}
+                            href={`/products?collections=${collection._id}`}
+                            className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+                            onClick={handleNavigation}
+                          >
+                            {collection.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link key={link.href} href={link.href} className="text-white hover:text-white transition-colors font-montserrat py-4" onClick={handleNavigation}>{link.label}</Link>
+                )
               ))}
             </nav>
             {renderRightControls(false)}

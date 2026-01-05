@@ -8,12 +8,14 @@ import { useGetMyProfileQuery, useUpdateProfileMutation, useChangePasswordMutati
 import { useGetMyOrdersQuery } from '@/app/store/api/orderApi';
 import { useCreateReviewMutation } from '@/app/store/api/reviewsApi';
 import Swal from 'sweetalert2';
+import { guestUser } from '@/app/store/config/envConfig';
 
 
 
 
 export default function AccountContent() {
     const { user: authUser } = useAuthState();
+    const isGuest = authUser?.email === guestUser.email;
     const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'orders'>('profile');
     const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
     const [showReviewModal, setShowReviewModal] = useState(false);
@@ -291,17 +293,21 @@ export default function AccountContent() {
                             <FiPackage className="w-5 h-5" />
                             My Orders
                         </button>
-                        <hr className="border-neutral-800" />
-                        <button
-                            onClick={() => setActiveTab('security')}
-                            className={`w-full flex items-center gap-3 px-6 py-4 text-sm font-medium transition-all ${activeTab === 'security'
-                                ? 'bg-[#D4A574]/10 text-[#D4A574] border-l-4 border-[#D4A574]'
-                                : 'text-neutral-400 hover:bg-neutral-800 hover:text-neutral-200 border-l-4 border-transparent'
-                                }`}
-                        >
-                            <FiShield className="w-5 h-5" />
-                            Security & Password
-                        </button>
+                        {!isGuest && (
+                            <>
+                                <hr className="border-neutral-800" />
+                                <button
+                                    onClick={() => setActiveTab('security')}
+                                    className={`w-full flex items-center gap-3 px-6 py-4 text-sm font-medium transition-all ${activeTab === 'security'
+                                        ? 'bg-[#D4A574]/10 text-[#D4A574] border-l-4 border-[#D4A574]'
+                                        : 'text-neutral-400 hover:bg-neutral-800 hover:text-neutral-200 border-l-4 border-transparent'
+                                        }`}
+                                >
+                                    <FiShield className="w-5 h-5" />
+                                    Security & Password
+                                </button>
+                            </>
+                        )}
                     </nav>
                 </div>
 
@@ -529,7 +535,7 @@ export default function AccountContent() {
                                                                 >
                                                                     View Details
                                                                 </button>
-                                                                {order.status?.toLowerCase() === 'delivered' && order.items?.length > 0 && (
+                                                                {order.status?.toLowerCase() === 'delivered' && order.items?.length > 0 && !isGuest && (
                                                                     <button
                                                                         onClick={() => handleOpenReviewModal(order.items)}
                                                                         className="px-3 py-1.5 bg-[#D4A574] text-white text-xs rounded-lg hover:bg-[#b88b5c] transition-colors flex items-center gap-1.5"
