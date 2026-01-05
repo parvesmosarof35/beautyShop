@@ -1,8 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Filter } from 'lucide-react';
-
 type FilterState = {
   collections: string[];
   priceRange: [number, number];
@@ -148,15 +145,15 @@ export default function FilterComponent({
         </div>
 
         {/* Skin Type */}
-        {renderFilterSection('Skin Type', skinTypes, handleSkinTypeChange, filters.skinTypes)}
+        {/* {renderFilterSection('Skin Type', skinTypes, handleSkinTypeChange, filters.skinTypes)} */}
 
         {/* Key Ingredients */}
-        {renderFilterSection(
+        {/* {renderFilterSection(
           'Key Ingredients',
           ingredients,
           handleIngredientChange,
           filters.ingredients
-        )}
+        )} */}
 
         <button
           onClick={() => setShowMobileFilters(false)}

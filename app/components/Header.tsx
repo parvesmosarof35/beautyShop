@@ -45,6 +45,7 @@ const Header = () => {
       
       if (!clickedInsideDesktop && !clickedInsideMobile) {
           setSearchResultsOpen(false);
+          setIsSearchOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -177,8 +178,7 @@ const Header = () => {
   const renderRightControls = (isMobileView = false) => (
     <div className="flex items-center space-x-4 md:space-x-6">
       {/* Search */}
-      {/* Search */}
-      <div className="relative">
+      <div className={`relative flex items-center justify-center ${!isMobileView ? 'w-10 h-10' : ''}`}>
         {isMobileView ? (
           <button
             onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -188,31 +188,42 @@ const Header = () => {
             <FiSearch className="h-5 w-5" />
           </button>
         ) : (
-          <div className="relative w-64 lg:w-80">
-            <form onSubmit={handleSearch} className="relative group" ref={searchRef}>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products..."
-                className="w-full bg-gray-800 border border-gray-300 text-white text-sm rounded-full py-2 pl-4 pr-10 focus:outline-none focus:border-[#d4a674] focus:ring-1 focus:ring-[#d4a674] transition-all duration-300 placeholder-gray-400"
-              />
-              <button
-                type="submit"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#d4a674] transition-colors hover:text-white"
-              >
-                <FiSearch className="h-4 w-4 text-gray-200" />
-              </button>
+          isSearchOpen ? (
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 lg:w-80 animate-fade-in z-50">
+              <form onSubmit={handleSearch} className="relative group" ref={searchRef}>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search products..."
+                  className="w-full bg-gray-800 border border-gray-300 text-white text-sm rounded-full py-2 pl-4 pr-10 focus:outline-none focus:border-[#d4a674] focus:ring-1 focus:ring-[#d4a674] transition-all duration-300 placeholder-gray-400"
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#d4a674] transition-colors hover:text-white"
+                >
+                  <FiSearch className="h-4 w-4 text-gray-200" />
+                </button>
 
-              {/* Search Results Dropdown */}
-              {renderSearchResultsDropdown()}
-            </form>
-          </div>
+                {/* Search Results Dropdown */}
+                {renderSearchResultsDropdown()}
+              </form>
+            </div>
+          ) : (
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="text-white hover:text-white transition-colors"
+              aria-label="Open search"
+            >
+              <FiSearch className="h-5 w-5" />
+            </button>
+          )
         )}
       </div>
 
       {/* Wishlist */}
-      {isAuthenticated && (
+      {/* {isAuthenticated && (
         <Link href="/wishlist" className="text-white hover:text-white transition-colors relative" onClick={handleNavigation}>
           <FiHeart className="h-5 w-5" />
           {wishlistCount > 0 && (
@@ -221,21 +232,9 @@ const Header = () => {
             </span>
           )}
         </Link>
-      )}
+      )} */}
 
-      {/* Cart */}
-      {isAuthenticated && (
-        <Link href="/cart" className="text-white hover:text-white relative transition-colors" onClick={handleNavigation}>
-          <FiShoppingBag className="h-5 w-5" />
-          {cartItemCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-gray-300 text-gray-800 text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
-              {cartItemCount > 9 ? '9+' : cartItemCount}
-            </span>
-          )}
-        </Link>
-      )}
-
-      {/* Account (Desktop Only) */}
+            {/* Account (Desktop Only) */}
       {!isMobileView && (
         !isAuthenticated ? (
           <Link href="/login" onClick={handleNavigation}>
@@ -269,6 +268,20 @@ const Header = () => {
           </div>
         )
       )}
+
+      {/* Cart */}
+      {isAuthenticated && (
+        <Link href="/cart" className="text-white hover:text-white relative transition-colors" onClick={handleNavigation}>
+          <FiShoppingBag className="h-5 w-5" />
+          {cartItemCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-gray-300 text-gray-800 text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+              {cartItemCount > 9 ? '9+' : cartItemCount}
+            </span>
+          )}
+        </Link>
+      )}
+
+
     </div>
   );
 

@@ -235,14 +235,14 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
               >
                 {isAddingToCart ? 'Adding...' : 'Add to Cart'}
               </button>
-              <button
+              {/* <button
                 onClick={handleWishlistToggle}
                 disabled={isAddingToWishlist || isRemovingFromWishlist}
                 className="w-full bg-transparent border-2 border-[#2a2a2a] hover:border-[#D4A574] text-white py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
               >
                 <Heart size={20} fill={isInWishlist ? 'currentColor' : 'none'} className={isInWishlist ? 'text-[#D4A574]' : ''} />
                 {isInWishlist ? 'In Wishlist' : 'Add to Wishlist'}
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

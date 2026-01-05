@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/app/store/authSlice';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
+import { guestUser } from '@/app/store/config/envConfig';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -39,22 +40,9 @@ export default function LoginPage() {
     }
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!email || !password) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: !email ? "Email is required!" : "Password is required!",
-      });
-      return;
-    }
-
-    const loginData = { email, password };
-    
+  const executeLogin = async (credentials: { email: string; password: string }) => {
     try {
-      const response = await logIn(loginData).unwrap();
+      const response = await logIn(credentials).unwrap();
       
       if (response?.success && response?.data?.accessToken) {
         let decodedToken: any = null;
@@ -64,14 +52,14 @@ export default function LoginPage() {
           console.error("Error decoding token:", decodeError);
         }
 
-
-        
-        // Save remember preferences
+        // Save remember preferences (only if rememberMe is checked, using current state)
+        // Note: For guest login we probably don't want to overwrite remember me unless specific behavior is desired,
+        // but following existing logic:
         try {
           if (rememberMe) {
             localStorage.setItem("rememberMe", "true");
-            localStorage.setItem("rememberEmail", email);
-            localStorage.setItem("rememberPassword", password);
+            localStorage.setItem("rememberEmail", credentials.email);
+            localStorage.setItem("rememberPassword", credentials.password);
           } else {
             localStorage.setItem("rememberMe", "false");
             localStorage.removeItem("rememberEmail");
@@ -99,7 +87,6 @@ export default function LoginPage() {
             if (decodedToken?.role === "admin" || decodedToken?.role === "superAdmin") {
                 router.push("/admin/dashboard");
             } else {
-                 // Navigate to redirect path if provided, else home
                 const params = new URLSearchParams(window.location.search);
                 const redirect = params.get("redirect");
                 if (redirect) {
@@ -139,6 +126,28 @@ export default function LoginPage() {
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: !email ? "Email is required!" : "Password is required!",
+      });
+      return;
+    }
+
+    await executeLogin({ email, password });
+  };
+
+  const handleGuestLogin = async () => {
+    await executeLogin({
+      email: guestUser.email,
+      password: guestUser.password
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#272727] flex flex-col justify-start pt-20 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -157,6 +166,17 @@ export default function LoginPage() {
         <div className="bg-[#171717] py-8 px-4 shadow sm:rounded-lg sm:px-10">
           
           <form className="space-y-6" onSubmit={handleSubmit}>
+
+            <div>
+              <Button
+                type="button"
+                onClick={handleGuestLogin}
+                className="w-full bg-gray-700 hover:bg-gray-600 text-white transition-all duration-300 py-3 px-4 text-sm font-medium font-montserrat flex items-center justify-center border border-gray-600"
+                disabled={isLoading}
+              >
+                Sign in as Guest
+              </Button>
+            </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-200 font-montserrat">
                 Email address

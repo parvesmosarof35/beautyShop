@@ -42,10 +42,10 @@ const HeroSection = () => {
             </Link>
           </div>
           <Link href="/contact">
-          <div className="mt-10 flex items-center justify-center space-x-3 cursor-pointer">
+          {/* <div className="mt-10 flex items-center justify-center space-x-3 cursor-pointer">
               <SquareArrowOutUpRight className="size-5" />
             <span className="text-white text-base font-montserrat font-medium">Dermatology Partner</span>
-          </div>
+          </div> */}
           </Link>
         </div>
       </div>

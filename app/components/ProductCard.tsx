@@ -202,7 +202,7 @@ export function ProductCard({ product }: ProductCardProps) {
           />
 
           {/* Wishlist Icon - Top Left */}
-          <button
+          {/* <button
             onClick={handleWishlistToggle}
             disabled={isAddingToWishlist}
             className={`absolute top-3 left-3 z-20 p-2 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${isInWishlist
@@ -219,7 +219,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 fill={isInWishlist ? 'currentColor' : 'none'}
               />
             )}
-          </button>
+          </button> */}
 
           {product.isBestSeller && (
             <div className="absolute top-3 right-3 bg-yellow-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider z-10">

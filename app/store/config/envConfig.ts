@@ -1,8 +1,16 @@
 
-export const imgUrl = "https://benefit-settle-expo-evaluating.trycloudflare.com/";
+export const imgUrl = "https://charger-cindy-decreased-equilibrium.trycloudflare.com/";
 
 
 export const url = `${imgUrl}api/v1/`;
+
+
+// Email: parvesmosarof32@gmail.com
+// Password: 12345678
+export const guestUser = {
+  email: "parvesmosarof32@gmail.com",
+  password: "12345678"
+};
 
 // 🔥 WebSocket base URL (auto picks wss:// if https page, ws:// otherwise)
 // const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";

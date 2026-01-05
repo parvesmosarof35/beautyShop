@@ -227,12 +227,12 @@ export default function ContactContent() {
                                 </div>
                             </div>
 
-                            <div className="bg-[#d4a574] p-6 rounded-lg">
+                            {/* <div className="bg-[#d4a574] p-6 rounded-lg">
                                 <h3 className="text-lg font-medium text-black mb-2 font-bold">Quick Response</h3>
                                 <p className="text-black mb-4">We typically respond to all inquiries within 24 hours on business days.</p>
                                 <p className="text-sm text-black">Monday - Friday: 9:00 AM - 6:00 PM</p>
                                 <p className="text-sm text-black">Saturday - Sunday: Closed</p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
