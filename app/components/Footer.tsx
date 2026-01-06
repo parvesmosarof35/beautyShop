@@ -15,7 +15,7 @@ const footerLinks = [
         links: [
             { name: 'All Products', href: '/products' },
             { name: 'Latest Arrivals', href: '/shop' },
-            { name: 'My Wishlist', href: '/wishlist' },
+            // { name: 'My Wishlist', href: '/wishlist' },
             { name: 'My Cart', href: '/cart' },
         ],
     },

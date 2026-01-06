@@ -1,5 +1,5 @@
 
-export const imgUrl = "https://charger-cindy-decreased-equilibrium.trycloudflare.com/";
+export const imgUrl = "https://subsidiaries-firmware-speech-professional.trycloudflare.com/";
 
 
 export const url = `${imgUrl}api/v1/`;
