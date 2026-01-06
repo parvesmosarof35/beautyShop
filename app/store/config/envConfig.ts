@@ -12,6 +12,8 @@ export const guestUser = {
   password: "12345678"
 };
 
+// new comment
+
 // 🔥 WebSocket base URL (auto picks wss:// if https page, ws:// otherwise)
 // const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
 // export const wsUrl = `${wsProtocol}://${new URL(imgUrl).host}`;
