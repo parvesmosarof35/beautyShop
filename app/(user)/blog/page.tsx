@@ -27,9 +27,10 @@ async function getBlogs(page: number = 1, searchTerm: string = '') {
   }
 }
 
-export default async function BlogPage({ searchParams }: { searchParams: { page?: string, searchTerm?: string } }) {
-  const page = searchParams.page ? parseInt(searchParams.page) : 1;
-  const searchTerm = searchParams.searchTerm || '';
+export default async function BlogPage({ searchParams }: { searchParams: Promise<{ page?: string, searchTerm?: string }> }) {
+  const resolvedSearchParams = await searchParams;
+  const page = resolvedSearchParams.page ? parseInt(resolvedSearchParams.page) : 1;
+  const searchTerm = resolvedSearchParams.searchTerm || '';
   const { allBlogs, meta } = await getBlogs(page, searchTerm);
   return <BlogContent allBlogs={allBlogs} meta={meta} currentPage={page} />;
 }

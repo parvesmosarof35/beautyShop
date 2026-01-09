@@ -4,29 +4,29 @@ import { revalidateTag } from 'next/cache';
 
 // ... existing code ...
 export async function revalidateFeaturedProducts() {
-  revalidateTag('featured-products');
+  revalidateTag('featured-products', 'max');
 }
 
 export async function revalidateFaq() {
-  revalidateTag('faq');
+  revalidateTag('faq', 'max');
 }
 
 export async function revalidateBlog() {
-  revalidateTag('blog');
+  revalidateTag('blog', 'max');
 }
 
 export async function revalidatePrivacy() {
-  revalidateTag('privacy');
+  revalidateTag('privacy', 'max');
 }
 
 export async function revalidateTerms() {
-  revalidateTag('termsAndConditions');
+  revalidateTag('termsAndConditions', 'max');
 }
 
 export async function revalidateAbout() {
-  revalidateTag('aboutUs');
+  revalidateTag('aboutUs', 'max');
 }
 
 export async function revalidateProducts() {
-  revalidateTag('product');
+  revalidateTag('product', 'max');
 }

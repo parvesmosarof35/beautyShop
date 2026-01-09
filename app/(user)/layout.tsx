@@ -43,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cormorant.variable}>
-      <body className="font-sans bg-[#0a0a0a] text-white">
+      <body className="font-sans bg-[#0a0a0a] text-white" suppressHydrationWarning={true}>
         <div className="min-h-screen">
           <Providers>
             <Header />

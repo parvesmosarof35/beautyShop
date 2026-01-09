@@ -1,18 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-  compiler: {
-    // Enables the styled-components SWC transform
-    styledComponents: true
-  },
   images: {
-    domains: ['images.unsplash.com', 'res.cloudinary.com'], // Add any image domains you need
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
   },
-  experimental: {
-    // Enable the new app directory
-    appDir: true,
-  },
+
 }
+
 
 module.exports = nextConfig

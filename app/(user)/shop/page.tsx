@@ -67,8 +67,9 @@ const getBackendSort = (sort: string) => {
   }
 };
 
-export default async function ShopPage({ searchParams }: { searchParams: { page?: string, sort?: string, collection?: string } }) {
-  const { products, meta } = await getProducts(searchParams);
+export default async function ShopPage({ searchParams }: { searchParams: Promise<{ page?: string, sort?: string, collection?: string }> }) {
+  const resolvedSearchParams = await searchParams;
+  const { products, meta } = await getProducts(resolvedSearchParams);
   const collections = await getCollections();
   
   return (
@@ -76,7 +77,7 @@ export default async function ShopPage({ searchParams }: { searchParams: { page?
       initialProducts={products} 
       initialMeta={meta} 
       collections={collections}
-      initialParams={searchParams}
+      initialParams={resolvedSearchParams}
     />
   );
 }

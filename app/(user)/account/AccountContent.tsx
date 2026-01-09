@@ -577,7 +577,9 @@ export default function AccountContent() {
                                     <p className="text-neutral-400 mt-1 print:text-gray-600">{selectedOrder.id}</p>
                                 </div>
                                 <div className="mt-4 md:mt-0 text-right">
-                                    <p className="text-[#D4A574] font-bold text-lg print:text-black">{selectedOrder.total}</p>
+                                    <p className="text-[#D4A574] font-bold text-lg print:text-black">
+                                        ${(selectedOrder.totalAmount || selectedOrder.total || 0).toFixed(2)}
+                                    </p>
                                     <p className="text-sm text-neutral-400 print:text-gray-600">{selectedOrder.date}</p>
                                 </div>
                             </div>
@@ -611,6 +613,7 @@ export default function AccountContent() {
                                                     <th className="py-3 px-4 font-semibold text-white print:text-black">Item</th>
                                                     <th className="py-3 px-4 font-semibold text-right text-white print:text-black">Qty</th>
                                                     <th className="py-3 px-4 font-semibold text-right text-white print:text-black">Price</th>
+                                                    <th className="py-3 px-4 font-semibold text-right text-white print:text-black">Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-neutral-800 print:divide-gray-300">
@@ -619,12 +622,16 @@ export default function AccountContent() {
                                                         <td className="py-3 px-4">{item.name || item}</td>
                                                         <td className="py-3 px-4 text-right">{item.quantity || 1}</td>
                                                         <td className="py-3 px-4 text-right">${item.price?.toFixed(2) || 'N/A'}</td>
+                                                        <td className="py-3 px-4 text-right text-[#D4A574] font-medium">
+                                                            ${((item.price || 0) * (item.quantity || 1)).toFixed(2)}
+                                                        </td>
                                                     </tr>
                                                 ))}
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+
                             </div>
 
                             {/* Actions */}

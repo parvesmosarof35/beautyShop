@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { getBaseUrl } from '@/app/store/config/envConfig';
 
 type Props = {
-  params: { id: string }
+  params: Promise<{ id: string }>
 };
 
 // Fetch single product
@@ -43,7 +43,8 @@ async function getRelatedProducts(id: string) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = await getProduct(params.id);
+  const { id } = await params;
+  const product = await getProduct(id);
   
   if (!product) {
     return {
@@ -61,8 +62,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductDetailsPage({ params }: Props) {
-  const product = await getProduct(params.id);
-  const relatedProducts = await getRelatedProducts(params.id);
+  const { id } = await params;
+  const product = await getProduct(id);
+  const relatedProducts = await getRelatedProducts(id);
 
   if (!product) {
       // We can also let the Client Component handle the 'not found' state better or return 404 here

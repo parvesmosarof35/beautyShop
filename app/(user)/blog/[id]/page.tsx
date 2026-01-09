@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import { getBaseUrl } from '@/app/store/config/envConfig';
 
 type Props = {
-  params: { id: string }
+  params: Promise<{ id: string }>
 };
 
 async function getBlog(id: string) {
@@ -26,7 +26,8 @@ async function getBlog(id: string) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const blog = await getBlog(params.id);
+  const { id } = await params;
+  const blog = await getBlog(id);
   
   if (!blog) {
     return {
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogDetails({ params }: Props) {
-    const blog = await getBlog(params.id);
+    const { id } = await params;
+    const blog = await getBlog(id);
 
     if (!blog) {
          return (

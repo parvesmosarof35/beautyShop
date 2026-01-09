@@ -61,16 +61,14 @@ async function getCollections() {
 }
 
 interface PageProps {
-    searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function ProductsPage({ searchParams }: PageProps) {
-  // Await searchParams before using it (Next.js 15 requirement, good practice generally now)
-  // Note: in Next 14/15 searchParams is a promise or object depending on version, 
-  // but simpler to treat as object for now if type is not Promise.
-  // Actually, let's treat it safely.
+  // Await searchParams before using it (Next.js 15 requirement)
+  const resolvedSearchParams = await searchParams;
   
-  const productsData = await getProducts(searchParams);
+  const productsData = await getProducts(resolvedSearchParams);
   const collectionsData = await getCollections();
 
   return (
