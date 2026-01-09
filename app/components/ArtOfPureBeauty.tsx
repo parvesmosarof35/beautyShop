@@ -3,17 +3,17 @@ import Image from 'next/image';
 
 const ArtOfPureBeauty = () => {
   return (
-    <section className="py-16 bg-[#3b3b3b]">
+    <section className="py-12 md:py-16 bg-[#3b3b3b]">
       <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto text-center mb-20">
-          <h2 className="text-4xl md:text-6xl font-serif text-gray-100 mb-6">The Art of Pure Beauty</h2>
-          <p className="text-lg md:text-xl text-gray-400 font-serif mb-16 max-w-2xl mx-auto leading-relaxed">
+        <div className="max-w-7xl mx-auto text-center mb-10 md:mb-20">
+          <h2 className="text-3xl md:text-6xl font-serif text-gray-100 mb-4 md:mb-6">The Art of Pure Beauty</h2>
+          <p className="text-base md:text-xl text-gray-400 font-serif mb-10 md:mb-16 max-w-2xl mx-auto leading-relaxed px-4">
             At Lunel, we believe in the power of nature to enhance your natural beauty. 
             Our products are crafted with pure, organic ingredients that nourish and revitalize your skin. 
             Experience the perfect blend of science and nature for radiant, healthy-looking skin.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 mb-8 px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-20 mb-8 px-4 md:px-12">
             {[
               { 
                 id: 1, 
@@ -27,7 +27,7 @@ const ArtOfPureBeauty = () => {
                 alt: 'JEKNCLER Cream', 
                 src: '/images/b2.png',
                 name: 'JEKNCLER',
-                className: 'mt-20' // Slightly adjust the top margin of the middle image
+                className: 'md:mt-20' // Apply top margin only on desktop
               },
               { 
                 id: 3, 
@@ -37,7 +37,7 @@ const ArtOfPureBeauty = () => {
                 className: ''
               },
             ].map((item) => (
-              <div key={item.id} className={`relative h-[500px] w-full group ${item.className}`}>
+              <div key={item.id} className={`relative h-[300px] md:h-[500px] w-full group ${item.className}`}>
                 <Image
                   src={item.src}
                   alt={item.alt}

@@ -1,15 +1,24 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { FiSearch, FiEye } from 'react-icons/fi';
+import { FiSearch, FiEye, FiX, FiPrinter } from 'react-icons/fi';
 import Link from 'next/link';
 import { useGetAllOrdersQuery, useUpdateOrderStatusMutation } from '@/app/store/api/orderApi';
+import { useGetSingleUserQuery } from '@/app/store/api/authApi';
 import Swal from 'sweetalert2';
 
 const OrdersPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
     const { data: ordersData, isLoading, isError } = useGetAllOrdersQuery({});
     const [updateOrderStatus, { isLoading: isUpdating }] = useUpdateOrderStatusMutation();
+
+    // Fetch customer details when an order is selected
+    const { data: userData } = useGetSingleUserQuery(selectedOrder?.customerId, {
+        skip: !selectedOrder?.customerId 
+    });
+    
+    const customer = userData?.data;
 
     const orders = Array.isArray(ordersData?.data?.orders) ? ordersData.data.orders : [];
 
@@ -205,13 +214,13 @@ const OrdersPage = () => {
                                             {formatDate(order.createdAt)}
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <Link
-                                                href={`/admin/orders/${order._id}`}
+                                            <button
+                                                onClick={() => setSelectedOrder(order)}
                                                 className="text-neutral-400 hover:text-[#D4A574] transition-colors inline-flex items-center gap-1"
                                             >
                                                 <FiEye />
                                                 <span className="text-xs">View</span>
-                                            </Link>
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
@@ -220,6 +229,128 @@ const OrdersPage = () => {
                     </table>
                 </div>
             </div>
+
+            {/* Order Details Modal */}
+            {selectedOrder && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                    <div className="bg-[#1e1e1e] border border-neutral-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-fade-in relative">
+                        <button
+                            onClick={() => setSelectedOrder(null)}
+                            className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-white bg-neutral-800/50 hover:bg-neutral-800 rounded-full transition-colors print:hidden"
+                        >
+                            <FiX className="w-5 h-5" />
+                        </button>
+
+                        <div className="p-8 print:p-0">
+                            {/* Invoice Header */}
+                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-neutral-800 pb-6 print:border-black">
+                                <div>
+                                    <h2 className="text-2xl font-bold text-white print:text-black">Order Details</h2>
+                                    <p className="text-neutral-400 mt-1 print:text-gray-600">#{selectedOrder._id}</p>
+                                    <div className="mt-2 flex gap-2">
+                                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                                            getStatusBadgeClass(selectedOrder.status)
+                                         }`}>
+                                            {selectedOrder.status}
+                                         </span>
+                                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border bg-gray-900/30 text-gray-400 border-gray-800">
+                                            {selectedOrder.paymentStatus}
+                                         </span>
+                                    </div>
+                                </div>
+                                <div className="mt-4 md:mt-0 text-right">
+                                    <p className="text-[#D4A574] font-bold text-lg print:text-black">${(selectedOrder.totalAmount || 0).toFixed(2)}</p>
+                                    <p className="text-sm text-neutral-400 print:text-gray-600">{formatDate(selectedOrder.createdAt)}</p>
+                                </div>
+                            </div>
+
+                            {/* Order Details */}
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="bg-neutral-900/50 p-4 rounded-xl border border-neutral-800 print:border-gray-300 print:bg-transparent">
+                                        <h4 className="text-sm font-semibold text-neutral-300 uppercase tracking-wide mb-3 print:text-black">Customer Info</h4>
+                                        <div className="space-y-1 text-sm text-neutral-400 print:text-gray-800">
+                                            {customer ? (
+                                                <>
+                                                    <p className="text-white font-medium print:text-black">{customer.fullname || 'N/A'}</p>
+                                                    <p>{customer.email || 'N/A'}</p>
+                                                    <p>{customer.phoneNumber || 'N/A'}</p>
+                                                </>
+                                            ) : (
+                                                <p className="text-white font-medium print:text-black">ID: {selectedOrder.customerId}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="bg-neutral-900/50 p-4 rounded-xl border border-neutral-800 print:border-gray-300 print:bg-transparent">
+                                        <h4 className="text-sm font-semibold text-neutral-300 uppercase tracking-wide mb-3 print:text-black">Shipping Address</h4>
+                                        <div className="space-y-1 text-sm text-neutral-400 print:text-gray-800">
+                                            <p>{selectedOrder.shippingAddress?.street}</p>
+                                            <p>{selectedOrder.shippingAddress?.city}, {selectedOrder.shippingAddress?.state} {selectedOrder.shippingAddress?.postalCode}</p>
+                                            <p>{selectedOrder.shippingAddress?.country}</p>
+                                            <p className="mt-2 pt-2 border-t border-neutral-800 print:border-gray-300">
+                                                <span className="block text-neutral-500 text-xs uppercase tracking-wider mb-0.5">Contact:</span>
+                                                {selectedOrder.shippingAddress?.email && <span className="block">{selectedOrder.shippingAddress.email}</span>}
+                                                {selectedOrder.shippingAddress?.phone && <span className="block">{selectedOrder.shippingAddress.phone}</span>}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {selectedOrder.notes && (
+                                     <div className="bg-neutral-900/50 p-4 rounded-xl border border-neutral-800 print:border-gray-300 print:bg-transparent">
+                                        <h4 className="text-sm font-semibold text-neutral-300 uppercase tracking-wide mb-2 print:text-black">Order Notes</h4>
+                                        <p className="text-sm text-neutral-400 italic print:text-gray-800">"{selectedOrder.notes}"</p>
+                                    </div>
+                                )}
+
+                                <div>
+                                    <h4 className="text-sm font-semibold text-neutral-300 uppercase tracking-wide mb-3 print:text-black">Order Items</h4>
+                                    <div className="border border-neutral-800 rounded-xl overflow-hidden overflow-x-auto print:border-gray-300">
+                                        <table className="w-full text-left text-sm min-w-[500px]">
+                                            <thead className="bg-neutral-900 print:bg-gray-100">
+                                                <tr>
+                                                    <th className="py-3 px-4 font-semibold text-white print:text-black">Item</th>
+                                                    <th className="py-3 px-4 font-semibold text-right text-white print:text-black whitespace-nowrap">Qty</th>
+                                                    <th className="py-3 px-4 font-semibold text-right text-white print:text-black whitespace-nowrap">Price</th>
+                                                    <th className="py-3 px-4 font-semibold text-right text-white print:text-black whitespace-nowrap">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-neutral-800 print:divide-gray-300">
+                                                {selectedOrder.items?.map((item: any, index: number) => (
+                                                    <tr key={index} className="text-neutral-300 print:text-gray-800">
+                                                        <td className="py-3 px-4 min-w-[200px]">{item.name}</td>
+                                                        <td className="py-3 px-4 text-right whitespace-nowrap">{item.quantity}</td>
+                                                        <td className="py-3 px-4 text-right whitespace-nowrap">${item.price?.toFixed(2)}</td>
+                                                        <td className="py-3 px-4 text-right text-[#D4A574] font-medium whitespace-nowrap">
+                                                            ${((item.price || 0) * (item.quantity || 1)).toFixed(2)}
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="mt-8 flex justify-end gap-3 pt-6 border-t border-neutral-800 print:hidden">
+                                <button
+                                    onClick={() => window.print()}
+                                    className="px-4 py-2 bg-neutral-800 text-white rounded-lg hover:bg-neutral-700 transition-colors flex items-center gap-2 text-sm font-medium"
+                                >
+                                    <FiPrinter /> Print
+                                </button>
+                                <button
+                                    onClick={() => setSelectedOrder(null)}
+                                    className="px-4 py-2 bg-[#D4A574] text-white rounded-lg hover:bg-[#b88b5c] transition-colors text-sm font-medium"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -25,7 +25,9 @@ export default function CartPage() {
     city: '',
     state: '',
     postalCode: '',
-    country: ''
+    country: '',
+    phone: '',
+    email: ''
   });
   const [notes, setNotes] = useState('');
 
@@ -122,11 +124,11 @@ export default function CartPage() {
 
   const handleCheckout = async () => {
     // Validate shipping address
-    if (!shippingAddress.street || !shippingAddress.city || !shippingAddress.state || !shippingAddress.postalCode || !shippingAddress.country) {
+    if (!shippingAddress.street || !shippingAddress.city || !shippingAddress.state || !shippingAddress.postalCode || !shippingAddress.country || !shippingAddress.phone || !shippingAddress.email) {
       Swal.fire({
         icon: 'error',
         title: 'Missing Information',
-        text: 'Please fill in all shipping details.',
+        text: 'Please fill in all shipping details including phone number and email.',
         background: '#171717',
         color: '#fff',
         confirmButtonColor: '#d4a674'
@@ -334,6 +336,22 @@ export default function CartPage() {
                         onChange={(e) => setShippingAddress({...shippingAddress, country: e.target.value})}
                         className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
                       />
+                    </div>
+                    <div className="flex gap-4">
+                        <input 
+                            type="tel" 
+                            placeholder="Phone Number"
+                            value={shippingAddress.phone}
+                            onChange={(e) => setShippingAddress({...shippingAddress, phone: e.target.value})}
+                            className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
+                        />
+                         <input 
+                            type="email" 
+                            placeholder="Email Address"
+                            value={shippingAddress.email}
+                            onChange={(e) => setShippingAddress({...shippingAddress, email: e.target.value})}
+                            className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
+                        />
                     </div>
                     <textarea 
                       placeholder="Order Notes (Optional)"
