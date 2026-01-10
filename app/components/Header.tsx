@@ -207,6 +207,7 @@ const Header = () => {
                 <button
                   type="submit"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#d4a674] transition-colors hover:text-white"
+                  aria-label="Submit search"
                 >
                   <FiSearch className="h-4 w-4 text-gray-200" />
                 </button>
@@ -252,6 +253,7 @@ const Header = () => {
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="text-white hover:text-white transition-colors flex items-center"
+              aria-label="User menu"
             >
               <FiUser className="h-5 w-5" />
             </button>
@@ -276,7 +278,7 @@ const Header = () => {
 
       {/* Cart */}
       {isAuthenticated && (
-        <Link href="/cart" className="text-white hover:text-white relative transition-colors" onClick={handleNavigation}>
+        <Link href="/cart" className="text-white hover:text-white relative transition-colors" onClick={handleNavigation} aria-label={`Cart with ${cartItemCount} items`}>
           <FiShoppingBag className="h-5 w-5" />
           {cartItemCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-gray-300 text-gray-800 text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
@@ -298,7 +300,7 @@ const Header = () => {
             MOBILE HEADER 
            ======================= */}
         <div className="md:hidden flex items-center justify-between py-4 bg-[#000000] text-gray-200">
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-2">
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-2" aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}>
             {isMobileMenuOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
           </button>
           
@@ -315,8 +317,8 @@ const Header = () => {
         {isSearchOpen && isMobile && (
           <div className="md:hidden px-4 pb-4 animate-fade-in">
              <form onSubmit={handleSearch} className="relative" ref={mobileSearchRef}>
-              <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search..." className="w-full bg-gray-900 border border-gray-700 text-white rounded-lg py-2 pl-4 pr-10 focus:outline-none focus:border-[#d4a674]" autoFocus />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"><FiSearch className="h-5 w-5" /></button>
+              <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search..." className="w-full bg-gray-900 border border-gray-700 text-white rounded-lg py-2 pl-4 pr-10 focus:outline-none focus:border-[#d4a674]" autoFocus aria-label="Search" />
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" aria-label="Submit search"><FiSearch className="h-5 w-5" /></button>
               {renderSearchResultsDropdown()}
             </form>
           </div>

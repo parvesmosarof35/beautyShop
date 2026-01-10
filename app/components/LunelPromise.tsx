@@ -28,7 +28,7 @@ const LunelPromise = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-20">
           <h2 className="text-4xl font-light mb-4">The Lunel Promise</h2>
-          <p className="text-gray-400 text-lg">
+          <p className="text-gray-300 text-lg">
             Uncompromising quality in every detail
           </p>
         </div>
@@ -48,7 +48,7 @@ const LunelPromise = () => {
                 </div>
               </div>
               <h3 className="text-[#d4a674] text-xl font-light mb-3">{promise.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{promise.description}</p>
+              <p className="text-gray-300 text-sm leading-relaxed">{promise.description}</p>
             </div>
           ))}
         </div>

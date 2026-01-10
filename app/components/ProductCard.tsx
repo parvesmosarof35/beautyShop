@@ -189,7 +189,7 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Link href={`/products/${product.id}`} className="block h-full">
+    <Link href={`/products/${product.id}`} className="block h-full" aria-label={`View details for ${product.name}, price $${product.price}`}>
       <div className="bg-[#383838] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 h-full flex flex-col w-full max-w-sm mx-auto border border-gray-700">
         {/* Product Image */}
         <div className="relative h-72 bg-gray-100 group">
@@ -233,7 +233,7 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
 
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-            <button className="bg-white text-gray-900 p-2 rounded-full hover:bg-gray-200 transition-colors">
+            <button className="bg-white text-gray-900 p-2 rounded-full hover:bg-gray-200 transition-colors" aria-label="Quick view">
               <Eye className="w-5 h-5" />
             </button>
           </div>

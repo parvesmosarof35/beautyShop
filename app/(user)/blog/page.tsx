@@ -27,6 +27,12 @@ async function getBlogs(page: number = 1, searchTerm: string = '') {
   }
 }
 
+export const viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default async function BlogPage({ searchParams }: { searchParams: Promise<{ page?: string, searchTerm?: string }> }) {
   const resolvedSearchParams = await searchParams;
   const page = resolvedSearchParams.page ? parseInt(resolvedSearchParams.page) : 1;

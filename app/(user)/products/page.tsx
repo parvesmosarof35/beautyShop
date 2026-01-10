@@ -64,6 +64,12 @@ interface PageProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
+export const viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default async function ProductsPage({ searchParams }: PageProps) {
   // Await searchParams before using it (Next.js 15 requirement)
   const resolvedSearchParams = await searchParams;

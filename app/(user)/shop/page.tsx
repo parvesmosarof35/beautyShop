@@ -67,6 +67,12 @@ const getBackendSort = (sort: string) => {
   }
 };
 
+export const viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ page?: string, sort?: string, collection?: string }> }) {
   const resolvedSearchParams = await searchParams;
   const { products, meta } = await getProducts(resolvedSearchParams);

@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 // Import components with dynamic imports for better performance
 const HeroSection = dynamic(() => import('../components/HeroSection'), { ssr: true });
 const ArtOfPureBeauty = dynamic(() => import('../components/ArtOfPureBeauty'), { ssr: true });
