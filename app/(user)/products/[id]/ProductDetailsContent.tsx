@@ -199,6 +199,15 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
             <div className="text-3xl font-bold text-white mb-6">
               ${product.price.toFixed(2)}
             </div>
+            
+            {product.stock_quantity !== undefined && (
+                 <div className="mb-6 flex items-center gap-2">
+                    <span className="text-gray-400">Availability:</span>
+                    <span className={`${product.stock_quantity > 0 ? 'text-green-500' : 'text-red-500'} font-medium`}>
+                        {product.stock_quantity > 0 ? `${product.stock_quantity} in stock` : 'Out of stock'}
+                    </span>
+                 </div>
+            )}
 
             {/* Quantity Selector */}
             <div className="mb-6">

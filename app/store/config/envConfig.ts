@@ -1,5 +1,5 @@
 
-export const imgUrl = "https://recognised-baby-cleaners-wilson.trycloudflare.com/";
+export const imgUrl = "https://ecommarce-backend-dsoe.onrender.com/";
 
 
 export const url = `${imgUrl}api/v1/`;
