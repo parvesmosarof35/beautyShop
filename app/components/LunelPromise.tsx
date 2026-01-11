@@ -41,8 +41,7 @@ const LunelPromise = () => {
                   <Image
                     src={promise.icon}
                     alt={promise.title}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
                     className="object-cover w-full h-full"
                   />
                 </div>

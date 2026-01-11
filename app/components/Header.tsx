@@ -33,7 +33,7 @@ const Header = () => {
   const cartItemCount = cartData?.data?.items?.length || 0; 
   const wishlistCount = wishlistData?.data?.length || 0;
 
-  console.log(isAdmin, "value of isadmin ");
+  //console.log(isAdmin, "value of isadmin ");
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -155,6 +155,7 @@ const Header = () => {
                                             src={product.images_urls[0]}
                                             alt={product.name}
                                             fill
+                                            sizes="40px"
                                             className="object-cover"
                                         />
                                     ) : (
@@ -306,7 +307,7 @@ const Header = () => {
           
           <Link href="/" onClick={handleNavigation} className="flex-1 flex justify-center ml-2">
             <div className="relative w-32 h-10">
-              <Image src="/images/logo.png" alt="Lunel Beauty" fill className="object-contain" priority />
+              <Image src="/images/logo.png" alt="Lunel Beauty" fill sizes="128px" className="object-contain" priority />
             </div>
           </Link>
 
@@ -360,7 +361,7 @@ const Header = () => {
         <div className="hidden md:flex flex-col items-center py-4 bg-[#000000] text-gray-200">
           <Link href="/" className="flex items-center -mt-2" onClick={handleNavigation}>
             <div className="relative w-32 h-14 transition-all duration-300 hover:scale-105">
-              <Image src="/images/logo.png" alt="Lunel Beauty" width={128} height={40} className="object-contain" priority />
+              <Image src="/images/logo.png" alt="Lunel Beauty" width={128} height={40} className="object-contain" style={{ width: 'auto', height: 'auto' }} priority />
             </div>
           </Link>
  

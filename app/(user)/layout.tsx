@@ -1,5 +1,5 @@
 import { Cormorant_Garamond } from 'next/font/google';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import '../../app/globals.css';
 import { Providers } from '../providers';
 import Header from '../components/Header';
@@ -15,9 +15,7 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: 'LUNEL Beauty',
   description: 'Discover our natural beauty products',
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#0a0a0a',
-    icons: {
+  icons: {
     icon: [
       {
         url: '/images/favicon.png',
@@ -34,6 +32,12 @@ export const metadata: Metadata = {
     ],
     apple: '/images/favicon.png',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0a0a0a',
 };
 
 export default function RootLayout({

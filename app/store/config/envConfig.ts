@@ -4,6 +4,8 @@ export const imgUrl = "https://ecommarce-backend-dsoe.onrender.com/";
 
 export const url = `${imgUrl}api/v1/`;
 
+//console.log(url);
+
 
 // Email: parvesmosarof32@gmail.com
 // Password: 12345678
