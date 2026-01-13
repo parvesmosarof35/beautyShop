@@ -227,6 +227,8 @@ export default function ShopContent({ initialProducts = [], initialMeta, collect
      if (newCollection) newParams.set('collection', newCollection);
      if (finalPage > 1) newParams.set('page', finalPage.toString());
 
+     newParams.sort();
+
      router.push(`/shop?${newParams.toString()}`);
   };
 

@@ -8,16 +8,24 @@ export const metadata: Metadata = {
 };
 
 async function getProducts(searchParams: any) {
-  const params = new URLSearchParams({
-    page: searchParams.page || '1',
-    limit: '12',
-    sort: getBackendSort(searchParams.sort || 'popularity'),
-  });
+  const params = new URLSearchParams();
+
+  // Set defaults
+  if (!searchParams.limit) params.set('limit', '12');
+  else params.set('limit', searchParams.limit);
+
+  if (!searchParams.page) params.set('page', '1');
+  else params.set('page', searchParams.page);
+
+  if (!searchParams.sort) params.set('sort', 'bestSelling');
+  else params.set('sort', getBackendSort(searchParams.sort));
 
   if (searchParams.collection) {
-    // The backend expects 'collections' array, passing single ID for now as per previous logic
     params.append('collections', searchParams.collection);
   }
+
+  // Sort params to ensure consistent cache keys
+  params.sort();
 
   try {
     const res = await fetch(`${getBaseUrl()}product?${params.toString()}`, {

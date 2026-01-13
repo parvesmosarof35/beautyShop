@@ -12,6 +12,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
+      {
+        protocol: "https",
+        hostname: "ecommarce-backend-dsoe.onrender.com",
+      },
     ],
   },
 
@@ -50,7 +54,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' blob: data: https://images.unsplash.com https://res.cloudinary.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://ecommarce-bw0p.onrender.com https://ecommarce-backend-dsoe.onrender.com https://vercel.live https://*.trycloudflare.com; frame-src 'self' https://vercel.live;"
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' blob: data: https://images.unsplash.com https://res.cloudinary.com https://ecommarce-backend-dsoe.onrender.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://ecommarce-bw0p.onrender.com https://ecommarce-backend-dsoe.onrender.com https://vercel.live https://*.trycloudflare.com; frame-src 'self' https://vercel.live;"
           },
           {
             key: 'Cross-Origin-Opener-Policy',
@@ -62,6 +66,14 @@ const nextConfig = {
           }
         ]
       }
+    ]
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/v1/:path*',
+        destination: 'https://ecommarce-backend-dsoe.onrender.com/api/v1/:path*',
+      },
     ]
   },
 }

@@ -11,17 +11,13 @@ async function getProducts(searchParams: any) {
     const params = new URLSearchParams(searchParams);
     
     // Default params if not present
-    if (!params.has('limit')) params.set('limit', '12');
     if (!params.has('page')) params.set('page', '1');
+    if (!params.has('limit')) params.set('limit', '12');
     if (!params.has('sort')) params.set('sort', 'bestSelling');
     if (!params.has('maxprice')) params.set('maxprice', '3000');
 
-    // Handle array params properly for the backend
-    // The previous ProductsContent logic passed arrays directly to RTK Query.
-    // RTK Query usually serializes arrays as repeated keys: collections=1&collections=2
-    // We can rely on URLSearchParams.toString() BUT we need to check how the backend expects it.
-    // If backend expects comma separated, we join. If repeated keys, toString() does it.
-    // Assuming standard repeated keys as per typical RTK Query <-> Express handling.
+    // Sort params to ensure consistent cache keys
+    params.sort();
 
     try {
         const res = await fetch(`${getBaseUrl()}product?${params.toString()}`, {

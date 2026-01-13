@@ -8,8 +8,16 @@ export const metadata: Metadata = {
 };
 
 async function getBlogs(page: number = 1, searchTerm: string = '') {
+  const params = new URLSearchParams();
+  params.set('searchTerm', searchTerm);
+  params.set('page', page.toString());
+  params.set('limit', '9');
+
+  // Sort params to ensure consistent cache keys
+  params.sort();
+
   try {
-    const res = await fetch(`${getBaseUrl()}blogs/find_by_all_blogs?searchTerm=${searchTerm}&page=${page}&limit=9`, {
+    const res = await fetch(`${getBaseUrl()}blogs/find_by_all_blogs?${params.toString()}`, {
       next: { tags: ['blog'] },
       cache: 'force-cache'
     });

@@ -125,9 +125,9 @@ const Header = () => {
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
-    { label: 'Products', href: '/products' },
-    { label: 'Shop', href: '/shop' },
-    { label: 'Blog', href: '/blog' },
+    { label: 'Products', href: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
+    { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },
+    { label: 'Blog', href: '/blog?limit=9&page=1&searchTerm=' },
     { label: 'Contact', href: '/contact' },
     { label: 'FAQ', href: '/faq' },
   ];
@@ -383,7 +383,7 @@ const Header = () => {
                     <div className="absolute left-1/2 -translate-x-1/2 top-full w-48 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
                       <div className="py-2">
                         <Link 
-                          href="/products" 
+                          href="/products?limit=12&maxprice=3000&page=1&sort=bestSelling" 
                           className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
                           onClick={handleNavigation}
                         >
@@ -392,7 +392,7 @@ const Header = () => {
                         {collectionsData?.data?.map((collection: any) => (
                           <Link
                             key={collection._id}
-                            href={`/products?collections=${collection._id}`}
+                            href={`/products?limit=12&maxprice=3000&page=1&sort=bestSelling&collections=${collection._id}`}
                             className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
                             onClick={handleNavigation}
                           >

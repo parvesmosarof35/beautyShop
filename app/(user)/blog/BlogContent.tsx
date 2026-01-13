@@ -2,23 +2,43 @@
 
 import { useState, useEffect } from 'react';
 import { FiSearch, FiCalendar, FiUser, FiArrowRight } from 'react-icons/fi';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function BlogContent({ allBlogs = [], meta, currentPage = 1 }: { allBlogs?: any[], meta?: any, currentPage?: number }) {
-  const [searchTerm, setSearchTerm] = useState('');
+  const searchParams = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('searchTerm') || '');
   const router = useRouter();
 
   // Debounce search to avoid too many requests
   useEffect(() => {
     const timer = setTimeout(() => {
         if (searchTerm) {
-            router.push(`/blog?searchTerm=${searchTerm}&page=1`);
+            const params = new URLSearchParams();
+            params.set('limit', '9');
+            params.set('page', '1');
+            params.set('searchTerm', searchTerm);
+            params.sort();
+            router.push(`/blog?${params.toString()}`);
         }
     }, 500);
     if (!searchTerm) {
-        router.push(`/blog?page=1`);
+        // Match Header default link: /blog?limit=9&page=1&searchTerm=
+        const params = new URLSearchParams();
+        params.set('limit', '9');
+        params.set('page', '1');
+        params.set('searchTerm', '');
+        params.sort();
+        // Check current URL search params to avoid infinite loop or redundant push
+        // We can't easily check against window.location here in a clean React way without searchParams
+        // But since we are likely already here, we can skip if already set?
+        // Simpler: Just ensure we push the canonical URL if empty
+        const currentString = searchParams.toString();
+        // searchParams from next/navigation is read-only and might be unsorted. 
+        // Let's rely on the fact that if we just navigated here with defaults, valid.
+        // But if user cleared input, we want to reset.
+         router.push(`/blog?${params.toString()}`);
     }
     return () => clearTimeout(timer);
   }, [searchTerm, router]);

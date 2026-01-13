@@ -270,6 +270,9 @@ export default function ProductsContent({
     debouncedFilters.skinTypes.forEach(s => params.append('skintype', s));
     debouncedFilters.ingredients.forEach(i => params.append('ingredients', i));
 
+    // Sort params to ensure consistent URL matching with server/header
+    params.sort();
+
     // Only push if the query string has actually changed to avoid redundant pushes
     const queryString = params.toString();
     if (searchParams.toString() !== queryString) {
