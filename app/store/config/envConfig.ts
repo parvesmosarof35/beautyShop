@@ -1,5 +1,6 @@
 
-export const imgUrl = "https://ecommarce-backend-dsoe.onrender.com/";
+// export const imgUrl = "https://ecommarce-backend-dsoe.onrender.com/";
+export const imgUrl = `${process.env.NEXT_PUBLIC_IMG_URL}`;
 
 
 export const url = `${imgUrl}api/v1/`;
@@ -10,9 +11,11 @@ export const url = `${imgUrl}api/v1/`;
 // Email: parvesmosarof32@gmail.com
 // Password: 12345678
 export const guestUser = {
-  email: "parvesmosarof32@gmail.com",
-  password: "12345678"
+  email: `${process.env.NEXT_PUBLIC_GUEST_USER_EMAIL}`,
+  password: `${process.env.NEXT_PUBLIC_GUEST_USER_PASSWORD}`
 };
+
+console.log(guestUser, imgUrl, "asdf");
 
 // new comment
 
