@@ -8,14 +8,14 @@ import { useGetMyProfileQuery, useUpdateProfileMutation, useChangePasswordMutati
 import { useGetMyOrdersQuery } from '@/app/store/api/orderApi';
 import { useCreateReviewMutation } from '@/app/store/api/reviewsApi';
 import Swal from 'sweetalert2';
-import { guestUser } from '@/app/store/config/envConfig';
+
 
 
 
 
 export default function AccountContent() {
     const { user: authUser } = useAuthState();
-    const isGuest = authUser?.email === guestUser.email;
+    const isGuest = authUser?.role === 'guest';
     const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'orders'>('profile');
     const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
     const [showReviewModal, setShowReviewModal] = useState(false);
