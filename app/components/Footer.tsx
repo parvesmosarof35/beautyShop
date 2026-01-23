@@ -1,11 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaInstagram, FaFacebookF, FaTwitter, FaPinterestP } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaTwitter, FaPinterestP, FaTiktok } from 'react-icons/fa';
 const socialLinks = [
     { name: 'Instagram', href: '#', icon: <FaInstagram /> },
     { name: 'Facebook', href: '#', icon: <FaFacebookF /> },
-    { name: 'Twitter', href: '#', icon: <FaTwitter /> },
+    // { name: 'Twitter', href: '#', icon: <FaTwitter /> },
+    { name: 'TikTok', href: '#', icon: <FaTiktok /> },
     { name: 'Pinterest', href: '#', icon: <FaPinterestP /> },
 ];
 
@@ -59,9 +60,9 @@ const Footer = () => {
                             </div>
                             </Link>
                         </div>
-                        {/* <p className="text-gray-400 mb-6">
-                            Lunel Lnck
-                        </p> */}
+                        <p className="text-gray-400 mb-6">
+                            Elevating beauty through the art of pure, natural skincare.
+                        </p>
                         <div className="flex space-x-4">
                             {socialLinks.map((social) => (
                                 <a
@@ -96,7 +97,7 @@ const Footer = () => {
 
                 <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-center items-center">
                     <p className="text-gray-400 text-sm mb-4 md:mb-0">
-                        © {new Date().getFullYear()} Lunel Lnck. All rights reserved.
+                        © {new Date().getFullYear()} Lunel Inc. All rights reserved.
                     </p>
                     <div className="flex space-x-6">
                         {/* <Link href="/privacy">
