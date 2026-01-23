@@ -15,15 +15,16 @@ const footerLinks = [
         links: [
             { name: 'All Products', href: '/products' },
             { name: 'Latest Arrivals', href: '/shop' },
+            { name: 'Best Sellers', href: '/shop?limit=12&page=1&sort=popularity' },
             // { name: 'My Wishlist', href: '/wishlist' },
-            { name: 'My Cart', href: '/cart' },
+            // { name: 'My Cart', href: '/cart' },
         ],
     },
     {
         title: 'About',
         links: [
             { name: 'Our Story', href: '/about' },
-            { name: 'Blog', href: '/blog' },
+            { name: 'Blog', href: '/blog?limit=9&page=1&searchTerm=' },
             { name: 'Contact Us', href: '/contact' },
         ],
     },
@@ -33,6 +34,7 @@ const footerLinks = [
             { name: 'FAQs', href: '/faq' },
             { name: 'Privacy Policy', href: '/privacy' },
             { name: 'Terms & Conditions', href: '/terms' },
+            { name: 'Cookies', href: '/cookies' },
         ],
     },
 ];
@@ -57,10 +59,9 @@ const Footer = () => {
                             </div>
                             </Link>
                         </div>
-                        <p className="text-gray-400 mb-6">
-                            Elevate your beauty routine with our natural, effective skincare products.
-                            Crafted with care for you and the planet.
-                        </p>
+                        {/* <p className="text-gray-400 mb-6">
+                            Lunel Lnck
+                        </p> */}
                         <div className="flex space-x-4">
                             {socialLinks.map((social) => (
                                 <a
@@ -93,12 +94,12 @@ const Footer = () => {
                     ))}
                 </div>
 
-                <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-center items-center">
                     <p className="text-gray-400 text-sm mb-4 md:mb-0">
-                        © {new Date().getFullYear()} Lunel Beauty. All rights reserved.
+                        © {new Date().getFullYear()} Lunel Lnck. All rights reserved.
                     </p>
                     <div className="flex space-x-6">
-                        <Link href="/privacy">
+                        {/* <Link href="/privacy">
                             <span className="text-gray-400 hover:text-white text-sm cursor-pointer">
                                 Privacy Policy
                             </span>
@@ -107,12 +108,12 @@ const Footer = () => {
                             <span className="text-gray-400 hover:text-white text-sm cursor-pointer">
                                 Terms of Service
                             </span>
-                        </Link>
-                        <Link href="/cookies">
+                        </Link> */}
+                        {/* <Link href="/cookies">
                             <span className="text-gray-400 hover:text-white text-sm cursor-pointer">
                                 Cookies
                             </span>
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

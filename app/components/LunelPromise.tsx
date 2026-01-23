@@ -24,7 +24,7 @@ const promises = [
 
 const LunelPromise = () => {
   return (
-    <section className="py-24 bg-[#3b3b3b] text-white">
+    <section className="py-24 bg-[#3b3b3b] text-white hidden">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-20">
           <h2 className="text-4xl font-light mb-4">The Lunel Promise</h2>

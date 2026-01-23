@@ -40,7 +40,7 @@ const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
                     alt={product.name}
                     width={500}
                     height={500}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
               </div>

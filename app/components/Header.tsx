@@ -126,10 +126,11 @@ const Header = () => {
     { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
     { label: 'Products', href: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
-    { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },
-    { label: 'Blog', href: '/blog?limit=9&page=1&searchTerm=' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'FAQ', href: '/faq' },
+    { label: 'New Arrivals', href: '/products?limit=12&maxprice=3000&page=1&sort=newest' },
+    // { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },
+    // { label: 'Blog', href: '/blog?limit=9&page=1&searchTerm=' },
+    // { label: 'Contact', href: '/contact' },
+    // { label: 'FAQ', href: '/faq' },
   ];
 
   // Reusable Search Results Dropdown
