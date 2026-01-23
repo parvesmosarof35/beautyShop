@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/app/components/ui/button';
 import Link from 'next/link';
+import { Eye } from 'lucide-react';
 // import { useGetFeaturedProductsQuery } from '@/app/store/api/productApi';
 
 const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
@@ -34,14 +35,21 @@ const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
           {products.map((product: any) => (
             <div key={product._id} className="group bg-[#2b2b2b] rounded-lg overflow-hidden transition-all duration-300 flex flex-col h-full">
               <div className="relative pt-[100%] bg-white">
-                <div className="absolute inset-0  flex items-center justify-center">
-                  <Image
-                    src={product.images_urls?.[0] || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80'}
-                    alt={product.name}
-                    width={500}
-                    height={500}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 cursor-pointer"
-                  />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Link href={`/products/${product._id}`} className="block w-full h-full relative cursor-pointer">
+                    <Image
+                      src={product.images_urls?.[0] || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80'}
+                      alt={product.name}
+                      width={500}
+                      height={500}
+                      className="object-cover w-full h-full group-hover:scale-100 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 z-10 overflow-hidden">
+                      <div className="bg-white p-3 rounded-full hover:scale-110 hover:bg-gray-100 transition-all duration-300 shadow-lg">
+                        <Eye className="w-6 h-6 text-black" />
+                      </div>
+                    </div>
+                  </Link>
                 </div>
               </div>
               <div className="p-6 flex-grow flex flex-col">
