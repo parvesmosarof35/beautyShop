@@ -5,7 +5,6 @@ import { FaInstagram, FaFacebookF, FaTwitter, FaPinterestP, FaTiktok } from 'rea
 const socialLinks = [
     { name: 'Instagram', href: '#', icon: <FaInstagram /> },
     { name: 'Facebook', href: '#', icon: <FaFacebookF /> },
-    // { name: 'Twitter', href: '#', icon: <FaTwitter /> },
     { name: 'TikTok', href: '#', icon: <FaTiktok /> },
     { name: 'Twitter', href: '#', icon: <FaTwitter /> },
 ];

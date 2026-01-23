@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaTiktok } from 'react-icons/fa';
 import { useCreateContactMutation } from '@/app/store/api/contactApi';
 import Swal from 'sweetalert2';
 
@@ -13,6 +13,15 @@ export default function ContactContent() {
         subject: '',
         message: ''
     });
+
+
+
+            const socialLinks = [
+        { name: 'Instagram', href: '#', icon: <FaInstagram /> },
+        { name: 'Facebook', href: '#', icon: <FaFacebookF /> },
+        { name: 'TikTok', href: '#', icon: <FaTiktok /> },
+        { name: 'Twitter', href: '#', icon: <FaTwitter /> },
+    ];
 
     const [createContact, { isLoading }] = useCreateContactMutation();
 
@@ -212,18 +221,15 @@ export default function ContactContent() {
                             <div className="pt-6 border-t border-gray-200">
                                 <h3 className="text-lg font-medium text-gray-100 mb-4">Follow Us</h3>
                                 <div className="flex space-x-4">
-                                    <a href="#" className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition">
-                                        <FaFacebookF className="h-5 w-5" />
-                                    </a>
-                                    <a href="#" className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-blue-100 hover:text-blue-400 transition">
-                                        <FaTwitter className="h-5 w-5" />
-                                    </a>
-                                    <a href="#" className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-pink-100 hover:text-pink-600 transition">
-                                        <FaInstagram className="h-5 w-5" />
-                                    </a>
-                                    <a href="#" className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-blue-600 hover:text-white transition">
-                                        <FaLinkedinIn className="h-5 w-5" />
-                                    </a>
+                                    {socialLinks.map((social) => (
+                                        <a
+                                            key={social.name}
+                                            href={social.href}
+                                            className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition"
+                                        >
+                                            {social.icon}
+                                        </a>
+                                    ))}
                                 </div>
                             </div>
 
