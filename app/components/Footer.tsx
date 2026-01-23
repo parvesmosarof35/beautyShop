@@ -7,7 +7,7 @@ const socialLinks = [
     { name: 'Facebook', href: '#', icon: <FaFacebookF /> },
     // { name: 'Twitter', href: '#', icon: <FaTwitter /> },
     { name: 'TikTok', href: '#', icon: <FaTiktok /> },
-    { name: 'Pinterest', href: '#', icon: <FaPinterestP /> },
+    { name: 'Twitter', href: '#', icon: <FaTwitter /> },
 ];
 
 const footerLinks = [
