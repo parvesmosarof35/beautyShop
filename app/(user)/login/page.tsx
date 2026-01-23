@@ -5,22 +5,24 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FiMail, FiLock, FiLogIn, FiEye, FiEyeOff } from 'react-icons/fi';
 import { Button } from '@/app/components/ui/button';
-import { useLogInMutation } from '@/app/store/api/authApi';
+import { useLogInMutation, useGuestLoginMutation } from '@/app/store/api/authApi';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/app/store/authSlice';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
-import { guestUser } from '@/app/store/config/envConfig';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const router = useRouter();
   const dispatch = useDispatch();
-  const [logIn, { isLoading }] = useLogInMutation();
+  const [logIn, { isLoading: isLoginLoading }] = useLogInMutation();
+  const [guestLogin, { isLoading: isGuestLoading }] = useGuestLoginMutation();
+
+  const isLoading = isLoginLoading || isGuestLoading;
 
   // Prefill remembered email and preference
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function LoginPage() {
   const executeLogin = async (credentials: { email: string; password: string }) => {
     try {
       const response = await logIn(credentials).unwrap();
-      
+
       if (response?.success && response?.data?.accessToken) {
         let decodedToken: any = null;
         try {
@@ -53,8 +55,6 @@ export default function LoginPage() {
         }
 
         // Save remember preferences (only if rememberMe is checked, using current state)
-        // Note: For guest login we probably don't want to overwrite remember me unless specific behavior is desired,
-        // but following existing logic:
         try {
           if (rememberMe) {
             localStorage.setItem("rememberMe", "true");
@@ -77,32 +77,32 @@ export default function LoginPage() {
         );
 
         Swal.fire({
-            icon: "success",
-            title: "Login successful!",
-            text: "You are now logged in.",
-            background: '#171717',
-            color: '#fff',
-            confirmButtonColor: '#D4A574'
+          icon: "success",
+          title: "Login successful!",
+          text: "You are now logged in.",
+          background: '#171717',
+          color: '#fff',
+          confirmButtonColor: '#D4A574'
         }).then(() => {
-            if (decodedToken?.role === "admin" || decodedToken?.role === "superAdmin") {
-                router.push("/admin/dashboard");
+          if (decodedToken?.role === "admin" || decodedToken?.role === "superAdmin") {
+            router.push("/admin/dashboard");
+          } else {
+            const params = new URLSearchParams(window.location.search);
+            const redirect = params.get("redirect");
+            if (redirect) {
+              let target = redirect;
+              try {
+                target = decodeURIComponent(redirect);
+              } catch {
+                // ignore decoding errors
+              }
+              router.push(target);
             } else {
-                const params = new URLSearchParams(window.location.search);
-                const redirect = params.get("redirect");
-                if (redirect) {
-                  let target = redirect;
-                  try {
-                    target = decodeURIComponent(redirect);
-                  } catch {
-                    // ignore decoding errors
-                  }
-                  router.push(target);
-                } else {
-                  router.push("/");
-                }
+              router.push("/");
             }
+          }
         });
-       
+
       } else {
         Swal.fire({
           icon: "error",
@@ -116,12 +116,12 @@ export default function LoginPage() {
     } catch (error: any) {
       console.error(error);
       Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: error?.data?.message || "Something went wrong! Please try again.",
-          background: '#171717',
-          color: '#fff',
-          confirmButtonColor: '#D4A574'
+        icon: "error",
+        title: "Login Failed",
+        text: error?.data?.message || "Something went wrong! Please try again.",
+        background: '#171717',
+        color: '#fff',
+        confirmButtonColor: '#D4A574'
       });
     }
   };
@@ -142,10 +142,75 @@ export default function LoginPage() {
   };
 
   const handleGuestLogin = async () => {
-    await executeLogin({
-      email: guestUser.email,
-      password: guestUser.password
-    });
+    try {
+      let sessionId = localStorage.getItem("browser-session-id");
+      if (!sessionId) {
+        sessionId = `browser-session-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+        localStorage.setItem("browser-session-id", sessionId);
+      }
+      const response = await guestLogin({ sessionId }).unwrap();
+
+      // Check for success and existence of nested token
+      // structure: response.data.data.accessToken
+      if (response?.success && response?.data?.data?.accessToken) {
+        const accessToken = response.data.data.accessToken;
+        let decodedToken: any = null;
+        try {
+          decodedToken = jwtDecode(accessToken);
+        } catch (decodeError) {
+          console.error("Error decoding token:", decodeError);
+        }
+
+        dispatch(
+          setUser({
+            user: decodedToken || response?.data?.data?.user || {},
+            token: accessToken,
+          })
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Guest Login successful!",
+          text: "You are now logged in as guest.",
+          background: '#171717',
+          color: '#fff',
+          confirmButtonColor: '#D4A574'
+        }).then(() => {
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get("redirect");
+          if (redirect) {
+            let target = redirect;
+            try {
+              target = decodeURIComponent(redirect);
+            } catch {
+              // ignore decoding errors
+            }
+            router.push(target);
+          } else {
+            router.push("/");
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response?.message || "Guest Login failed!",
+          background: '#171717',
+          color: '#fff',
+          confirmButtonColor: '#D4A574'
+        });
+      }
+    } catch (error: any) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Guest Login Failed",
+        text: error?.data?.message || "Something went wrong! Please try again.",
+        background: '#171717',
+        color: '#fff',
+        confirmButtonColor: '#D4A574'
+      });
+    }
   };
 
   return (
@@ -164,7 +229,7 @@ export default function LoginPage() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-[#171717] py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          
+
           <form className="space-y-6" onSubmit={handleSubmit}>
 
             <div>
@@ -261,13 +326,13 @@ export default function LoginPage() {
                 className="w-full bg-[#D4A574] !text-black hover:bg-[#D4A574]/90 transition-all duration-300 py-3 px-4 text-sm font-medium font-montserrat disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
-                   <span className="flex items-center justify-center">
-                     <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                     </svg>
-                     Signing in...
-                   </span>
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Signing in...
+                  </span>
                 ) : (
                   <>
                     <FiLogIn className="mr-2 h-5 w-5" />

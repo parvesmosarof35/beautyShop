@@ -2,34 +2,34 @@
 import { baseApi } from "./baseApi";
 
 const authApi = baseApi.injectEndpoints({
-    endpoints: (builder) => ({
-        logIn: builder.mutation({
-            query: (data) => {
-                return {
-                    url: "auth/login_user",
-                    method: "POST",
-                    body: data,
-                };
-            },
-            invalidatesTags: ["auth"],
-        }),
-        createUser: builder.mutation({
-          query: (data) => ({
-            url: "user/create_user",
-            method: "POST",
-            body: data,
-          }),
-          invalidatesTags: ["User", "dashboard"],
-        }),
-      
-        
-        getMyProfile: builder.query({
-  query: () => ({
-    url: "auth/myprofile",
-    method: "GET",
-  }),
-  providesTags: ["auth"],
-}),
+  endpoints: (builder) => ({
+    logIn: builder.mutation({
+      query: (data) => {
+        return {
+          url: "auth/login_user",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["auth"],
+    }),
+    createUser: builder.mutation({
+      query: (data) => ({
+        url: "user/create_user",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User", "dashboard"],
+    }),
+
+
+    getMyProfile: builder.query({
+      query: () => ({
+        url: "auth/myprofile",
+        method: "GET",
+      }),
+      providesTags: ["auth"],
+    }),
     updateProfile: builder.mutation({
       query: (formData) => ({
         url: "auth/update_my_profile",
@@ -83,7 +83,7 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    
+
     getSingleUser: builder.query({
       query: (id) => ({
         url: `/auth/get_single_user/${id}`,
@@ -92,22 +92,32 @@ const authApi = baseApi.injectEndpoints({
       providesTags: ["User"],
     }),
 
+    guestLogin: builder.mutation({
+      query: (data) => ({
+        url: "user/guest_login",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
     }),
+
+  }),
 });
 
 
 
 export const {
-    useLogInMutation,
-    useCreateUserMutation,
-    useForgotPasswordMutation,
-    useVerifyEmailMutation,
-    useResetPasswordMutation,
-    useGetMyProfileQuery,
-    useUpdateProfileMutation,
-    useUserVarificationMutation,
-    useChangePasswordMutation,
-    useGetSingleUserQuery,
+  useLogInMutation,
+  useCreateUserMutation,
+  useForgotPasswordMutation,
+  useVerifyEmailMutation,
+  useResetPasswordMutation,
+  useGetMyProfileQuery,
+  useUpdateProfileMutation,
+  useUserVarificationMutation,
+  useChangePasswordMutation,
+  useGetSingleUserQuery,
+  useGuestLoginMutation,
 } = authApi;
 
 export default authApi;
