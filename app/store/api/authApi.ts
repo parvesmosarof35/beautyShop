@@ -101,6 +101,15 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["auth"],
     }),
 
+    googleLogin: builder.mutation({
+      query: (data) => ({
+        url: "auth/google_login",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+
   }),
 });
 
@@ -118,6 +127,7 @@ export const {
   useChangePasswordMutation,
   useGetSingleUserQuery,
   useGuestLoginMutation,
+  useGoogleLoginMutation,
 } = authApi;
 
 export default authApi;

@@ -11,6 +11,10 @@ import { setUser } from '@/app/store/authSlice';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
 
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/app/store/config/firebase';
+import { FcGoogle } from 'react-icons/fc';
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +25,6 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const [logIn, { isLoading: isLoginLoading }] = useLogInMutation();
   const [guestLogin, { isLoading: isGuestLoading }] = useGuestLoginMutation();
-
   const isLoading = isLoginLoading || isGuestLoading;
 
   // Prefill remembered email and preference
@@ -213,6 +216,78 @@ export default function LoginPage() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      const idToken = await user.getIdToken();
+
+      // Structure data to match TUser schema for backend integration
+      const backendUserData = {
+        role: "user", // or "buyer" based on your constants
+        email: user.email,
+        fullname: user.displayName,
+        photo: user.photoURL,
+        isVerify: user.emailVerified,
+        status: "isProgress",
+        isDelete: false,
+        // Add other fields as necessary or leave optional ones undefined
+      };
+
+      console.log("Structured User Data for Backend:", backendUserData);
+      console.log("Firebase User Info:", user);
+
+      // Frontend-only handling as requested
+      const userInfo = {
+        email: user.email,
+        name: user.displayName,
+        photoURL: user.photoURL,
+        role: 'user',
+        uid: user.uid
+      };
+
+      dispatch(
+        setUser({
+          user: userInfo,
+          token: idToken,
+        })
+      );
+
+      Swal.fire({
+        icon: "success",
+        title: "Login successful!",
+        text: "You are now logged in with Google.",
+        background: '#171717',
+        color: '#fff',
+        confirmButtonColor: '#D4A574'
+      }).then(() => {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get("redirect");
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/");
+        }
+      });
+
+    } catch (error: any) {
+      console.error("Google Login Error:", error);
+      if (error.code) console.error("Error Code:", error.code);
+      if (error.message) console.error("Error Message:", error.message);
+
+      Swal.fire({
+        icon: "error",
+        title: "Google Login Failed",
+        text: error?.message || "Could not sign in with Google.",
+        background: '#171717',
+        color: '#fff',
+        confirmButtonColor: '#D4A574'
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#272727] flex flex-col justify-start pt-20 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -233,6 +308,15 @@ export default function LoginPage() {
           <form className="space-y-6" onSubmit={handleSubmit}>
 
             <div>
+              <Button
+                type="button"
+                onClick={handleGoogleLogin}
+                className="w-full bg-white text-black hover:bg-gray-100 transition-all duration-300 py-3 px-4 text-sm font-medium font-montserrat flex items-center justify-center border border-gray-300 mb-4"
+                disabled={isLoading}
+              >
+                <FcGoogle className="mr-2 h-5 w-5" />
+                Sign in with Google
+              </Button>
               <Button
                 type="button"
                 onClick={handleGuestLogin}
