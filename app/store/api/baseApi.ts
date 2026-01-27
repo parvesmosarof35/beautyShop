@@ -37,5 +37,6 @@ export const baseApi = createApi({
     "wishlist",
     "Order",
     "reviews",
+    "Hero",
   ],
 });

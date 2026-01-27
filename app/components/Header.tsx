@@ -125,7 +125,7 @@ const Header = () => {
 
   const navLinks = [
     { label: 'Home', href: '/' },
-    // { label: 'About Us', href: '/about' },
+    { label: 'Wellness', href: 'https://elementor.com/features/landing-page-builder/' },
     { label: 'Products', href: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
     { label: 'New Arrivals', href: '/products?limit=12&maxprice=3000&page=1&sort=newest' },
     // { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },

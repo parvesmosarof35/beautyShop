@@ -247,8 +247,8 @@ export default function RegisterPage() {
                 className="h-4 w-4 text-[#D4A574] focus:ring-[#D4A574] border-gray-600 rounded bg-gray-800"
               />
               <label htmlFor="terms" className="ml-2 block text-sm text-gray-300 font-montserrat">
-                I agree to the <a href="#" className="text-[#D4A574] hover:text-[#D4A574]/80 font-montserrat">Terms of Service</a> and{' '}
-                <a href="#" className="text-[#D4A574] hover:text-[#D4A574]/80 font-montserrat">Privacy Policy</a>
+                I agree to the <Link href="/terms" className="text-[#D4A574] hover:text-[#D4A574]/80 font-montserrat">Terms of Service</Link> and{' '}
+                <Link href="/privacy" className="text-[#D4A574] hover:text-[#D4A574]/80 font-montserrat">Privacy Policy</Link>
               </label>
             </div>
 

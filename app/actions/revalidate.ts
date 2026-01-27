@@ -3,6 +3,10 @@
 import { revalidateTag } from 'next/cache';
 
 // ... existing code ...
+export async function revalidateHero() {
+  revalidateTag('Hero', 'max');
+}
+
 export async function revalidateFeaturedProducts() {
   revalidateTag('featured-products', 'max');
 }

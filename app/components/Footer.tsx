@@ -1,12 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaInstagram, FaFacebookF, FaTwitter, FaPinterestP, FaTiktok } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaTiktok } from 'react-icons/fa';
+import { FaXTwitter } from "react-icons/fa6";
 const socialLinks = [
     { name: 'Instagram', href: '#', icon: <FaInstagram /> },
     { name: 'Facebook', href: '#', icon: <FaFacebookF /> },
     { name: 'TikTok', href: '#', icon: <FaTiktok /> },
-    { name: 'Twitter', href: '#', icon: <FaTwitter /> },
+    { name: 'X', href: '#', icon: <FaXTwitter /> },
 ];
 
 const footerLinks = [
@@ -23,7 +24,7 @@ const footerLinks = [
     {
         title: 'About',
         links: [
-            { name: 'Our Story', href: '/about' },
+            { name: 'About Us', href: '/about' },
             { name: 'Blog', href: '/blog?limit=9&page=1&searchTerm=' },
             { name: 'Contact Us', href: '/contact' },
         ],
