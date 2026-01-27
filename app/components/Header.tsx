@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FiSearch, FiUser, FiX, FiShoppingBag, FiHeart, FiLogIn, FiLogOut, FiSettings, FiMenu } from 'react-icons/fi';
+import { FiUser, FiX, FiShoppingBag, FiHeart, FiLogIn, FiLogOut, FiSettings, FiMenu } from 'react-icons/fi';
+import { ImSearch } from "react-icons/im";
 import { Button } from '@/app/components/ui/button';
 import { useAuthState, useAuthActions } from '@/app/store/hooks';
 import { useGetSearchProductsQuery } from '@/app/store/api/productsApi';
@@ -30,7 +31,7 @@ const Header = () => {
   const { data: cartData } = useGetMyCartQuery(undefined, { skip: !isAuthenticated });
   const { data: wishlistData } = useGetMyWishlistQuery(undefined, { skip: !isAuthenticated });
 
-  const cartItemCount = cartData?.data?.items?.length || 0; 
+  const cartItemCount = cartData?.data?.items?.length || 0;
   const wishlistCount = wishlistData?.data?.length || 0;
 
   //console.log(isAdmin, "value of isadmin ");
@@ -44,10 +45,10 @@ const Header = () => {
       // Close search results when clicking outside
       const clickedInsideDesktop = searchRef.current && searchRef.current.contains(event.target as Node);
       const clickedInsideMobile = mobileSearchRef.current && mobileSearchRef.current.contains(event.target as Node);
-      
+
       if (!clickedInsideDesktop && !clickedInsideMobile) {
-          setSearchResultsOpen(false);
-          setIsSearchOpen(false);
+        setSearchResultsOpen(false);
+        setIsSearchOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -124,7 +125,7 @@ const Header = () => {
 
   const navLinks = [
     { label: 'Home', href: '/' },
-    { label: 'About Us', href: '/about' },
+    // { label: 'About Us', href: '/about' },
     { label: 'Products', href: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
     { label: 'New Arrivals', href: '/products?limit=12&maxprice=3000&page=1&sort=newest' },
     // { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },
@@ -136,48 +137,48 @@ const Header = () => {
   // Reusable Search Results Dropdown
   const renderSearchResultsDropdown = () => {
     if (!searchResultsOpen) return null;
-    
+
     return (
-        <div className="absolute top-full left-0 w-full mt-2 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-xl z-50 overflow-hidden">
-            {isSearchLoading ? (
-                <div className="p-4 text-center text-gray-400">Loading...</div>
-            ) : (
-                searchResults?.data?.length > 0 ? (
-                    <div className="max-h-96 overflow-y-auto">
-                        {searchResults.data.map((product: any) => (
-                            <div
-                                key={product._id}
-                                onClick={() => handleProductClick(product._id)}
-                                className="flex items-center p-3 hover:bg-gray-800 cursor-pointer border-b border-gray-800 last:border-0 transition-colors"
-                            >
-                                <div className="flex-shrink-0 h-10 w-10 relative rounded overflow-hidden mr-3">
-                                    {product.images_urls && product.images_urls.length > 0 ? (
-                                        <Image
-                                            src={product.images_urls[0]}
-                                            alt={product.name}
-                                            fill
-                                            sizes="40px"
-                                            className="object-cover"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-gray-700 flex items-center justify-center text-xs text-gray-500">
-                                            No Img
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-white truncate">
-                                        {product.name}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="p-4 text-center text-gray-400">No products found</div>
-                )
-            )}
-        </div>
+      <div className="absolute top-full left-0 w-full mt-2 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-xl z-50 overflow-hidden">
+        {isSearchLoading ? (
+          <div className="p-4 text-center text-gray-400">Loading...</div>
+        ) : (
+          searchResults?.data?.length > 0 ? (
+            <div className="max-h-96 overflow-y-auto">
+              {searchResults.data.map((product: any) => (
+                <div
+                  key={product._id}
+                  onClick={() => handleProductClick(product._id)}
+                  className="flex items-center p-3 hover:bg-gray-800 cursor-pointer border-b border-gray-800 last:border-0 transition-colors"
+                >
+                  <div className="flex-shrink-0 h-10 w-10 relative rounded overflow-hidden mr-3">
+                    {product.images_urls && product.images_urls.length > 0 ? (
+                      <Image
+                        src={product.images_urls[0]}
+                        alt={product.name}
+                        fill
+                        sizes="40px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-700 flex items-center justify-center text-xs text-gray-500">
+                        No Img
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-white truncate">
+                      {product.name}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-4 text-center text-gray-400">No products found</div>
+          )
+        )}
+      </div>
     );
   };
 
@@ -192,7 +193,7 @@ const Header = () => {
             className="text-white hover:text-white transition-colors"
             aria-label={isSearchOpen ? 'Close search' : 'Open search'}
           >
-            <FiSearch className="h-5 w-5" />
+            <ImSearch className="h-5 w-5" />
           </button>
         ) : (
           isSearchOpen ? (
@@ -211,7 +212,7 @@ const Header = () => {
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#d4a674] transition-colors hover:text-white"
                   aria-label="Submit search"
                 >
-                  <FiSearch className="h-4 w-4 text-gray-200" />
+                  <ImSearch className="h-4 w-4 text-gray-200" />
                 </button>
 
                 {/* Search Results Dropdown */}
@@ -224,7 +225,7 @@ const Header = () => {
               className="text-white hover:text-white transition-colors"
               aria-label="Open search"
             >
-              <FiSearch className="h-5 w-5" />
+              <ImSearch className="h-5 w-5" />
             </button>
           )
         )}
@@ -242,13 +243,11 @@ const Header = () => {
         </Link>
       )} */}
 
-            {/* Account (Desktop Only) */}
+      {/* Account (Desktop Only) */}
       {!isMobileView && (
         !isAuthenticated ? (
-          <Link href="/login" onClick={handleNavigation}>
-            <Button variant="outline" className="text-white font-montserrat border-white border hover:bg-white hover:text-black transition-colors h-8 px-4 text-xs">
-              Login
-            </Button>
+          <Link href="/login" onClick={handleNavigation} className="text-white hover:text-white transition-colors flex items-center" aria-label="Login">
+            <FiUser className="h-5 w-5" />
           </Link>
         ) : (
           <div className="relative" ref={dropdownRef}>
@@ -279,16 +278,15 @@ const Header = () => {
       )}
 
       {/* Cart */}
-      {isAuthenticated && (
-        <Link href="/cart" className="text-white hover:text-white relative transition-colors" onClick={handleNavigation} aria-label={`Cart with ${cartItemCount} items`}>
-          <FiShoppingBag className="h-5 w-5" />
-          {cartItemCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-gray-300 text-gray-800 text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
-              {cartItemCount > 9 ? '9+' : cartItemCount}
-            </span>
-          )}
-        </Link>
-      )}
+      {/* Cart */}
+      <Link href={isAuthenticated ? "/cart" : "/login"} className="text-white hover:text-white relative transition-colors" onClick={handleNavigation} aria-label={`Cart with ${cartItemCount} items`}>
+        <FiShoppingBag className="h-5 w-5" />
+        {isAuthenticated && cartItemCount > 0 && (
+          <span className="absolute -top-2 -right-2 bg-gray-300 text-gray-800 text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+            {cartItemCount > 9 ? '9+' : cartItemCount}
+          </span>
+        )}
+      </Link>
 
 
     </div>
@@ -297,7 +295,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-[#000000] font-serif backdrop-blur-md shadow-sm min-h-12 transition-all duration-300">
       <div className="container mx-auto px-4 pb-1">
-        
+
         {/* =======================
             MOBILE HEADER 
            ======================= */}
@@ -305,7 +303,7 @@ const Header = () => {
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-2" aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}>
             {isMobileMenuOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
           </button>
-          
+
           <Link href="/" onClick={handleNavigation} className="flex-1 flex justify-center ml-2">
             <div className="relative w-32 h-10">
               <Image src="/images/logo.png" alt="Lunel Beauty" fill sizes="128px" className="object-contain" priority />
@@ -318,9 +316,9 @@ const Header = () => {
         {/* Mobile Search Bar (Expandable) */}
         {isSearchOpen && isMobile && (
           <div className="md:hidden px-4 pb-4 animate-fade-in">
-             <form onSubmit={handleSearch} className="relative" ref={mobileSearchRef}>
+            <form onSubmit={handleSearch} className="relative" ref={mobileSearchRef}>
               <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search..." className="w-full bg-gray-900 border border-gray-700 text-white rounded-lg py-2 pl-4 pr-10 focus:outline-none focus:border-[#d4a674]" autoFocus aria-label="Search" />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" aria-label="Submit search"><FiSearch className="h-5 w-5" /></button>
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" aria-label="Submit search"><ImSearch className="h-5 w-5" /></button>
               {renderSearchResultsDropdown()}
             </form>
           </div>
@@ -365,26 +363,29 @@ const Header = () => {
               <Image src="/images/logo.png" alt="Lunel Beauty" width={128} height={40} className="object-contain" style={{ width: 'auto', height: 'auto' }} priority />
             </div>
           </Link>
- 
+
           <div className="w-full flex justify-between items-center px-4 md:px-0 font-montserrat mt-5">
+            <div className='hidden md:flex w-20'>
+
+            </div>
             <nav className="flex justify-center space-x-6 lg:space-x-12 z-50">
               {navLinks.map((link) => (
                 link.label === 'Products' ? (
                   <div key={link.href} className="relative group">
-                    <Link 
-                      href={link.href} 
-                      className="text-white hover:text-white transition-colors font-montserrat flex items-center gap-1 py-4" 
+                    <Link
+                      href={link.href}
+                      className="text-white hover:text-white transition-colors font-montserrat flex items-center gap-1 py-4"
                       onClick={handleNavigation}
                     >
                       {link.label}
                       <FiChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                     </Link>
-                    
+
                     {/* Hover Dropdown */}
                     <div className="absolute left-1/2 -translate-x-1/2 top-full w-48 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
                       <div className="py-2">
-                        <Link 
-                          href="/products?limit=12&maxprice=3000&page=1&sort=bestSelling" 
+                        <Link
+                          href="/products?limit=12&maxprice=3000&page=1&sort=bestSelling"
                           className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
                           onClick={handleNavigation}
                         >

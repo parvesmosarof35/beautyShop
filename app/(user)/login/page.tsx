@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FiMail, FiLock, FiLogIn, FiEye, FiEyeOff } from 'react-icons/fi';
 import { Button } from '@/app/components/ui/button';
-import { useLogInMutation, useGuestLoginMutation } from '@/app/store/api/authApi';
+import { useLogInMutation, useGuestLoginMutation, useGoogleLoginMutation } from '@/app/store/api/authApi';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/app/store/authSlice';
 import { jwtDecode } from 'jwt-decode';
@@ -25,7 +25,8 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const [logIn, { isLoading: isLoginLoading }] = useLogInMutation();
   const [guestLogin, { isLoading: isGuestLoading }] = useGuestLoginMutation();
-  const isLoading = isLoginLoading || isGuestLoading;
+  const [googleLogin, { isLoading: isGoogleLoading }] = useGoogleLoginMutation();
+  const isLoading = isLoginLoading || isGuestLoading || isGoogleLoading;
 
   // Prefill remembered email and preference
   useEffect(() => {
@@ -226,7 +227,7 @@ export default function LoginPage() {
 
       // Structure data to match TUser schema for backend integration
       const backendUserData = {
-        role: "user", // or "buyer" based on your constants
+        role: "buyer", // or "buyer" based on your constants
         email: user.email,
         fullname: user.displayName,
         photo: user.photoURL,
@@ -236,41 +237,54 @@ export default function LoginPage() {
         // Add other fields as necessary or leave optional ones undefined
       };
 
-      console.log("Structured User Data for Backend:", backendUserData);
-      console.log("Firebase User Info:", user);
+      console.log("Structured User Data for Backend for Google Login:", backendUserData);
+      console.log("Firebase User Info for Google Login:", user);
 
-      // Frontend-only handling as requested
-      const userInfo = {
-        email: user.email,
-        name: user.displayName,
-        photoURL: user.photoURL,
-        role: 'user',
-        uid: user.uid
-      };
+      // Call Backend API
+      const response = await googleLogin(backendUserData).unwrap();
 
-      dispatch(
-        setUser({
-          user: userInfo,
-          token: idToken,
-        })
-      );
-
-      Swal.fire({
-        icon: "success",
-        title: "Login successful!",
-        text: "You are now logged in with Google.",
-        background: '#171717',
-        color: '#fff',
-        confirmButtonColor: '#D4A574'
-      }).then(() => {
-        const params = new URLSearchParams(window.location.search);
-        const redirect = params.get("redirect");
-        if (redirect) {
-          router.push(redirect);
-        } else {
-          router.push("/");
+      if (response?.success && response?.data?.accessToken) {
+        const accessToken = response.data.accessToken;
+        let decodedToken: any = null;
+        try {
+          decodedToken = jwtDecode(accessToken);
+        } catch (decodeError) {
+          console.error("Error decoding token:", decodeError);
         }
-      });
+
+        dispatch(
+          setUser({
+            user: decodedToken || response?.data?.user || {},
+            token: accessToken,
+          })
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Login successful!",
+          text: "You are now logged in with Google.",
+          background: '#171717',
+          color: '#fff',
+          confirmButtonColor: '#D4A574'
+        }).then(() => {
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get("redirect");
+          if (redirect) {
+            router.push(redirect);
+          } else {
+            router.push("/");
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Google Login Failed",
+          text: response?.message || "Backend authentication failed.",
+          background: '#171717',
+          color: '#fff',
+          confirmButtonColor: '#D4A574'
+        });
+      }
 
     } catch (error: any) {
       console.error("Google Login Error:", error);

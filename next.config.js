@@ -16,6 +16,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "ecommarce-backend-dsoe.onrender.com",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
     ],
   },
 
