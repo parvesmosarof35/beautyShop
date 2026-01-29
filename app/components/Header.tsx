@@ -125,7 +125,7 @@ const Header = () => {
 
   const navLinks = [
     { label: 'Home', href: '/' },
-    { label: 'Wellness', href: 'https://elementor.com/features/landing-page-builder/' },
+    { label: 'Wellness', href: 'https://shop.lunelwellness.com/business/yp09ey1e/htim5qmb' },
     { label: 'Products', href: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
     { label: 'New Arrivals', href: '/products?limit=12&maxprice=3000&page=1&sort=newest' },
     // { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },
