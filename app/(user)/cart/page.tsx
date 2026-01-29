@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FiArrowLeft, FiShoppingBag, FiTruck, FiShield, FiRefreshCw } from 'react-icons/fi';
 import CartItem from './CartItem';
-import { 
-  useGetMyCartQuery, 
-  useUpdateCartItemQuantityMutation, 
-  useRemoveFromCartMutation, 
-  useClearMyCartMutation 
+import {
+  useGetMyCartQuery,
+  useUpdateCartItemQuantityMutation,
+  useRemoveFromCartMutation,
+  useClearMyCartMutation
 } from '../../store/api/cartApi';
 import { useCreateCheckoutSessionMutation } from '../../store/api/orderApi';
 import Swal from 'sweetalert2';
@@ -20,25 +20,16 @@ export default function CartPage() {
   const [clearCart, { isLoading: isClearing }] = useClearMyCartMutation();
   const [createCheckoutSession, { isLoading: isCreatingCheckout }] = useCreateCheckoutSessionMutation();
 
-  const [shippingAddress, setShippingAddress] = useState({
-    street: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: '',
-    phone: '',
-    email: ''
-  });
-  const [notes, setNotes] = useState('');
+  // Shipping state moved to Checkout page
 
   const cartItems = cartData?.data?.items || [];
   const meta = cartData?.data?.summary;
-  
+
   // Calculate cart summary from API or fallback to calculation
   const subtotal = meta?.subtotal || cartItems.reduce((sum: number, item: any) => sum + ((item.product_id?.price || 0) * item.quantity), 0);
   const itemCount = meta?.itemCount || cartItems.length;
   const shipping = subtotal > 0 ? (subtotal > 50 ? 0 : 10) : 0; // Free shipping over $50
-  const discount = 0; 
+  const discount = 0;
   const total = subtotal + shipping - discount;
 
   const handleUpdateQuantity = async (productId: string, newQuantity: number) => {
@@ -46,15 +37,15 @@ export default function CartPage() {
       await updateQuantity({ productId, quantity: newQuantity }).unwrap();
     } catch (err: any) {
       Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: err?.data?.message || 'Failed to update quantity',
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          background: '#171717',
-          color: '#fff'
+        icon: 'error',
+        title: 'Error',
+        text: err?.data?.message || 'Failed to update quantity',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        background: '#171717',
+        color: '#fff'
       });
     }
   };
@@ -64,114 +55,72 @@ export default function CartPage() {
     // Usually removal is instant but nice to have confirm for big actions? 
     // User requested "delete product /:productid".
     try {
-        await removeFromCart(productId).unwrap();
-        Swal.fire({
-            icon: 'success',
-            title: 'Removed from cart',
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            background: '#171717',
-            color: '#fff'
-        });
+      await removeFromCart(productId).unwrap();
+      Swal.fire({
+        icon: 'success',
+        title: 'Removed from cart',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        background: '#171717',
+        color: '#fff'
+      });
     } catch (err: any) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: err?.data?.message || 'Failed to remove item',
-            background: '#171717',
-            color: '#fff'
-        });
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: err?.data?.message || 'Failed to remove item',
+        background: '#171717',
+        color: '#fff'
+      });
     }
   };
 
   const handleClearCart = async () => {
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d4a674',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, clear it!',
-        background: '#171717',
-        color: '#fff'
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d4a674',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, clear it!',
+      background: '#171717',
+      color: '#fff'
     }).then(async (result) => {
-        if (result.isConfirmed) {
-            try {
-                await clearCart({}).unwrap();
-                Swal.fire({
-                    title: 'Cleared!',
-                    text: 'Your cart has been cleared.',
-                    icon: 'success',
-                    background: '#171717',
-                    color: '#fff',
-                    confirmButtonColor: '#d4a674'
-                });
-            } catch (err: any) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: err?.data?.message || 'Failed to clear cart',
-                    background: '#171717',
-                    color: '#fff'
-                });
-            }
+      if (result.isConfirmed) {
+        try {
+          await clearCart({}).unwrap();
+          Swal.fire({
+            title: 'Cleared!',
+            text: 'Your cart has been cleared.',
+            icon: 'success',
+            background: '#171717',
+            color: '#fff',
+            confirmButtonColor: '#d4a674'
+          });
+        } catch (err: any) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: err?.data?.message || 'Failed to clear cart',
+            background: '#171717',
+            color: '#fff'
+          });
         }
+      }
     });
   };
 
-  const handleCheckout = async () => {
-    // Validate shipping address
-    if (!shippingAddress.street || !shippingAddress.city || !shippingAddress.state || !shippingAddress.postalCode || !shippingAddress.country || !shippingAddress.phone || !shippingAddress.email) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Missing Information',
-        text: 'Please fill in all shipping details including phone number and email.',
-        background: '#171717',
-        color: '#fff',
-        confirmButtonColor: '#d4a674'
-      });
-      return;
-    }
-
-    try {
-        const response = await createCheckoutSession({
-            shippingAddress,
-            notes,
-            currency: 'usd'
-        }).unwrap();
-
-        if (response?.data?.paymentUrl) {
-            window.location.href = response.data.paymentUrl;
-        } else {
-             Swal.fire({
-                icon: 'error',
-                title: 'Checkout Failed',
-                text: 'No checkout URL received from server.',
-                background: '#171717',
-                color: '#fff',
-                confirmButtonColor: '#d4a674'
-              });
-        }
-    } catch (err: any) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Checkout Failed',
-        text: err?.data?.message || 'Something went wrong while processing your request.',
-        background: '#171717',
-        color: '#fff',
-        confirmButtonColor: '#d4a674'
-      });
-    }
-  };
+  // handleCheckout logic moved to Checkout page
+  // const handleCheckout = ... (removed)
 
   if (isLoading) {
     return (
-        <div className="min-h-screen bg-[#171717] text-white flex items-center justify-center">
-             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#D4A574]"></div>
-        </div>
+      <div className="min-h-screen bg-[#171717] text-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#D4A574]"></div>
+      </div>
     );
   }
 
@@ -212,8 +161,8 @@ export default function CartPage() {
 
                 <div className="space-y-4">
                   {cartItems.map((item: any) => (
-                    <CartItem 
-                      key={item._id} 
+                    <CartItem
+                      key={item._id}
                       // Mapping API response structure to CartItem expected structure
                       // CartItem expects: id, name, price, originalPrice, image, color, size, quantity
                       // API provides: product_id { _id, name, price, images_urls }, quantity
@@ -224,7 +173,7 @@ export default function CartPage() {
                         originalPrice: item.product_id?.discountPrice,
                         image: item.product_id?.images_urls?.[0] || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80',
                         quantity: item.quantity,
-                        
+
                       }}
                       onUpdateQuantity={handleUpdateQuantity}
                       onRemove={handleRemoveItem}
@@ -233,14 +182,14 @@ export default function CartPage() {
                 </div>
 
                 <div className="mt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <Link 
-                    href="/products" 
+                  <Link
+                    href="/products"
                     className="flex items-center text-[#d4a674] hover:text-[#c49560] transition-colors"
                   >
                     <FiArrowLeft className="mr-2" /> Continue Shopping
                   </Link>
-                  
-                  <button 
+
+                  <button
                     className="px-6 py-2 border border-gray-600 rounded-md text-gray-300 hover:bg-gray-800 transition-colors disabled:opacity-50"
                     onClick={handleClearCart}
                     disabled={isClearing}
@@ -271,7 +220,7 @@ export default function CartPage() {
             <div className="lg:w-1/3">
               <div className="bg-[#171717] rounded-lg p-6 sticky top-4">
                 <h2 className="text-xl font-bold mb-6 text-white">Order Summary</h2>
-                
+
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-lg font-medium mb-2 text-white">
                     <span>Subtotal ({itemCount} {itemCount === 1 ? 'item' : 'items'})</span>
@@ -294,84 +243,12 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {/* Shipping Details */}
-                <div className="mb-6">
-                  <h3 className="text-lg font-medium mb-4 text-white">Shipping Details</h3>
-                  <div className="space-y-4">
-                    <input 
-                      type="text" 
-                      placeholder="Street Address"
-                      value={shippingAddress.street}
-                      onChange={(e) => setShippingAddress({...shippingAddress, street: e.target.value})}
-                      className="w-full bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
-                    />
-                    <div className="flex gap-4">
-                      <input 
-                        type="text" 
-                        placeholder="City"
-                        value={shippingAddress.city}
-                        onChange={(e) => setShippingAddress({...shippingAddress, city: e.target.value})}
-                        className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
-                      />
-                      <input 
-                        type="text" 
-                        placeholder="State"
-                        value={shippingAddress.state}
-                        onChange={(e) => setShippingAddress({...shippingAddress, state: e.target.value})}
-                        className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
-                      />
-                    </div>
-                    <div className="flex gap-4">
-                      <input 
-                        type="text" 
-                        placeholder="Postal Code"
-                        value={shippingAddress.postalCode}
-                        onChange={(e) => setShippingAddress({...shippingAddress, postalCode: e.target.value})}
-                        className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
-                      />
-                      <input 
-                        type="text" 
-                        placeholder="Country"
-                        value={shippingAddress.country}
-                        onChange={(e) => setShippingAddress({...shippingAddress, country: e.target.value})}
-                        className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
-                      />
-                    </div>
-                    <div className="flex gap-4">
-                        <input 
-                            type="tel" 
-                            placeholder="Phone Number"
-                            value={shippingAddress.phone}
-                            onChange={(e) => setShippingAddress({...shippingAddress, phone: e.target.value})}
-                            className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
-                        />
-                         <input 
-                            type="email" 
-                            placeholder="Email Address"
-                            value={shippingAddress.email}
-                            onChange={(e) => setShippingAddress({...shippingAddress, email: e.target.value})}
-                            className="w-1/2 bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674]"
-                        />
-                    </div>
-                    <textarea 
-                      placeholder="Order Notes (Optional)"
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      className="w-full bg-[#2a2a2a] border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#d4a674] h-24 resize-none"
-                    />
-                  </div>
-                </div>
-
-                <button 
-                  className="w-full bg-[#d4a674] text-black font-medium py-3 rounded-md hover:bg-[#c49560] transition-colors mb-4 disabled:opacity-50 flex justify-center items-center"
-                  onClick={handleCheckout}
-                  disabled={isCreatingCheckout}
+                <Link
+                  href="/checkout"
+                  className="w-full bg-[#d4a674] text-black font-medium py-3 rounded-md hover:bg-[#c49560] transition-colors mb-4 flex justify-center items-center text-center block"
                 >
-                  {isCreatingCheckout ? (
-                     <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-black mr-2"></div>
-                  ) : null}
                   Proceed to Checkout
-                </button>
+                </Link>
 
                 <div className="text-center text-sm text-gray-400">
                   or <Link href="/products" className="text-[#d4a674] hover:underline">Continue Shopping</Link>

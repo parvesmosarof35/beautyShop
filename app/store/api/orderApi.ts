@@ -10,6 +10,30 @@ export const orderApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["cart", "Order", "product", "products"],
     }),
+    createCheckoutSessionGooglePay: build.mutation({
+      query: (data) => ({
+        url: "/payment/cart/create-checkout-session-by-google-pay-stripe",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["cart", "Order", "product", "products"],
+    }),
+    createCheckoutSessionApplePay: build.mutation({
+      query: (data) => ({
+        url: "/payment/cart/create-checkout-session-by-apple-pay-stripe",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["cart", "Order", "product", "products"],
+    }),
+    createCheckoutSessionMultiple: build.mutation({
+      query: (data) => ({
+        url: "/payment/cart/create-checkout-session-by-multiple-payments-stripe",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["cart", "Order", "product", "products"],
+    }),
     getMyOrders: build.query({
       query: (customerId) => ({
         url: `/order/my-orders/${customerId}`,
@@ -33,7 +57,7 @@ export const orderApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Order"],
     }),
-// .................................................................
+    // .................................................................
 
     getOrderById: build.query({
       query: (orderId) => ({
@@ -63,6 +87,9 @@ export const orderApi = baseApi.injectEndpoints({
 
 export const {
   useCreateCheckoutSessionMutation,
+  useCreateCheckoutSessionGooglePayMutation,
+  useCreateCheckoutSessionApplePayMutation,
+  useCreateCheckoutSessionMultipleMutation,
   useGetMyOrdersQuery,
   useGetAllOrdersQuery,
   useGetOrderByIdQuery,
