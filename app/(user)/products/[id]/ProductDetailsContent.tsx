@@ -15,12 +15,19 @@ interface ProductDetailsContentProps {
   relatedProducts: any[];
 }
 
+import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
+
 export default function ProductDetailsContent({ product, relatedProducts }: ProductDetailsContentProps) {
   const router = useRouter();
   const pathname = usePathname();
   const { isAuthenticated } = useAuthState();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+
+  const { data: settingsData } = useGetSettingsQuery({});
+  const settings = settingsData?.data?.productdetails || {};
+  const goToDetailsText = settings.Gotodetailstext || "Go to details";
+  const relatedProductText = settings.relatedproducttext || "You May Also Like";
 
   const { data: wishlistData } = useGetMyWishlistQuery({});
   const [addToWishlist, { isLoading: isAddingToWishlist }] = useAddToWishlistMutation();
@@ -236,13 +243,13 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
             </div>
 
             {/* Action Buttons */}
+            {product.product_link ? (
             <div className="flex flex-col gap-3 mb-8">
               <button
-                onClick={handleAddToCart}
-                disabled={isAddingToCart}
+                onClick={() => window.open(product.product_link, '_blank')}
                 className="w-full bg-[#D4A574] hover:bg-[#c29563] text-black font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isAddingToCart ? 'Adding...' : 'Add to Cart'}
+                {goToDetailsText}
               </button>
               {/* <button
                 onClick={handleWishlistToggle}
@@ -253,11 +260,22 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
                 {isInWishlist ? 'In Wishlist' : 'Add to Wishlist'}
               </button> */}
             </div>
+            ) : (
+              <div className="flex flex-col gap-3 mb-8">
+                <button
+                  onClick={handleAddToCart}
+                  disabled={isAddingToCart}
+                  className="w-full bg-[#D4A574] hover:bg-[#c29563] text-black font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isAddingToCart ? 'Adding...' : 'Add to Cart'}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Product Features */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 mb-8">
+        {/* <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 mb-8">
           <h3 className="text-xl font-semibold text-white mb-6 text-center">Product Features</h3>
           <div className="grid grid-cols-3 gap-6">
             <div className="flex flex-col items-center text-center p-4">
@@ -282,10 +300,10 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
               <span className="text-xs text-gray-500 mt-1">Gentle on sensitive skin</span>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Skin Type Compatibility */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 mb-8">
+        {/* <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 mb-8">
           <h3 className="text-xl font-semibold text-white mb-6 text-center">Skin Type Compatibility</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-[#1a1a1a] rounded-lg p-6 text-center border border-gray-800 hover:border-[#D4A574] transition-colors">
@@ -304,7 +322,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
               <p className="text-xs text-gray-400">Balanced hydration</p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Customer Reviews */}
         <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 mb-8">
@@ -389,7 +407,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <div className="mt-16">
-            <h2 className="text-2xl font-bold text-white mb-6">You May Also Like</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{relatedProductText}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {relatedProducts.map((relatedProduct: any) => (
                 <ProductCard

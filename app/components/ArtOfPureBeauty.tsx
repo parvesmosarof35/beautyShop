@@ -1,16 +1,22 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
+import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
 
 const ArtOfPureBeauty = () => {
+  const { data: settingsData } = useGetSettingsQuery({});
+  const { title, subtitle } = settingsData?.data?.homepagesection2 || {};
+
   return (
     <section className="py-12 md:py-16 bg-[#3b3b3b]">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto text-center mb-10 md:mb-20">
-          <h2 className="text-3xl md:text-6xl font-serif text-white mb-4 md:mb-6">The Art of Pure Beauty</h2>
+          <h2 className="text-3xl md:text-6xl font-serif text-white mb-4 md:mb-6">
+            {title || "The Art of Pure Beauty"}
+          </h2>
           <p className="text-base md:text-xl text-gray-300 font-serif mb-10 md:mb-16 max-w-2xl mx-auto leading-relaxed px-4">
-            At Lunel, we believe in the power of nature to enhance your natural beauty. 
-            Our products are crafted with pure, organic ingredients that nourish and revitalize your skin. 
-            Experience the perfect blend of science and nature for radiant, healthy-looking skin.
+            {subtitle || "At Lunel, we believe in the power of nature to enhance your natural beauty. Our products are crafted with pure, organic ingredients that nourish and revitalize your skin. Experience the perfect blend of science and nature for radiant, healthy-looking skin."}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-20 mb-8 px-4 md:px-12">

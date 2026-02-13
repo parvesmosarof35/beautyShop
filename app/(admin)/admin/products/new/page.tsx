@@ -42,6 +42,7 @@ const AddProductPage = () => {
         categories: [] as string[],
         ingredients: [] as Ingredient[],
         collection: '', // Changed from collections array to single collection
+        product_link: '',
     });
 
     // Store actual File objects for images
@@ -144,6 +145,9 @@ const AddProductPage = () => {
         formDataToSend.append('stock_quantity', formData.stock_quantity);
         formDataToSend.append('sku', formData.sku);
         formDataToSend.append('isFeatured', formData.isFeatured.toString());
+        if (formData.product_link) {
+            formDataToSend.append('product_link', formData.product_link);
+        }
 
         if (formData.skintype) {
             formDataToSend.append('skintype', formData.skintype);
@@ -320,6 +324,17 @@ const AddProductPage = () => {
                                     className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#D4A574]"
                                     placeholder="Detailed product description..."
                                 ></textarea>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-neutral-400 mb-1">Product Link (Optional)</label>
+                                <input
+                                    type="text"
+                                    name="product_link"
+                                    value={formData.product_link}
+                                    onChange={handleChange}
+                                    className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#D4A574]"
+                                    placeholder="e.g. https://example.com/product"
+                                />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-neutral-400 mb-1">SKU *</label>

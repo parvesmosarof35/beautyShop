@@ -42,16 +42,23 @@ export type Product = {
   image: string;
   isBestSeller?: boolean;
   isNew?: boolean;
+  product_link?: string;
 };
 
 type ProductCardProps = {
   product: Product;
 };
 
+import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
+
 export function ProductCard({ product }: ProductCardProps) {
   const [addToCart, { isLoading }] = useAddToCartMutation();
   const [addToWishlist, { isLoading: isAddingToWishlist }] = useAddToWishlistMutation();
   const { data: wishlistData } = useGetMyWishlistQuery({});
+  
+  const { data: settingsData } = useGetSettingsQuery({});
+  const settings = settingsData?.data?.productdetails || {};
+  const goToDetailsText = settings.Gotodetailstext || "Go to Details";
 
   const router = useRouter();
   const pathname = usePathname();
@@ -255,6 +262,7 @@ export function ProductCard({ product }: ProductCardProps) {
               ))}
             </div>
             <span className="text-xs text-gray-100 ml-1">({product.reviewCount})</span>
+            {/* <span className="text-xs text-gray-100 ml-1">({product.product_link})</span> */}
           </div>
 
           <div className="mt-auto flex items-center justify-between">
@@ -266,19 +274,31 @@ export function ProductCard({ product }: ProductCardProps) {
                 </span>
               )}
             </div>
-            <button
-              onClick={handleAddToCart}
-              disabled={isLoading}
-              className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-1"></div>
+              {product.product_link ? (
+                <a
+                  href={product.product_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full hover:bg-[#b88b5c] transition-colors flex items-center"
+                >
+                  {goToDetailsText}
+                </a>
               ) : (
-                <ShoppingCart className="w-4 h-4 mr-1" />
+                <button
+                  onClick={handleAddToCart}
+                  disabled={isLoading}
+                  className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-1"></div>
+                  ) : (
+                    <ShoppingCart className="w-4 h-4 mr-1" />
+                  )}
+                  Add to Cart
+                </button>
               )}
-              Add to Cart
-            </button>
-          </div>
+            </div>
         </div>
       </div>
     </Link>

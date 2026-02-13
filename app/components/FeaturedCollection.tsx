@@ -7,27 +7,21 @@ import Link from 'next/link';
 import { Eye } from 'lucide-react';
 // import { useGetFeaturedProductsQuery } from '@/app/store/api/productApi';
 
-const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
-  // const { data, isLoading } = useGetFeaturedProductsQuery({});
-  // const products = data?.data || [];
+import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
 
-  // if (isLoading) {
-  //   return (
-  //     <section className="py-24 bg-[#1a1a1a]">
-  //       <div className="container mx-auto px-4 flex justify-center">
-  //           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#D4A574]"></div>
-  //       </div>
-  //     </section>
-  //   );
-  // }
+const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
+  const { data: settingsData } = useGetSettingsQuery({});
+  const { title, subtitle, buttontext } = settingsData?.data?.homepagesection3 || {};
 
   return (
     <section className="py-24 bg-[#1a1a1a]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-20">
-          <h2 className="text-5xl text-white font-medium mb-6">Featured Collection</h2>
+          <h2 className="text-5xl text-white font-medium mb-6">
+            {title || "Featured Collection"}
+          </h2>
           <p className="text-xl text-gray-100 max-w-2xl mx-auto leading-relaxed">
-            Discover our best-selling products that will transform your skincare routine
+            {subtitle || "Discover our best-selling products that will transform your skincare routine"}
           </p>
         </div>
         
@@ -76,7 +70,7 @@ const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
             variant="outline" 
             className="border-b-2 border-white text-white hover:bg-black hover:text-gray-100 px-12 py-6 text-xl rounded-none transition-all duration-300"
           >
-            Shop Now
+            {buttontext || "Shop Now"}
           </Button>
           </Link>
         </div>

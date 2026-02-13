@@ -1,14 +1,12 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaInstagram, FaFacebookF, FaTiktok } from 'react-icons/fa';
 import { FaXTwitter } from "react-icons/fa6";
-const socialLinks = [
-    { name: 'Instagram', href: '#', icon: <FaInstagram /> },
-    { name: 'Facebook', href: '#', icon: <FaFacebookF /> },
-    { name: 'TikTok', href: '#', icon: <FaTiktok /> },
-    { name: 'X', href: '#', icon: <FaXTwitter /> },
-];
+import { useGetSettingsQuery } from '../store/api/settingsApi';
+
 
 const footerLinks = [
     {
@@ -41,6 +39,39 @@ const footerLinks = [
 ];
 
 const Footer = () => {
+    const { data: settingsData } = useGetSettingsQuery({});
+    const settings = settingsData?.data || {};
+
+    const socialLinks = [
+        { 
+            name: 'Instagram', 
+            href: settings.instagram?.url || '#', 
+            icon: <FaInstagram />,
+            isActive: settings.instagram?.isActive ?? true
+        },
+        { 
+            name: 'Facebook', 
+            href: settings.facebook?.url || '#', 
+            icon: <FaFacebookF />,
+            isActive: settings.facebook?.isActive ?? true
+        },
+        { 
+            name: 'TikTok', 
+            href: settings.tiktok?.url || '#', 
+            icon: <FaTiktok />,
+            isActive: settings.tiktok?.isActive ?? false
+        },
+        { 
+            name: 'X', 
+            href: settings.twitterx?.url || '#', 
+            icon: <FaXTwitter />,
+            isActive: settings.twitterx?.isActive ?? true
+        },
+    ];
+
+    const logoBelowText = settings.footertext?.logobelowtext || 'Elevating beauty through the art of pure, natural skincare.';
+    const footerBottomText = settings.footertext?.footerbottomtext || ' Lunel Inc. All rights reserved.';
+
     return (
         <footer className="bg-[#1a1a1a] text-white pt-16 pb-8">
             <div className="container mx-auto px-4">
@@ -61,18 +92,22 @@ const Footer = () => {
                             </Link>
                         </div>
                         <p className="text-gray-400 mb-6">
-                            Elevating beauty through the art of pure, natural skincare.
+                            {logoBelowText}
                         </p>
                         <div className="flex space-x-4">
                             {socialLinks.map((social) => (
+                                social.isActive && (
                                 <a
                                     key={social.name}
                                     href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="flex items-center justify-center w-10 h-10 rounded-full border border-white text-white hover:bg-white hover:text-gray-900 transition-colors"
                                     aria-label={social.name}
                                 >
                                     {social.icon}
                                 </a>
+                                )
                             ))}
                         </div>
                     </div>
@@ -97,7 +132,7 @@ const Footer = () => {
 
                 <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-center items-center">
                     <p className="text-gray-400 text-sm mb-4 md:mb-0">
-                        © {new Date().getFullYear()} Lunel Inc. All rights reserved.
+                        © {new Date().getFullYear()} {footerBottomText}
                     </p>
                     <div className="flex space-x-6">
                         {/* <Link href="/privacy">

@@ -47,6 +47,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }: SidebarProps) => {
     { icon: <FiMessageSquare className="w-5 h-5" />, label: "Contact", path: "/admin/contact" },
     { icon: <FiEdit3 className="w-5 h-5" />, label: "Blog", path: "/admin/blog" },
     { icon: <FiEdit3 className="w-5 h-5" />, label: "Web Content", path: "/admin/web-content" },
+    { icon: <FiEdit3 className="w-5 h-5" />, label: "Web Settings", path: "/admin/web-settings" },
     { icon: <FiLock className="w-5 h-5" />, label: "Privacy Policy", path: "/admin/privacy-policy" },
     { icon: <FiFileText className="w-5 h-5" />, label: "Terms & Conditions", path: "/admin/terms" },
     { icon: <FiInfo className="w-5 h-5" />, label: "About Us", path: "/admin/about-us" },

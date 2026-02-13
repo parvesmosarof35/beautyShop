@@ -24,6 +24,7 @@ interface Product {
     isFeatured: boolean;
     skintype?: string;
     ingredients?: string[];
+    product_link?: string;
 }
 
 const ProductsPage = () => {
@@ -171,6 +172,9 @@ const ProductsPage = () => {
         formData.append('stock_quantity', editingProduct.stock_quantity?.toString() || '0');
         formData.append('sku', editingProduct.sku || '');
         formData.append('isFeatured', String(editingProduct.isFeatured || false));
+        if (editingProduct.product_link) {
+            formData.append('product_link', editingProduct.product_link);
+        }
         
         if (Array.isArray(editingProduct.categories)) {
              editingProduct.categories.forEach(cat => formData.append('categories[]', cat));
@@ -453,6 +457,18 @@ const ProductsPage = () => {
                                     onChange={handleEditChange}
                                     className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#D4A574]"
                                     rows={3}
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-neutral-400 mb-1">Product Link</label>
+                                <input
+                                    type="text"
+                                    name="product_link"
+                                    value={editingProduct.product_link || ''}
+                                    onChange={handleEditChange}
+                                    className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#D4A574]"
+                                    placeholder="e.g. https://example.com/product"
                                 />
                             </div>
 

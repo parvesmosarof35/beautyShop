@@ -18,6 +18,10 @@ const ProductListItem = ({ product }: { product: any }) => {
   const pathname = usePathname();
   const { isAuthenticated } = useAuthState();
 
+  const { data: settingsData } = useGetSettingsQuery({});
+  const settings = settingsData?.data?.productdetails || {};
+  const goToDetailsText = settings.Gotodetailstext || "Go to Details";
+
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -143,18 +147,30 @@ const ProductListItem = ({ product }: { product: any }) => {
               </span>
             )}
           </div>
-          <button 
-            onClick={handleAddToCart}
-            disabled={isLoading}
-            className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-1"></div>
-            ) : (
-                <ShoppingCart className="w-4 h-4 mr-1" />
-            )}
-            Add to Cart
-          </button>
+          {product.product_link ? (
+              <a
+                href={product.product_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center hover:bg-[#b88b5c]"
+              >
+                {goToDetailsText}
+              </a>
+          ) : (
+              <button 
+                onClick={handleAddToCart}
+                disabled={isLoading}
+                className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-1"></div>
+                ) : (
+                    <ShoppingCart className="w-4 h-4 mr-1" />
+                )}
+                Add to Cart
+              </button>
+          )}
           
           <button 
             onClick={handleWishlistToggle}
@@ -188,6 +204,8 @@ function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
+import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
+
 type FilterState = {
   collections: string[];
   priceRange: [number, number];
@@ -213,6 +231,12 @@ export default function ProductsContent({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const { data: settingsData } = useGetSettingsQuery({});
+  const settings = settingsData?.data?.productpage || {};
+
+  const displayTitle = settings.title || title;
+  const displayDescription = settings.subtitle || description;
 
   // State for filters - Initialize from URL
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -295,8 +319,8 @@ export default function ProductsContent({
       {/* Header */}
       <div className="bg-[#171717] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-2">{title}</h1>
-          <p className="text-gray-300">{description}</p>
+          <h1 className="text-4xl font-bold mb-2">{displayTitle}</h1>
+          <p className="text-gray-300">{displayDescription}</p>
         </div>
       </div>
 
@@ -396,7 +420,8 @@ export default function ProductsContent({
                         description: product.description,
                         originalPrice: product.discountPrice,
                         skinType: product.skintype ? [product.skintype] : [],
-                        ingredients: product.ingredients || []
+                        ingredients: product.ingredients || [],
+                        product_link: product.product_link
                     }} />
                   ) : (
                     <ProductListItem key={product._id} product={product} />
