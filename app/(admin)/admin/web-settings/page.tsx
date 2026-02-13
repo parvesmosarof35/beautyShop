@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useGetSettingsQuery, useUpdateSettingsMutation } from '@/app/store/api/settingsApi';
 import Swal from 'sweetalert2';
 import { FiSave, FiLoader } from 'react-icons/fi';
+import { revalidateFeaturedProducts, revalidateProducts } from '@/app/actions/revalidate';
 
 const WebSettingsPage = () => {
   const { data: settingsData, isLoading } = useGetSettingsQuery({});
@@ -59,6 +60,8 @@ const WebSettingsPage = () => {
         color: '#e5e5e5',
         timer: 2000,
       });
+      await revalidateFeaturedProducts();
+      await revalidateProducts(); 
     } catch (err) {
       console.error('Failed to update settings:', err);
       Swal.fire({
