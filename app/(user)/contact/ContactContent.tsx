@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaTiktok } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebookF, FaInstagram, FaTiktok,FaWhatsapp } from 'react-icons/fa';
+import { FaXTwitter } from "react-icons/fa6";
 import { useCreateContactMutation } from '@/app/store/api/contactApi';
+import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
 import Swal from 'sweetalert2';
 
 export default function ContactContent() {
@@ -14,13 +16,40 @@ export default function ContactContent() {
         message: ''
     });
 
+    const { data: settingsData } = useGetSettingsQuery({});
+    const settings = settingsData?.data || {};
 
-
-            const socialLinks = [
-        { name: 'Instagram', href: '#', icon: <FaInstagram /> },
-        { name: 'Facebook', href: '#', icon: <FaFacebookF /> },
-        { name: 'TikTok', href: '#', icon: <FaTiktok /> },
-        { name: 'Twitter', href: '#', icon: <FaTwitter /> },
+    const socialLinks = [
+        { 
+            name: 'Instagram', 
+            href: settings.instagram?.url || '#', 
+            icon: <FaInstagram />,
+            isActive: settings.instagram?.isActive ?? true
+        },
+        { 
+            name: 'Facebook', 
+            href: settings.facebook?.url || '#', 
+            icon: <FaFacebookF />,
+            isActive: settings.facebook?.isActive ?? true
+        },
+        { 
+            name: 'TikTok', 
+            href: settings.tiktok?.url || '#', 
+            icon: <FaTiktok />,
+            isActive: settings.tiktok?.isActive ?? false
+        },
+        { 
+            name: 'Twitter', 
+            href: settings.twitterx?.url || '#', 
+            icon: <FaXTwitter />,
+            isActive: settings.twitterx?.isActive ?? true
+        },
+        { 
+            name: 'WhatsApp', 
+            href: settings.whatsapp?.url || '#', 
+            icon: <FaWhatsapp />,
+            isActive: settings.whatsapp?.isActive ?? true
+        },
     ];
 
     const [createContact, { isLoading }] = useCreateContactMutation();
@@ -192,7 +221,10 @@ export default function ContactContent() {
                                         </div>
                                         <div className="ml-4">
                                             <h3 className="text-lg font-medium text-gray-100">Our Location</h3>
-                                            <p className="text-gray-100">123 Business Street, Suite 100<br />New York, NY 10001</p>
+                                            <p className="text-gray-100">
+                                                {/* 123 Business Street, Suite 100<br />New York, NY 10001 */}
+                                                {settings.address?.url || '123 Business Street, Suite 100, New York, NY 10001'}
+                                            </p>
                                         </div>
                                     </div>
 
@@ -202,7 +234,10 @@ export default function ContactContent() {
                                         </div>
                                         <div className="ml-4">
                                             <h3 className="text-lg font-medium text-gray-100">Phone Number</h3>
-                                            <p className="text-gray-100">+1 (555) 123-4567<br />+1 (555) 987-6543</p>
+                                            <p className="text-gray-100">
+                                                {/* +1 (555) 123-4567<br />+1 (555) 987-6543 */}
+                                                {settings.phone?.url || '+1 (555) 123-4567'}
+                                            </p>
                                         </div>
                                     </div>
 
@@ -212,7 +247,10 @@ export default function ContactContent() {
                                         </div>
                                         <div className="ml-4">
                                             <h3 className="text-lg font-medium text-gray-100">Email Address</h3>
-                                            <p className="text-gray-100">info@example.com<br />support@example.com</p>
+                                            <p className="text-gray-100">
+                                                {/* info@example.com<br />support@example.com */}
+                                                {settings.email?.url || 'info@example.com'}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -222,13 +260,17 @@ export default function ContactContent() {
                                 <h3 className="text-lg font-medium text-gray-100 mb-4">Follow Us</h3>
                                 <div className="flex space-x-4">
                                     {socialLinks.map((social) => (
-                                        <a
-                                            key={social.name}
-                                            href={social.href}
-                                            className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition"
-                                        >
-                                            {social.icon}
-                                        </a>
+                                        social.isActive && (
+                                            <a
+                                                key={social.name}
+                                                href={social.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition"
+                                            >
+                                                {social.icon}
+                                            </a>
+                                        )
                                     ))}
                                 </div>
                             </div>
