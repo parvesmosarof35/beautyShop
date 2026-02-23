@@ -1,0 +1,3225 @@
+{
+  "info": {
+    "_postman_id": "35778a97-fb9c-4340-a01a-cb42d6158e41",
+    "name": "renee reefschlaeger",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "38181591"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "login_user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n//admin account \r\n// {\r\n//     \"email\":\"parvesmosarof35@gmail.com\", // buyer \r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n{\r\n    \"email\":\"parvesmosarof2@gmail.com\", // super admin\r\n    \"password\": \"123456\"\r\n}\r\n\r\n\r\n\r\n\r\n// user  accoutn \r\n// {\r\n//     \"email\":\"info.sohelranaa@gmail.com\",\r\n//     \"password\":\"12345678\"\r\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/auth/login_user",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login_user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refresh-token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk4MTM1NjksImV4cCI6MTc3MDY3NzU2OX0.hdd3LbdW0cDRu3BJ_W1q_G0GFWGffflDZAXYB0TzfGg",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/auth/refresh-token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "refresh-token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk4MTM1NjksImV4cCI6MTc3MDY3NzU2OX0.hdd3LbdW0cDRu3BJ_W1q_G0GFWGffflDZAXYB0TzfGg",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/auth/refresh-token",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "refresh-token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "309"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"135-mvewpUG0RigrB6EnWktBDBKbhNM\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 30 Jan 2026 22:53:21 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Access token is Retrived Successfully\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsImVtYWlsIjoicGFydmVzbW9zYXJvZjJAZ21haWwuY29tIiwiaWF0IjoxNzY5ODEzNjAxLCJleHAiOjE3NzA2Nzc2MDF9.0tWkCNgZTX_euBl3P43564lrrX2LeaBIjBt66-b9diI\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "myprofile",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{buyerToken}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/auth/myprofile",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "myprofile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "myprofile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{buyerToken}}",
+                    "type": "text",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/auth/myprofile",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "myprofile"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "446"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1be-bbw3KBUrk0H1rfK6hiIilnxnzdQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 22:06:06 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully find my profile\",\n    \"data\": {\n        \"_id\": \"69790f314d6217d841e7ee84\",\n        \"email\": \"parvesmosarof2@gmail.com\",\n        \"auth_type\": \"email\",\n        \"createdAt\": \"2026-01-27T19:16:52.535Z\",\n        \"fcm\": null,\n        \"fullname\": \"Super Admin\",\n        \"photo\": null,\n        \"role\": \"superAdmin\",\n        \"status\": \"isProgress\",\n        \"updatedAt\": \"2026-02-01T22:05:57.452Z\",\n        \"phoneNumber\": \"01722305054\",\n        \"address\": \"123 Main Street, New York, NY, USA\",\n        \"gender\": \"Male\",\n        \"id\": \"69790f314d6217d841e7ee84\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "update_my_profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{buyerToken}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "data",
+                  "value": "{\n    \"fullname\": \"Ali Mohammad\",\n    \"gender\": \"Male\",\n    \"phoneNumber\": \"01516502365\",\n    \"address\": \"123 Main Street, New York, NY, USA\"\n  }",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/C:/Users/Parves Mosarof new/Pictures/Screenshots/Screenshot 2025-12-09 053029.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/auth/update_my_profile",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "update_my_profile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "update_my_profile",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "{{buyerToken}}",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "data",
+                      "value": "{\n    \"fullname\": \"Ali Mohammad\",\n    \"gender\": \"Male\",\n    \"phoneNumber\": \"01516502365\",\n    \"address\": \"123 Main Street, New York, NY, USA\"\n  }",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/C:/Users/Parves Mosarof new/Pictures/Screenshots/Screenshot 2025-12-09 053029.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/auth/update_my_profile",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "update_my_profile"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "123"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"7b-0FcU/DHse1B5bHjsg+EMyY5+Njc\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 30 Jan 2026 23:38:19 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Change My Profile\",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"Successfully updated profile\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get_all_users(admin only)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/auth/find_by_admin_all_users?searchTerm=smosarof32@gma&page=1&limit=8",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "find_by_admin_all_users"
+              ],
+              "query": [
+                {
+                  "key": "searchTerm",
+                  "value": "smosarof32@gma"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "8"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get_single_user",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/auth/get_single_user/:id",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "get_single_user",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6948777f6946cba0e7440b90"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get_single_user",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/auth/get_single_user/:id",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "get_single_user",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6948777f6946cba0e7440b90"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "333"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14d-uB8GBVAOv/tG6C+O/D2REF7Fu74\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 09 Jan 2026 21:39:26 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Find Single User\",\n    \"data\": {\n        \"_id\": \"6948777f6946cba0e7440b90\",\n        \"fullname\": \"Hasan Mahmud\",\n        \"email\": \"parvesmosarof32@gmail.com\",\n        \"phoneNumber\": \"+1 (415) 555-0137\",\n        \"isVerify\": true,\n        \"role\": \"buyer\",\n        \"status\": \"isProgress\",\n        \"photo\": null,\n        \"createdAt\": \"2025-12-21T22:41:03.784Z\",\n        \"id\": \"6948777f6946cba0e7440b90\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "block and unblock user(admin only)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n    \"status\":false //true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/auth/change_status/693dbf5926d8bc1979c3f901",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "change_status",
+                "693dbf5926d8bc1979c3f901"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get_all_admin(admin only)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/auth/find_by_all_admin?page=1&limit=10",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "find_by_all_admin"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "create_user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fullname\": \"new parves\",\r\n    \"email\": \"parvesmosarof614@gmail.com\",\r\n    \"phoneNumber\": \"01522305059\", \r\n    \"password\": \"123456\",\r\n    \"role\": \"buyer\",\r\n    \"gender\": \"Male\", // \"Female\" | \"Others\";\r\n    \"address\": \"new address here\"    \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base-url}}/api/v1/user/create_user",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "create_user"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create_user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"fullname\": \"new parves\",\r\n    \"email\": \"parvesmosarof32@gmail.com\",\r\n    \"phoneNumber\": \"01522305059\", //optional\r\n    \"password\": \"123456\",\r\n    \"role\": \"buyer\",\r\n    \"gender\": \"Male\", // \"Female\" | \"Others\";\r\n    \"address\": \"new address here\"    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/user/create_user",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "create_user"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "124"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"7c-iD7jHWdVkCrwpGJpnFaqbPLTsHo\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 25 Jan 2026 22:50:16 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Change Onboarding Status\",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"Check your email inbox\"\n    }\n}"
+            },
+            {
+              "name": "create_user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"fullname\": \"new parves\",\r\n    \"email\": \"parvesmosaro\",\r\n    \"phoneNumber\": \"01522305059\", //optional\r\n    \"password\": \"123456\",\r\n    \"role\": \"buyer\",\r\n    \"gender\": \"Male\", // \"Female\" | \"Others\";\r\n    \"address\": \"new address here\"    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/user/create_user",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "create_user"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1793"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"701-bTLoz+45PfY0H7hJ7unwZbnN84U\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 25 Jan 2026 22:53:16 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Zod Validation error\",\n    \"errorSources\": [\n        {\n            \"path\": \"email\",\n            \"message\": \"Invalid email format\"\n        },\n        {\n            \"path\": \"email\",\n            \"message\": \"Invalid email format\"\n        }\n    ],\n    \"stack\": \"ZodError: [\\n  {\\n    \\\"origin\\\": \\\"string\\\",\\n    \\\"code\\\": \\\"invalid_format\\\",\\n    \\\"format\\\": \\\"email\\\",\\n    \\\"pattern\\\": \\\"/^(?!\\\\\\\\.)(?!.*\\\\\\\\.\\\\\\\\.)([A-Za-z0-9_'+\\\\\\\\-\\\\\\\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\\\\\\\-]*\\\\\\\\.)+[A-Za-z]{2,}$/\\\",\\n    \\\"path\\\": [\\n      \\\"body\\\",\\n      \\\"email\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid email format\\\"\\n  },\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"body\\\",\\n      \\\"email\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid email format\\\"\\n  }\\n]\\n    at C:\\\\New folder\\\\spark-tech\\\\renee-reefschlaeger-backend\\\\src\\\\app\\\\middlewares\\\\validationRequest.ts:8:18\\n    at Generator.next (<anonymous>)\\n    at C:\\\\New folder\\\\spark-tech\\\\renee-reefschlaeger-backend\\\\src\\\\app\\\\middlewares\\\\validationRequest.ts:8:71\\n    at new Promise (<anonymous>)\\n    at __awaiter (C:\\\\New folder\\\\spark-tech\\\\renee-reefschlaeger-backend\\\\src\\\\app\\\\middlewares\\\\validationRequest.ts:4:12)\\n    at C:\\\\New folder\\\\spark-tech\\\\renee-reefschlaeger-backend\\\\src\\\\app\\\\middlewares\\\\validationRequest.ts:6:79\\n    at C:\\\\New folder\\\\spark-tech\\\\renee-reefschlaeger-backend\\\\src\\\\app\\\\utils\\\\asyncCatch.ts:5:21\\n    at Layer.handleRequest (C:\\\\New folder\\\\spark-tech\\\\renee-reefschlaeger-backend\\\\node_modules\\\\.pnpm\\\\router@2.2.0\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at next (C:\\\\New folder\\\\spark-tech\\\\renee-reefschlaeger-backend\\\\node_modules\\\\.pnpm\\\\router@2.2.0\\\\node_modules\\\\router\\\\lib\\\\route.js:157:13)\\n    at Route.dispatch (C:\\\\New folder\\\\spark-tech\\\\renee-reefschlaeger-backend\\\\node_modules\\\\.pnpm\\\\router@2.2.0\\\\node_modules\\\\router\\\\lib\\\\route.js:117:3)\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "user_verification",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"verificationCode\":878944\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/user_verification",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "user_verification"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "user_verification",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"verificationCode\":129199\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/user/user_verification",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "user_verification"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "369"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"171-xSb1p9cd8DbWsHp/ge79BuSrqx0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 25 Jan 2026 22:54:53 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Varified Your Account\",\n    \"data\": {\n        \"message\": \"User verification successful\",\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzY5ZTI1YzdmZGIwMDk4YmQyODU3YSIsInJvbGUiOiJidXllciIsImVtYWlsIjoicGFydmVzbW9zYXJvZjMyQGdtYWlsLmNvbSIsImlhdCI6MTc2OTM4MTY5MywiZXhwIjoxNzcwMjQ1NjkzfQ.Y0u7VNNacd9oAe0sjkf_TkdN4DLVJb7GNXniYBNy2A0\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "change_password(while loged in)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{buyerToken}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newpassword\":\"123456\",\r\n    \"oldpassword\":\"12345678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/change_password",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "change_password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "forgot_password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{buyerToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n \"email\": \"parvesmosarof32@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/forgot_password",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "forgot_password"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "forgot_password",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{buyerToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n \"email\": \"parvesmosarof32@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/user/forgot_password",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "forgot_password"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "106"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"6a-9npb0qtYTGQvmFvk96vtb8Sn0ss\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 25 Jan 2026 23:00:42 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Send Email\",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"Checked Your Email\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "verification_forgot_user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"verificationCode\":763900\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/verification_forgot_user",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "verification_forgot_user"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "verification_forgot_user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"verificationCode\":763900\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/user/verification_forgot_user",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "verification_forgot_user"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "318"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"13e-VLseUNQFjTBq0xi44V0omb6vNxI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 25 Jan 2026 23:35:22 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Verify User\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzY5ZTI1YzdmZGIwMDk4YmQyODU3YSIsInJvbGUiOiJidXllciIsImVtYWlsIjoicGFydmVzbW9zYXJvZjMyQGdtYWlsLmNvbSIsImlhdCI6MTc2OTM4NDEyMiwiZXhwIjoxNzcwMjQ4MTIyfQ.uAti0DfIQp8hIqGxLUwcKoLp2u_av75GVx9LeRwFUdQ\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "reset_password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzY5ZTI1YzdmZGIwMDk4YmQyODU3YSIsInJvbGUiOiJidXllciIsImVtYWlsIjoicGFydmVzbW9zYXJvZjMyQGdtYWlsLmNvbSIsImlhdCI6MTc2OTM4MjA3OCwiZXhwIjoxNzcwMjQ2MDc4fQ.Tz7N4o2Vv1kfbgopoSxyxbmUG6fBuL962WV8Y32__VY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"password\":\"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/reset_password",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "reset_password"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "reset_password",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzY5ZTI1YzdmZGIwMDk4YmQyODU3YSIsInJvbGUiOiJidXllciIsImVtYWlsIjoicGFydmVzbW9zYXJvZjMyQGdtYWlsLmNvbSIsImlhdCI6MTc2OTM4MjA3OCwiZXhwIjoxNzcwMjQ2MDc4fQ.Tz7N4o2Vv1kfbgopoSxyxbmUG6fBuL962WV8Y32__VY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"password\":\"123456\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/user/reset_password",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "reset_password"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "119"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"77-wFLoRAzP7F8p4wUFewy9VmI28vE\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 25 Jan 2026 23:31:21 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Reset Password\",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"successfylly reset password\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get_user_growth",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/find_by_user_growth?year=2025",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "find_by_user_growth"
+              ],
+              "query": [
+                {
+                  "key": "year",
+                  "value": "2025"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "recently_joined_user",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/recently_joined_user",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "recently_joined_user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create_admin(admin only)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fastname\": \"Parvers\",\r\n    \"lastname\":\"Mosarof\",\r\n    \"email\": \"parvesmosarof35@gmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"isVerify\": true,\r\n    \"role\": \"admin\"\r\n \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/create_user",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "create_user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete_user(admin only)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/user/delete_user/69497d8f6756b742204a1960",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "delete_user",
+                "69497d8f6756b742204a1960"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "delete_user(admin only)",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/user/delete_user/6977bcd6c6f1351621a8c711",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "delete_user",
+                    "6977bcd6c6f1351621a8c711"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "105"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"69-OT7zaVuEeac+P+NBVan2iTRi3YM\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 26 Jan 2026 22:20:30 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Delete  \",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"successfully delete\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "guest user",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "create about",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"aboutUs\": \"<div> new about us here <h1 > about us </h1> </div>\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base-url}}/api/v1/settings/about",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "about"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create about",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"aboutUs\": \"<div> new about us here <h1 > about us </h1> </div>\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base-url}}/api/v1/settings/about",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "about"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 19:29:33 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c73dbb7bec78139-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"71-jNyE3DHNVzfzRBEyMqmqIpBuDbM\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully  Updated \",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"AboutUs successfully saved\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "create terms_conditions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"TermsConditions\": \"<div> new TermsConditions here <h1 > TermsConditions </h1> </div>\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base-url}}/api/v1/settings/terms_conditions",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "terms_conditions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create terms_conditions",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"TermsConditions\": \"<div> new TermsConditions here <h1 > TermsConditions </h1> </div>\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base-url}}/api/v1/settings/terms_conditions",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "terms_conditions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 19:31:56 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c73df2ffe8272e3-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"7e-89ADpLNGvccpvWGC58zXuQKNKpU\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully  Recorded\",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"Terms and Conditions successfully saved\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "create PrivacyPolicy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"PrivacyPolicy\": \"<div> new privacy_policys here <h1 > privacy_policys </h1> </div>\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base-url}}/api/v1/settings/privacy_policys",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "privacy_policys"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create PrivacyPolicy",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"PrivacyPolicy\": \"<div> new privacy_policys here <h1 > privacy_policys </h1> </div>\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base-url}}/api/v1/settings/privacy_policys",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "privacy_policys"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 19:34:52 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c73e37e69131645-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"78-QB/0Jx9iNzDD9WfRoj9fBu6r8yw\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully  Recorded\",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"Privacy policy successfully saved\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "create socal_media_links_address_phone_email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"facebook\": {\r\n    \"url\": \"https://facebook.com/yourpage\",\r\n    \"isActive\": true\r\n  },\r\n  \"instagram\": {\r\n    \"url\": \"https://instagram.com/yourpage\",\r\n    \"isActive\": true\r\n  },\r\n  \"twitter\": {\r\n    \"url\": \"https://twitter.com/yourpage\",\r\n    \"isActive\": true\r\n  },\r\n  \"linkedin\": {\r\n    \"url\": \"https://linkedin.com/in/yourprofile\",\r\n    \"isActive\": false\r\n  },\r\n  \"youtube\": {\r\n    \"url\": \"https://youtube.com/c/yourchannel\",\r\n    \"isActive\": true\r\n  },\r\n  \"tiktok\": {\r\n    \"url\": \"https://tiktok.com/@yourprofile\",\r\n    \"isActive\": false\r\n  },\r\n  \"whatsapp\": {\r\n    \"url\": \"+1234567890\",\r\n    \"isActive\": true\r\n  },\r\n  \"telegram\": {\r\n    \"url\": \"https://t.me/yourchannel\",\r\n    \"isActive\": false\r\n  },\r\n  \"snapchat\": {\r\n    \"url\": \"https://snapchat.com/add/yourprofile\",\r\n    \"isActive\": false\r\n  },\r\n  \"address\": {\r\n    \"url\": \"123 Main St, City, Country\",\r\n    \"isActive\": true\r\n  },\r\n  \"phone\": {\r\n    \"url\": \"+1234567890\",\r\n    \"isActive\": true\r\n  },\r\n  \"email\": {\r\n    \"url\": \"info@example.com\",\r\n    \"isActive\": true\r\n  },\r\n  \"website\": {\r\n    \"url\": \"https://www.example.com\",\r\n    \"isActive\": false\r\n  },\r\n  \"appName\": {\r\n    \"url\": \"My Super App\",\r\n    \"isActive\": false\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base-url}}/api/v1/settings/socal_media_links_address_phone_email",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "socal_media_links_address_phone_email"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create socal_media_links_address_phone_email",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"facebook\": {\r\n    \"url\": \"https://facebook.com/yourpage\",\r\n    \"isActive\": true\r\n  },\r\n  \"instagram\": {\r\n    \"url\": \"https://instagram.com/yourpage\",\r\n    \"isActive\": true\r\n  },\r\n  \"twitter\": {\r\n    \"url\": \"https://twitter.com/yourpage\",\r\n    \"isActive\": true\r\n  },\r\n  \"linkedin\": {\r\n    \"url\": \"https://linkedin.com/in/yourprofile\",\r\n    \"isActive\": false\r\n  },\r\n  \"youtube\": {\r\n    \"url\": \"https://youtube.com/c/yourchannel\",\r\n    \"isActive\": true\r\n  },\r\n  \"tiktok\": {\r\n    \"url\": \"https://tiktok.com/@yourprofile\",\r\n    \"isActive\": false\r\n  },\r\n  \"whatsapp\": {\r\n    \"url\": \"+1234567890\",\r\n    \"isActive\": true\r\n  },\r\n  \"telegram\": {\r\n    \"url\": \"https://t.me/yourchannel\",\r\n    \"isActive\": false\r\n  },\r\n  \"snapchat\": {\r\n    \"url\": \"https://snapchat.com/add/yourprofile\",\r\n    \"isActive\": false\r\n  },\r\n  \"address\": {\r\n    \"url\": \"123 Main St, City, Country\",\r\n    \"isActive\": true\r\n  },\r\n  \"phone\": {\r\n    \"url\": \"+1234567890\",\r\n    \"isActive\": true\r\n  },\r\n  \"email\": {\r\n    \"url\": \"info@example.com\",\r\n    \"isActive\": true\r\n  },\r\n  \"website\": {\r\n    \"url\": \"https://www.example.com\",\r\n    \"isActive\": false\r\n  },\r\n  \"appName\": {\r\n    \"url\": \"My Super App\",\r\n    \"isActive\": false\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base-url}}/api/v1/settings/socal_media_links_address_phone_email",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "socal_media_links_address_phone_email"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 20:28:01 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c7431582efb3e7d-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"8d-6B7UOC6MflQfaw1y10+LyRIDOoM\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Updated Social Media Links\",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"Social Media Links successfully saved\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get about",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"aboutUs\": \"<div> new about us here <h1 > about us </h1> </div>\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base-url}}/api/v1/settings/find_by_about_us",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "find_by_about_us"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get about",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"aboutUs\": \"<div> new about us here <h1 > about us </h1> </div>\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base-url}}/api/v1/settings/find_by_about_us",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "find_by_about_us"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 19:30:09 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c73dc987e0d8139-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"a8-jQ4Lx/f1k7R2FHmtgyIselP1Q2A\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Find AboutUs\",\n    \"data\": {\n        \"_id\": \"697fa91e8b6b1af267767aee\",\n        \"__v\": 0,\n        \"aboutUs\": \"<div> new about us here <h1 > about us </h1> </div>\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get /socal_media_links_address_phone_email",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base-url}}/api/v1/settings/get_socal_media_links_address_phone_email",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "get_socal_media_links_address_phone_email"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get /socal_media_links_address_phone_email",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "url": {
+                  "raw": "{{base-url}}/api/v1/settings/get_socal_media_links_address_phone_email",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "get_socal_media_links_address_phone_email"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 20:31:14 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c74360f19803e6f-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3d2-YPkwfiA8oIHKfq33KhRvSzE+ftQ\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Find Social Media Links\",\n    \"data\": {\n        \"facebook\": {\n            \"url\": \"https://facebook.com/yourpage\",\n            \"isActive\": true\n        },\n        \"instagram\": {\n            \"url\": \"https://instagram.com/yourpage\",\n            \"isActive\": true\n        },\n        \"twitter\": {\n            \"url\": \"https://twitter.com/yourpage\",\n            \"isActive\": true\n        },\n        \"linkedin\": {\n            \"url\": \"https://linkedin.com/in/yourprofile\",\n            \"isActive\": false\n        },\n        \"youtube\": {\n            \"url\": \"https://youtube.com/c/yourchannel\",\n            \"isActive\": true\n        },\n        \"tiktok\": {\n            \"url\": \"https://tiktok.com/@yourprofile\",\n            \"isActive\": false\n        },\n        \"whatsapp\": {\n            \"url\": \"+1234567890\",\n            \"isActive\": true\n        },\n        \"telegram\": {\n            \"url\": \"https://t.me/yourchannel\",\n            \"isActive\": false\n        },\n        \"snapchat\": {\n            \"url\": \"https://snapchat.com/add/yourprofile\",\n            \"isActive\": false\n        },\n        \"address\": {\n            \"url\": \"123 Main St, City, Country\",\n            \"isActive\": true\n        },\n        \"phone\": {\n            \"url\": \"+1234567890\",\n            \"isActive\": true\n        },\n        \"email\": {\n            \"url\": \"info@example.com\",\n            \"isActive\": true\n        },\n        \"website\": {\n            \"url\": \"https://www.example.com\",\n            \"isActive\": false\n        },\n        \"appName\": {\n            \"url\": \"My Super App\",\n            \"isActive\": false\n        },\n        \"_id\": \"697fb7518b6b1af267767b39\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get find_by_terms_conditions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base-url}}/api/v1/settings/find_by_terms_conditions",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "find_by_terms_conditions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get find_by_terms_conditions",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "url": {
+                  "raw": "{{base-url}}/api/v1/settings/find_by_terms_conditions",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "find_by_terms_conditions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 19:36:50 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c73e65c78511645-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"cb-YR4cHCsUyguqYL2FqTobcIV7yKY\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Find By Terms Conditions \",\n    \"data\": {\n        \"_id\": \"697faa2c8b6b1af267767af8\",\n        \"TermsConditions\": \"<div> new TermsConditions here <h1 > TermsConditions </h1> </div>\",\n        \"__v\": 0\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get PrivacyPolicy",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base-url}}/api/v1/settings/find_by_privacy_policy",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "find_by_privacy_policy"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get PrivacyPolicy",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzkwZjMxNGQ2MjE3ZDg0MWU3ZWU4NCIsInJvbGUiOiJzdXBlckFkbWluIiwiZW1haWwiOiJwYXJ2ZXNtb3Nhcm9mMkBnbWFpbC5jb20iLCJpYXQiOjE3Njk5NzM4NTEsImV4cCI6MTc3MDgzNzg1MX0.TkpcVoJPFOIQwamD2vZS1jgzkdfLbHqse7Yqu-EwUVo",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "url": {
+                  "raw": "{{base-url}}/api/v1/settings/find_by_privacy_policy",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "find_by_privacy_policy"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 01 Feb 2026 19:35:56 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c73e51188561645-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"c7-3BVNt6yDnpZRNtex544uIgLN6lM\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Find By Privacy Policy \",\n    \"data\": {\n        \"_id\": \"697faadc8b6b1af267767afb\",\n        \"PrivacyPolicy\": \"<div> new privacy_policys here <h1 > privacy_policys </h1> </div>\",\n        \"__v\": 0\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "contact",
+      "item": [
+        {
+          "name": "create_contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n \"title\": \"Guest Inquiry\",\r\n \"description\": \"Guest description text.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base-url}}/api/v1/contact/create_contact",
+              "host": [
+                "{{base-url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "create_contact"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create_contact",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n \"title\": \"Guest Inquiry\",\r\n \"description\": \"Guest description text.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base-url}}/api/v1/contact/create_contact",
+                  "host": [
+                    "{{base-url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contact",
+                    "create_contact"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Mon, 02 Feb 2026 18:05:26 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "109"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                },
+                {
+                  "key": "CF-Ray",
+                  "value": "9c7b9dc669bdb5cb-CGP"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"6d-juywINt+BRKF7m0eM3NZatoKEKg\""
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully  Recorded \",\n    \"data\": {\n        \"status\": true,\n        \"message\": \"successfully recorded\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "all_contact",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/all_contact?page=1&limit=10",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "all_contact"
+              ],
+              "query": [
+                {
+                  "key": "searchTerm",
+                  "value": "John Doe",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "all_contact",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/contact/all_contact?page=1&limit=10",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contact",
+                    "all_contact"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchTerm",
+                      "value": "John Doe",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "389"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"185-EuS50nmVJlnIWynykMWB0Obs+5A\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 02 Feb 2026 18:05:47 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Successfully Find All Contact\",\n    \"data\": {\n        \"meta\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPage\": 1\n        },\n        \"allContactList\": [\n            {\n                \"_id\": \"6980e75f42b5b1e4370e1199\",\n                \"name\": \"Super Admin\",\n                \"email\": \"parvesmosarof2@gmail.com\",\n                \"title\": \"Guest Inquiry\",\n                \"description\": \"Guest description text.\",\n                \"isDelete\": false,\n                \"createdAt\": \"2026-02-02T18:05:19.483Z\",\n                \"updatedAt\": \"2026-02-02T18:05:19.483Z\"\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "specific_contact",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/specific_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "specific_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update_contact",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"asdfgashgfgashdfg\",\r\n    \"email\": \"johndoe@example.com\",\r\n    \"question\": \"How can I reset my password?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/update_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "update_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete_contact",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/delete_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "delete_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service Category",
+      "item": [
+        {
+          "name": "get-all-category(app)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/categories/getallcategories",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "getallcategories"
+              ],
+              "query": [
+                {
+                  "key": "searchTerm",
+                  "value": "John Doe",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "all_contact",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/categories/getallcategories",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categories",
+                    "getallcategories"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchTerm",
+                      "value": "John Doe",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "603"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"25b-A+c/FxW9E0FrPdAZ7jhWL1Iud3g\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 02 Feb 2026 18:39:34 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Categories retrieved successfully\",\n    \"data\": [\n        {\n            \"_id\": \"6980ef0855841f60ccb9bc63\",\n            \"name\": \"Fitness\",\n            \"description\": \"not required\",\n            \"img\": \"https://res.cloudinary.com/dhxyjdrvr/image/upload/v1770057483/categories/rzidaths4lvsazka5lga.png\",\n            \"createdAt\": \"2026-02-02T18:38:00.736Z\",\n            \"updatedAt\": \"2026-02-02T18:38:00.736Z\"\n        },\n        {\n            \"_id\": \"6980ef3455841f60ccb9bc66\",\n            \"name\": \"Lifestyle\",\n            \"description\": \"not required\",\n            \"img\": \"https://res.cloudinary.com/dhxyjdrvr/image/upload/v1770057527/categories/r7a4qkzw5kz6ywgnw0vx.png\",\n            \"createdAt\": \"2026-02-02T18:38:44.185Z\",\n            \"updatedAt\": \"2026-02-02T18:38:44.185Z\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "specific_contact",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/specific_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "specific_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update_contact",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"asdfgashgfgashdfg\",\r\n    \"email\": \"johndoe@example.com\",\r\n    \"question\": \"How can I reset my password?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/update_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "update_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete_contact",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/delete_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "delete_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createcategory",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{buyerToken}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "data",
+                  "value": "{\n    \"name\": \"Lifestyle\",\n    \"description\": \"not required\"\n  }",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/C:/Users/Parves Mosarof new/Pictures/Screenshots/lifestyle2.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/categories/createcategory",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "createcategory"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "createcategory",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{adminToken}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "{{buyerToken}}",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "data",
+                      "value": "{\n    \"name\": \"Fitness\",\n    \"description\": \"not required\"\n  }",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/C:/Users/Parves Mosarof new/Pictures/Screenshots/lifestyle.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{localUrl}}/api/v1/categories/createcategory",
+                  "host": [
+                    "{{localUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categories",
+                    "createcategory"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "330"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14a-IGRAogyweCA0uRNxfBX4sqB1gD0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 02 Feb 2026 18:38:00 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Category created successfully\",\n    \"data\": {\n        \"name\": \"Fitness\",\n        \"description\": \"not required\",\n        \"img\": \"https://res.cloudinary.com/dhxyjdrvr/image/upload/v1770057483/categories/rzidaths4lvsazka5lga.png\",\n        \"_id\": \"6980ef0855841f60ccb9bc63\",\n        \"createdAt\": \"2026-02-02T18:38:00.736Z\",\n        \"updatedAt\": \"2026-02-02T18:38:00.736Z\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Service",
+      "item": [
+        {
+          "name": "get-all-category(app)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/categories/getallcategories",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "getallcategories"
+              ],
+              "query": [
+                {
+                  "key": "searchTerm",
+                  "value": "John Doe",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "specific_contact",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/specific_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "specific_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update_contact",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"asdfgashgfgashdfg\",\r\n    \"email\": \"johndoe@example.com\",\r\n    \"question\": \"How can I reset my password?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/update_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "update_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete_contact",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/contact/delete_contact/68967057fdbaf03d7da2873d",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contact",
+                "delete_contact",
+                "68967057fdbaf03d7da2873d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createcategory",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{adminToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{buyerToken}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "data",
+                  "value": "{\n    \"name\": \"Lifestyle\",\n    \"description\": \"not required\"\n  }",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/C:/Users/Parves Mosarof new/Pictures/Screenshots/lifestyle2.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/categories/createcategory",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "createcategory"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "buyerToken",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}

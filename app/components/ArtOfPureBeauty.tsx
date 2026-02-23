@@ -6,7 +6,7 @@ import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
 
 const ArtOfPureBeauty = () => {
   const { data: settingsData } = useGetSettingsQuery({});
-  const { title, subtitle } = settingsData?.data?.homepagesection2 || {};
+  const { title, subtitle, imageone, imagetwo, imagethree } = settingsData?.data?.homepagesection2 || {};
 
   return (
     <section className="py-12 md:py-16 bg-[#3b3b3b]">
@@ -18,27 +18,27 @@ const ArtOfPureBeauty = () => {
           <p className="text-base md:text-xl text-gray-300 font-serif mb-10 md:mb-16 max-w-2xl mx-auto leading-relaxed px-4">
             {subtitle || "At Lunel, we believe in the power of nature to enhance your natural beauty. Our products are crafted with pure, organic ingredients that nourish and revitalize your skin. Experience the perfect blend of science and nature for radiant, healthy-looking skin."}
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-20 mb-8 px-4 md:px-12">
             {[
-              { 
-                id: 1, 
-                alt: 'Laum Seury Serum', 
-                src: '/images/b1.png',
+              {
+                id: 1,
+                alt: 'Laum Seury Serum',
+                src: imageone || '/images/b1.png',
                 name: 'Laum Seury',
                 className: ''
               },
-              { 
-                id: 2, 
-                alt: 'JEKNCLER Cream', 
-                src: '/images/b2.png',
+              {
+                id: 2,
+                alt: 'JEKNCLER Cream',
+                src: imagetwo || '/images/b2.png',
                 name: 'JEKNCLER',
                 className: 'md:mt-20' // Apply top margin only on desktop
               },
-              { 
-                id: 3, 
-                alt: 'Pure Serum', 
-                src: '/images/b3.png',
+              {
+                id: 3,
+                alt: 'Pure Serum',
+                src: imagethree || '/images/b3.png',
                 name: 'Pure Serum',
                 className: ''
               },

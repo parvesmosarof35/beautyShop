@@ -17,7 +17,27 @@ export const settingsApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["settings"],
         }),
+        getHomePageSection2: builder.query({
+            query: () => ({
+                url: "setting/home-page-section-2",
+                method: "GET",
+            }),
+            providesTags: ["settings"],
+        }),
+        updateHomePageSection2: builder.mutation({
+            query: (data) => ({
+                url: "setting/home-page-section-2",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["settings"],
+        }),
     }),
 });
 
-export const { useGetSettingsQuery, useUpdateSettingsMutation } = settingsApi;
+export const {
+    useGetSettingsQuery,
+    useUpdateSettingsMutation,
+    useGetHomePageSection2Query,
+    useUpdateHomePageSection2Mutation
+} = settingsApi;
