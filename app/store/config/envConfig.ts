@@ -1,9 +1,5 @@
-
-// export const imgUrl = "https://ecommarce-backend-dsoe.onrender.com/";
-export const imgUrl = `${process.env.NEXT_PUBLIC_IMG_URL}`;
-
-
-export const url = `${imgUrl}api/v1/`;
+export const imgUrl = process.env.NEXT_PUBLIC_IMG_URL || "https://ecommarce-backend-dsoe.onrender.com/";
+export const url = `${imgUrl.replace(/\/+$/, "")}/api/v1/`;
 
 
 export const firebaseConfig = {
@@ -28,7 +24,7 @@ export const firebaseConfig = {
 //   password: `${process.env.NEXT_PUBLIC_GUEST_USER_PASSWORD}`
 // };
 
-console.log(imgUrl, "asdf");
+
 
 // new comment
 
@@ -45,9 +41,8 @@ export const getImageBaseUrl = () => imgUrl;
 // Function to get the WebSocket base URL
 // export const getWsBaseUrl = () => wsUrl;
 
-// asdf 
 
-export const getImageUrl = (imagePath : any) => {
+export const getImageUrl = (imagePath: any) => {
   if (!imagePath) return "";
 
   // If it's already a full URL, return as-is
