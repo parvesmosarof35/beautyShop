@@ -207,14 +207,14 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
               ${product.price.toFixed(2)}
             </div>
             
-            {product.stock_quantity !== undefined && (
+            {/* {product.stock_quantity !== undefined && (
                  <div className="mb-6 flex items-center gap-2">
                     <span className="text-gray-400">Availability:</span>
                     <span className={`${product.stock_quantity > 0 ? 'text-green-500' : 'text-red-500'} font-medium`}>
                         {product.stock_quantity > 0 ? `${product.stock_quantity} in stock` : 'Out of stock'}
                     </span>
                  </div>
-            )}
+            )} */}
 
             {/* Quantity Selector */}
             <div className="mb-6">
@@ -326,10 +326,10 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
 
         {/* Customer Reviews */}
         <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-8">Customer Reviews</h2>
+          {/* <h2 className="text-2xl font-bold text-white mb-8">Customer Reviews</h2> */}
 
-          <div className="grid md:grid-cols-5 gap-8">
-            {/* Rating Summary */}
+          {/* <div className="grid md:grid-cols-5 gap-8">
+         
             <div className="md:col-span-2 flex flex-col items-center justify-center text-center border-r border-gray-800 pr-8">
               <div className="text-6xl font-bold text-white mb-2">
                 {(product.averageRating || 0).toFixed(1)}
@@ -346,7 +346,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
               <p className="text-sm text-gray-400">Based on {product.totalReviews || 0} reviews</p>
             </div>
 
-            {/* Rating Distribution */}
+           
             <div className="md:col-span-3 space-y-3">
               {[5, 4, 3, 2, 1].map((star, index) => (
                 <div key={star} className="flex items-center gap-3">
@@ -362,10 +362,10 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Individual Reviews */}
-          <div className="mt-8 space-y-6">
+          {/* <div className="mt-8 space-y-6">
             {product.reviews && product.reviews.length > 0 ? (
               product.reviews.slice(0, 3).map((review: any, index: number) => (
                 <div key={index} className="bg-[#1a1a1a] rounded-lg p-6 border border-gray-800">
@@ -401,7 +401,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
             ) : (
               <p className="text-center text-gray-500 py-8">No reviews yet. Be the first to review!</p>
             )}
-          </div>
+          </div> */}
         </div>
 
         {/* Related Products */}

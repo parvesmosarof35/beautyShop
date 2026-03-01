@@ -11,6 +11,7 @@ import {
     useUpdateProductMutation,
     useDeleteProductMutation,
 } from '@/app/store/api/productApi';
+import { useGetAllCollectionsQuery } from '@/app/store/api/collectionApi';
 
 interface Product {
     _id: string;
@@ -18,13 +19,15 @@ interface Product {
     description: string;
     categories: string[] | string; // API returns array, simplified for compatibility
     price: number;
-    stock_quantity: number;
+    stock_quantity?: number;
     images_urls: string[];
-    sku: string;
+    sku?: string;
     isFeatured: boolean;
     skintype?: string;
     ingredients?: string[];
     product_link?: string;
+    collection?: string;
+    collections?: any;
 }
 
 const ProductsPage = () => {
@@ -46,6 +49,12 @@ const ProductsPage = () => {
 
     const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
     const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
+
+    const { data: collectionsData, isLoading: isLoadingCollections } = useGetAllCollectionsQuery({
+        page: 1,
+        limit: 100,
+    });
+    const availableCollections = collectionsData?.data || [];
 
     // Extract products from API response
     const products: Product[] = productsData?.data || [];
@@ -107,7 +116,12 @@ const ProductsPage = () => {
     };
 
     const openEditModal = (product: Product) => {
-        setEditingProduct({ ...product });
+        setEditingProduct({
+            ...product,
+            collection: Array.isArray(product.collections) && product.collections.length > 0
+                ? product.collections[0]._id
+                : (typeof product.collections === 'string' ? product.collections : '')
+        });
         // We don't load existing images into 'imagePreviews' because those are for NEW files.
         // We will render existing images from editingProduct.images_urls
         setImagePreviews([]);
@@ -118,11 +132,11 @@ const ProductsPage = () => {
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         setEditingProduct((prev) => {
-             if (!prev) return null;
-             return {
+            if (!prev) return null;
+            return {
                 ...prev,
                 [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : (type === 'number' ? parseFloat(value) : value)
-             };
+            };
         });
     };
 
@@ -131,7 +145,7 @@ const ProductsPage = () => {
         if (files) {
             const newFiles = Array.from(files);
             const currentTotal = (editingProduct?.images_urls?.length || 0) + selectedImageFiles.length + newFiles.length;
-            
+
             if (currentTotal > 8) {
                 Swal.fire({
                     icon: 'error',
@@ -175,11 +189,15 @@ const ProductsPage = () => {
         if (editingProduct.product_link) {
             formData.append('product_link', editingProduct.product_link);
         }
-        
+
+        if (editingProduct.collection) {
+            formData.append('collections', editingProduct.collection);
+        }
+
         if (Array.isArray(editingProduct.categories)) {
-             editingProduct.categories.forEach(cat => formData.append('categories[]', cat));
+            editingProduct.categories.forEach(cat => formData.append('categories[]', cat));
         } else if (editingProduct.categories) {
-             formData.append('categories', editingProduct.categories);
+            formData.append('categories', editingProduct.categories);
         }
 
         // Append all selected files
@@ -269,7 +287,7 @@ const ProductsPage = () => {
                                 <thead className="bg-neutral-950 text-neutral-400 text-xs uppercase font-medium">
                                     <tr>
                                         <th className="px-6 py-4">Product</th>
-                                        <th className="px-6 py-4">Category</th>
+                                        <th className="px-6 py-4">Collection</th>
                                         <th className="px-6 py-4">Price</th>
                                         <th className="px-6 py-4">Stock</th>
                                         <th className="px-6 py-4">Status</th>
@@ -295,24 +313,24 @@ const ProductsPage = () => {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 text-sm text-neutral-400">
-                                                {Array.isArray(product.categories) ? product.categories.join(', ') : product.categories}
+                                                {Array.isArray(product.collections) && product.collections.length > 0
+                                                    ? product.collections[0].name
+                                                    : 'No Collection'}
                                             </td>
                                             <td className="px-6 py-4 text-sm font-medium text-neutral-200 font-inter">${product.price}</td>
                                             <td className="px-6 py-4">
-                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                                    product.stock_quantity > 0 
-                                                    ? 'bg-green-900/30 text-green-400' 
+                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${(product.stock_quantity ?? 0) > 0
+                                                    ? 'bg-green-900/30 text-green-400'
                                                     : 'bg-red-900/30 text-red-400'
-                                                }`}>
-                                                    {product.stock_quantity} in stock
+                                                    }`}>
+                                                    {product.stock_quantity ?? 0} in stock
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                                    product.isFeatured 
-                                                    ? 'bg-[#D4A574]/20 text-[#D4A574] border border-[#D4A574]/30' 
+                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${product.isFeatured
+                                                    ? 'bg-[#D4A574]/20 text-[#D4A574] border border-[#D4A574]/30'
                                                     : 'bg-neutral-800 text-neutral-500 border border-neutral-700'
-                                                }`}>
+                                                    }`}>
                                                     {product.isFeatured ? 'Featured' : 'Standard'}
                                                 </span>
                                             </td>
@@ -390,15 +408,15 @@ const ProductsPage = () => {
                             {/* Image Upload Section */}
                             <div>
                                 <label className="block text-sm font-medium text-neutral-400 mb-2">Product Images (Max 8)</label>
-                                
+
                                 <div className="grid grid-cols-4 gap-4 mb-4">
                                     {/* Existing Images */}
                                     {editingProduct.images_urls?.map((url, idx) => (
                                         <div key={`existing-${idx}`} className="relative aspect-square rounded-lg overflow-hidden border border-neutral-800 group">
                                             <Image src={url} alt={`Existing ${idx}`} fill className="object-cover" />
                                             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                               <span className="text-xs text-white">Existing</span>
-                                               {/* Optional delete button if API supported it */}
+                                                <span className="text-xs text-white">Existing</span>
+                                                {/* Optional delete button if API supported it */}
                                             </div>
                                         </div>
                                     ))}
@@ -422,12 +440,12 @@ const ProductsPage = () => {
                                         <label className="aspect-square rounded-lg border-2 border-dashed border-neutral-700 hover:border-[#D4A574] flex flex-col items-center justify-center cursor-pointer transition-colors text-neutral-500 hover:text-[#D4A574]">
                                             <FiUpload className="w-6 h-6 mb-2" />
                                             <span className="text-xs">Add Image</span>
-                                            <input 
-                                                type="file" 
-                                                accept="image/*" 
-                                                multiple 
-                                                className="hidden" 
-                                                onChange={handleImageChange} 
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                multiple
+                                                className="hidden"
+                                                onChange={handleImageChange}
                                             />
                                         </label>
                                     )}
@@ -486,18 +504,17 @@ const ProductsPage = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-neutral-400 mb-1">Stock</label>
+                                    <label className="block text-sm font-medium text-neutral-400 mb-1">Stock (Optional)</label>
                                     <input
                                         type="number"
                                         name="stock_quantity"
                                         value={editingProduct.stock_quantity || ''}
                                         onChange={handleEditChange}
                                         className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#D4A574]"
-                                        required
                                     />
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-2">
                                 <input
                                     type="checkbox"
@@ -513,7 +530,7 @@ const ProductsPage = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-neutral-400 mb-1">SKU</label>
+                                <label className="block text-sm font-medium text-neutral-400 mb-1">SKU (Optional)</label>
                                 <input
                                     type="text"
                                     name="sku"
@@ -521,6 +538,31 @@ const ProductsPage = () => {
                                     onChange={handleEditChange}
                                     className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#D4A574]"
                                 />
+                            </div>
+
+                            {/* Collection Selection */}
+                            <div className="bg-black/20 border border-neutral-800 rounded-xl p-4 mt-6">
+                                <h3 className="text-sm font-semibold text-neutral-200 mb-4">Collection (Category)</h3>
+                                {isLoadingCollections ? (
+                                    <div className="text-center py-4 text-neutral-500 text-xs">Loading collections...</div>
+                                ) : availableCollections.length === 0 ? (
+                                    <div className="text-center py-4 text-neutral-500 text-xs">No collections available</div>
+                                ) : (
+                                    <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+                                        {availableCollections.map((collection: any) => (
+                                            <label key={collection._id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-neutral-800 transition-colors cursor-pointer">
+                                                <input
+                                                    type="radio"
+                                                    name="collection"
+                                                    checked={editingProduct.collection === collection._id}
+                                                    onChange={() => setEditingProduct(prev => prev ? { ...prev, collection: collection._id } : null)}
+                                                    className="bg-neutral-950 border-neutral-700 text-[#D4A574] focus:ring-0 focus:ring-offset-0"
+                                                />
+                                                <span className="text-xs text-neutral-300">{collection.name}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="pt-4 flex justify-end gap-3 sticky bottom-0 bg-neutral-900 py-4 border-t border-neutral-800">

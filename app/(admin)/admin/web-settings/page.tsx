@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useGetSettingsQuery, useUpdateHomePageSection2Mutation, useUpdateSettingsMutation } from '@/app/store/api/settingsApi';
 import Swal from 'sweetalert2';
 import { FiSave, FiLoader, FiUpload, FiImage } from 'react-icons/fi';
-import { revalidateFeaturedProducts, revalidateProducts } from '@/app/actions/revalidate';
+import { revalidateFeaturedProducts, revalidateProducts, revalidateSettings } from '@/app/actions/revalidate';
 
 const WebSettingsPage = () => {
   const { data: settingsData, isLoading } = useGetSettingsQuery({});
@@ -33,6 +33,7 @@ const WebSettingsPage = () => {
     email: { url: '', isActive: true },
     homepagesection2: { title: '', subtitle: '' },
     homepagesection3: { title: '', subtitle: '', buttontext: '' },
+    homepageCollections: { title: '', subtitle: '' },
     footertext: { logobelowtext: '', footerbottomtext: '' },
     productpage: { title: '', subtitle: '' },
     productdetails: { Gotodetailstext: '', relatedproducttext: '' },
@@ -96,6 +97,7 @@ const WebSettingsPage = () => {
       });
       await revalidateFeaturedProducts();
       await revalidateProducts();
+      await revalidateSettings();
     } catch (err) {
       console.error('Failed to update settings:', err);
       Swal.fire({
@@ -192,9 +194,35 @@ const WebSettingsPage = () => {
         </section>
 
         {/* Homepage Sections */}
+        <section className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-neutral-200 mb-4">Homepage Section 2 (Collections)</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-neutral-400 mb-1">Title</label>
+              <input
+                type="text"
+                value={formData.homepageCollections?.title || ''}
+                onChange={(e) => handleChange('homepageCollections', 'title', e.target.value)}
+                placeholder="Curated Collections"
+                className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2 focus:outline-none focus:border-[#D4A574]"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-neutral-400 mb-1">Subtitle</label>
+              <input
+                type="text"
+                value={formData.homepageCollections?.subtitle || ''}
+                onChange={(e) => handleChange('homepageCollections', 'subtitle', e.target.value)}
+                placeholder="Explore our meticulously crafted ranges..."
+                className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2 focus:outline-none focus:border-[#D4A574]"
+              />
+            </div>
+          </div>
+        </section>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <section className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-neutral-200 mb-4">Homepage Section 2</h2>
+            <h2 className="text-lg font-semibold text-neutral-200 mb-4">Homepage Section 3 (Art of Pure Beauty)</h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-neutral-400 mb-1">Title</label>
@@ -251,7 +279,7 @@ const WebSettingsPage = () => {
           </section>
 
           <section className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-neutral-200 mb-4">Homepage Section 3</h2>
+            <h2 className="text-lg font-semibold text-neutral-200 mb-4">Homepage Section 4 (Featured Collection)</h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-neutral-400 mb-1">Title</label>

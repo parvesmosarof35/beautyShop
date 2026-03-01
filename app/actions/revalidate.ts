@@ -34,3 +34,11 @@ export async function revalidateAbout() {
 export async function revalidateProducts() {
   revalidateTag('product', 'max');
 }
+
+export async function revalidateCollections() {
+  revalidateTag('collections', 'max');
+}
+
+export async function revalidateSettings() {
+  revalidateTag('settings', 'max');
+}

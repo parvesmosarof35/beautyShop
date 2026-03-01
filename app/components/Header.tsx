@@ -125,7 +125,7 @@ const Header = () => {
 
   const navLinks = [
     { label: 'Home', href: '/' },
-    { label: 'Wellness', href: 'https://shop.lunelwellness.com/business/yp09ey1e/htim5qmb' },
+    { label: 'Booking', href: 'https://shop.lunelwellness.com/business/yp09ey1e/htim5qmb' },
     { label: 'Products', href: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
     { label: 'New Arrivals', href: '/products?limit=12&maxprice=3000&page=1&sort=newest' },
     // { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },
@@ -246,7 +246,7 @@ const Header = () => {
       {/* Account (Desktop Only) */}
       {!isMobileView && (
         !isAuthenticated ? (
-          <Link href="/login" onClick={handleNavigation} className="text-white hover:text-white transition-colors flex items-center" aria-label="Login">
+          <Link href="https://shop.lunelwellness.com/auth/login?redirectUrl=%2Fbusiness%2Fyp09ey1e%2Fhtim5qmb" onClick={handleNavigation} className="text-white hover:text-white transition-colors flex items-center" aria-label="Login">
             <FiUser className="h-5 w-5" />
           </Link>
         ) : (

@@ -10,6 +10,7 @@ import {
     useUpdateCollectionMutation,
     useDeleteCollectionMutation,
 } from '@/app/store/api/collectionApi';
+import { revalidateCollections } from '@/app/actions/revalidate';
 
 interface Collection {
     _id: string;
@@ -73,6 +74,9 @@ const CollectionsPage = () => {
         if (result.isConfirmed) {
             try {
                 await deleteCollection(id).unwrap();
+                // Revalidate static pages that use collections
+                await revalidateCollections();
+
                 Swal.fire({
                     title: 'Deleted!',
                     text: 'Collection has been deleted successfully.',
@@ -171,12 +175,26 @@ const CollectionsPage = () => {
                     timer: 2000,
                 });
             }
+
+            // Revalidate static pages that use collections
+            await revalidateCollections();
+
             handleCloseModal();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Failed to save collection:', err);
+
+            let errorMessage = 'Failed to save collection. Please try again.';
+
+            // Handle duplicate slug error from backend
+            if (err?.data?.message && err.data.message.includes('slug already exists')) {
+                errorMessage = `The slug "${formData.slug}" is already in use. Please choose a different one.`;
+            } else if (err?.data?.errorSources?.[0]?.message) {
+                errorMessage = err.data.errorSources[0].message;
+            }
+
             Swal.fire({
                 title: 'Error!',
-                text: 'Failed to save collection. Please try again.',
+                text: errorMessage,
                 icon: 'error',
                 confirmButtonColor: '#D4A574',
                 background: '#171717',
@@ -388,10 +406,9 @@ const CollectionsPage = () => {
 
                             {/* Slug Input */}
                             <div className="space-y-2">
-                                <label className="block text-sm font-medium text-neutral-300">Collection Slug</label>
+                                <label className="block text-sm font-medium text-neutral-300">Collection Slug (Optional)</label>
                                 <input
                                     type="text"
-                                    required
                                     value={formData.slug}
                                     onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
                                     placeholder="e.g. summer-essentials"
