@@ -11,7 +11,7 @@ import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
 
 const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
   const { data: settingsData } = useGetSettingsQuery({});
-  const { title, subtitle, buttontext } = settingsData?.data?.homepagesection3 || {};
+  const { title, subtitle, buttontext } = settingsData?.homepagesection3 || {};
 
   return (
     <section className="py-24 bg-[#1a1a1a]">
@@ -24,7 +24,7 @@ const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
             {subtitle || "Discover our best-selling products that will transform your skincare routine"}
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product: any) => (
             <div key={product._id} className="group bg-[#2b2b2b] rounded-lg overflow-hidden transition-all duration-300 flex flex-col h-full">
@@ -63,15 +63,15 @@ const FeaturedCollection = ({ products = [] }: { products?: any[] }) => {
             </div>
           ))}
         </div>
-        
+
         <div className="text-center mt-16">
           <Link href="/shop">
-          <Button 
-            variant="outline" 
-            className="border-b-2 border-white text-white hover:bg-black hover:text-gray-100 px-12 py-6 text-xl rounded-none transition-all duration-300"
-          >
-            {buttontext || "Shop Now"}
-          </Button>
+            <Button
+              variant="outline"
+              className="border-b-2 border-white text-white hover:bg-black hover:text-gray-100 px-12 py-6 text-xl rounded-none transition-all duration-300"
+            >
+              {buttontext || "Shop Now"}
+            </Button>
           </Link>
         </div>
       </div>

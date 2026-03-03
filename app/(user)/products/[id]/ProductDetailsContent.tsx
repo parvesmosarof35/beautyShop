@@ -25,7 +25,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
   const [quantity, setQuantity] = useState(1);
 
   const { data: settingsData } = useGetSettingsQuery({});
-  const settings = settingsData?.data?.productdetails || {};
+  const settings = settingsData || {};
   const goToDetailsText = settings.Gotodetailstext || "Go to details";
   const relatedProductText = settings.relatedproducttext || "You May Also Like";
 
@@ -33,7 +33,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
   const [addToWishlist, { isLoading: isAddingToWishlist }] = useAddToWishlistMutation();
   const [removeFromWishlist, { isLoading: isRemovingFromWishlist }] = useRemoveFromWishlistMutation();
 
-  const isInWishlist = wishlistData?.data?.some((item: any) => 
+  const isInWishlist = wishlistData?.data?.some((item: any) =>
     (item.product_id?._id || item.product_id) === product?._id
   );
 
@@ -41,9 +41,9 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
     if (!product) return;
 
     if (!isAuthenticated) {
-        const returnUrl = encodeURIComponent(pathname + window.location.search);
-        router.push(`/login?redirect=${returnUrl}`);
-        return;
+      const returnUrl = encodeURIComponent(pathname + window.location.search);
+      router.push(`/login?redirect=${returnUrl}`);
+      return;
     }
 
     try {
@@ -66,7 +66,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
         });
       }
     } catch (err: any) {
-        // Error handling
+      // Error handling
     }
   };
 
@@ -76,9 +76,9 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
     if (!product) return;
 
     if (!isAuthenticated) {
-        const returnUrl = encodeURIComponent(pathname + window.location.search);
-        router.push(`/login?redirect=${returnUrl}`);
-        return;
+      const returnUrl = encodeURIComponent(pathname + window.location.search);
+      router.push(`/login?redirect=${returnUrl}`);
+      return;
     }
 
     try {
@@ -181,8 +181,8 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`relative aspect-square rounded-lg overflow-hidden transition-all ${selectedImage === index
-                        ? 'ring-2 ring-[#D4A574] ring-offset-2 ring-offset-[#0a0a0a] scale-95'
-                        : 'opacity-60 hover:opacity-100'
+                      ? 'ring-2 ring-[#D4A574] ring-offset-2 ring-offset-[#0a0a0a] scale-95'
+                      : 'opacity-60 hover:opacity-100'
                       }`}
                   >
                     <Image
@@ -206,7 +206,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
             <div className="text-3xl font-bold text-white mb-6">
               ${product.price.toFixed(2)}
             </div>
-            
+
             {/* {product.stock_quantity !== undefined && (
                  <div className="mb-6 flex items-center gap-2">
                     <span className="text-gray-400">Availability:</span>
@@ -244,14 +244,14 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
 
             {/* Action Buttons */}
             {product.product_link ? (
-            <div className="flex flex-col gap-3 mb-8">
-              <button
-                onClick={() => window.open(product.product_link, '_blank')}
-                className="w-full bg-[#D4A574] hover:bg-[#c29563] text-black font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {goToDetailsText}
-              </button>
-              {/* <button
+              <div className="flex flex-col gap-3 mb-8">
+                <button
+                  onClick={() => window.open(product.product_link, '_blank')}
+                  className="w-full bg-[#D4A574] hover:bg-[#c29563] text-black font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {goToDetailsText}
+                </button>
+                {/* <button
                 onClick={handleWishlistToggle}
                 disabled={isAddingToWishlist || isRemovingFromWishlist}
                 className="w-full bg-transparent border-2 border-[#2a2a2a] hover:border-[#D4A574] text-white py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
@@ -259,7 +259,7 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
                 <Heart size={20} fill={isInWishlist ? 'currentColor' : 'none'} className={isInWishlist ? 'text-[#D4A574]' : ''} />
                 {isInWishlist ? 'In Wishlist' : 'Add to Wishlist'}
               </button> */}
-            </div>
+              </div>
             ) : (
               <div className="flex flex-col gap-3 mb-8">
                 <button
@@ -409,10 +409,10 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
           <div className="mt-16">
             <h2 className="text-2xl font-bold text-white mb-6">{relatedProductText}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {relatedProducts.map((relatedProduct: any) => (
+              {relatedProducts.map((relatedProduct: any) => (
                 <ProductCard
-                key={relatedProduct._id}
-                product={{
+                  key={relatedProduct._id}
+                  product={{
                     id: relatedProduct._id,
                     name: relatedProduct.name,
                     price: relatedProduct.price,
@@ -425,9 +425,9 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
                     originalPrice: relatedProduct.discountPrice,
                     skinType: relatedProduct.skintype ? [relatedProduct.skintype] : [],
                     ingredients: relatedProduct.ingredients || []
-                }}
+                  }}
                 />
-            ))}
+              ))}
             </div>
           </div>
         )}

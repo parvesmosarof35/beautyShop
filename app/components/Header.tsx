@@ -12,6 +12,7 @@ import { useGetSearchProductsQuery } from '@/app/store/api/productsApi';
 import { useGetMyCartQuery } from '@/app/store/api/cartApi';
 import { useGetMyWishlistQuery } from '@/app/store/api/wishlistApi';
 import { useGetAllCollectionsQuery } from '@/app/store/api/collectionApi';
+import { useGetSettingsQuery, NavbarLink } from '@/app/store/api/settingsApi';
 import { FiChevronDown } from 'react-icons/fi';
 
 const Header = () => {
@@ -77,6 +78,19 @@ const Header = () => {
   // Fetch Collections for Dropdown
   const { data: collectionsData } = useGetAllCollectionsQuery({});
 
+  // Fetch Navbar Settings
+  const { data: settingsData } = useGetSettingsQuery({});
+  const navbarLinks = settingsData?.navbarlinks?.filter((link: NavbarLink) => link.isActive) || [];
+
+  const defaultNavLinks = [
+    { title: 'Home', url: '/' },
+    { title: 'Booking', url: 'https://shop.lunelwellness.com/business/yp09ey1e/htim5qmb' },
+    { title: 'Products', url: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
+    { title: 'New Arrivals', url: '/products?limit=12&maxprice=3000&page=1&sort=newest' },
+  ];
+
+  const currentNavLinks = navbarLinks.length > 0 ? navbarLinks : defaultNavLinks;
+
   useEffect(() => {
     if (debouncedSearchQuery.trim() && searchResults?.data?.length > 0) {
       setSearchResultsOpen(true);
@@ -123,16 +137,16 @@ const Header = () => {
     setIsSearchOpen(false);
   };
 
-  const navLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'Booking', href: 'https://shop.lunelwellness.com/business/yp09ey1e/htim5qmb' },
-    { label: 'Products', href: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
-    { label: 'New Arrivals', href: '/products?limit=12&maxprice=3000&page=1&sort=newest' },
-    // { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },
-    // { label: 'Blog', href: '/blog?limit=9&page=1&searchTerm=' },
-    // { label: 'Contact', href: '/contact' },
-    // { label: 'FAQ', href: '/faq' },
-  ];
+  // const navLinks = [
+  //   { label: 'Home', href: '/' },
+  //   { label: 'Booking', href: 'https://shop.lunelwellness.com/business/yp09ey1e/htim5qmb' },
+  //   { label: 'Products', href: '/products?limit=12&maxprice=3000&page=1&sort=bestSelling' },
+  //   { label: 'New Arrivals', href: '/products?limit=12&maxprice=3000&page=1&sort=newest' },
+  //   // { label: 'Shop', href: '/shop?limit=12&page=1&sort=popularity' },
+  //   // { label: 'Blog', href: '/blog?limit=9&page=1&searchTerm=' },
+  //   // { label: 'Contact', href: '/contact' },
+  //   // { label: 'FAQ', href: '/faq' },
+  // ];
 
   // Reusable Search Results Dropdown
   const renderSearchResultsDropdown = () => {
@@ -328,8 +342,8 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden bg-[#000000] border-t border-gray-900 animate-slide-in-top">
             <nav className="flex flex-col p-4 space-y-1">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors font-montserrat" onClick={handleNavigation}>{link.label}</Link>
+              {currentNavLinks.map((link: NavbarLink) => (
+                <Link key={link.url} href={link.url} className="px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors font-montserrat" onClick={handleNavigation}>{link.title}</Link>
               ))}
               <div className="my-2 border-t border-gray-800"></div>
               {!isAuthenticated ? (
@@ -369,15 +383,15 @@ const Header = () => {
 
             </div>
             <nav className="flex justify-center space-x-6 lg:space-x-12 z-50">
-              {navLinks.map((link) => (
-                link.label === 'Products' ? (
-                  <div key={link.href} className="relative group">
+              {currentNavLinks.map((link: NavbarLink) => (
+                link.title === 'Products' ? (
+                  <div key={link.url} className="relative group">
                     <Link
-                      href={link.href}
+                      href={link.url}
                       className="text-white hover:text-white transition-colors font-montserrat flex items-center gap-1 py-4"
                       onClick={handleNavigation}
                     >
-                      {link.label}
+                      {link.title}
                       <FiChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                     </Link>
 
@@ -405,7 +419,7 @@ const Header = () => {
                     </div>
                   </div>
                 ) : (
-                  <Link key={link.href} href={link.href} className="text-white hover:text-white transition-colors font-montserrat py-4" onClick={handleNavigation}>{link.label}</Link>
+                  <Link key={link.url} href={link.url} className="text-white hover:text-white transition-colors font-montserrat py-4" onClick={handleNavigation}>{link.title}</Link>
                 )
               ))}
             </nav>

@@ -19,7 +19,7 @@ const ProductListItem = ({ product }: { product: any }) => {
   const { isAuthenticated } = useAuthState();
 
   const { data: settingsData } = useGetSettingsQuery({});
-  const settings = settingsData?.data?.productdetails || {};
+  const settings = settingsData?.productdetails || {};
   const goToDetailsText = settings.Gotodetailstext || "Go to Details";
 
   const handleAddToCart = async (e: React.MouseEvent) => {
@@ -27,9 +27,9 @@ const ProductListItem = ({ product }: { product: any }) => {
     e.stopPropagation();
 
     if (!isAuthenticated) {
-        const returnUrl = encodeURIComponent(pathname + window.location.search);
-        router.push(`/login?redirect=${returnUrl}`);
-        return;
+      const returnUrl = encodeURIComponent(pathname + window.location.search);
+      router.push(`/login?redirect=${returnUrl}`);
+      return;
     }
 
     try {
@@ -47,7 +47,7 @@ const ProductListItem = ({ product }: { product: any }) => {
           timer: 1500,
           background: '#171717',
           color: '#fff',
-           toast: true
+          toast: true
         });
       }
     } catch (err: any) {
@@ -73,9 +73,9 @@ const ProductListItem = ({ product }: { product: any }) => {
     e.stopPropagation();
 
     if (!isAuthenticated) {
-        const returnUrl = encodeURIComponent(pathname + window.location.search);
-        router.push(`/login?redirect=${returnUrl}`);
-        return;
+      const returnUrl = encodeURIComponent(pathname + window.location.search);
+      router.push(`/login?redirect=${returnUrl}`);
+      return;
     }
 
     try {
@@ -84,21 +84,21 @@ const ProductListItem = ({ product }: { product: any }) => {
         // Optional: Toast for removal
       } else {
         await addToWishlist({
-            product_id: product._id
+          product_id: product._id
         }).unwrap();
         Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Added to wishlist",
-            showConfirmButton: false,
-            timer: 1500,
-            background: '#171717',
-            color: '#fff',
-            toast: true
+          position: "top-end",
+          icon: "success",
+          title: "Added to wishlist",
+          showConfirmButton: false,
+          timer: 1500,
+          background: '#171717',
+          color: '#fff',
+          toast: true
         });
       }
     } catch (err: any) {
-        // Error handling
+      // Error handling
     }
   };
 
@@ -119,25 +119,25 @@ const ProductListItem = ({ product }: { product: any }) => {
           </div>
         )}
       </div>
-      
+
       {/* Details - Right side */}
       <div className="p-5 flex-1 flex flex-col">
         <div className="text-xs text-gray-300 mb-2">{product.categories?.[0] || 'Uncategorized'}</div>
         <h3 className="font-medium text-gray-100 text-xl mb-2">{product.name}</h3>
         <p className="text-gray-300 text-sm mb-4 line-clamp-2">{product.description}</p>
-        
+
         <div className="flex items-center mb-4">
           <div className="flex">
             {[1, 2, 3, 4, 5].map((star) => (
-              <Star 
-                key={star} 
-                className={`w-4 h-4 ${star <= (product.averageRating || 0) ? 'text-[#5CA1B5] fill-current' : 'text-gray-300'}`} 
+              <Star
+                key={star}
+                className={`w-4 h-4 ${star <= (product.averageRating || 0) ? 'text-[#5CA1B5] fill-current' : 'text-gray-300'}`}
               />
             ))}
           </div>
           <span className="text-xs text-gray-400 ml-1">({product.totalReviews || 0})</span>
         </div>
-        
+
         <div className="mt-auto flex items-center justify-between">
           <div className="flex items-baseline">
             <span className="text-xl font-bold text-gray-100">${product.price.toFixed(2)}</span>
@@ -148,38 +148,38 @@ const ProductListItem = ({ product }: { product: any }) => {
             )}
           </div>
           {product.product_link ? (
-              <a
-                href={product.product_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center hover:bg-[#b88b5c]"
-              >
-                {goToDetailsText}
-              </a>
+            <a
+              href={product.product_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center hover:bg-[#b88b5c]"
+            >
+              {goToDetailsText}
+            </a>
           ) : (
-              <button 
-                onClick={handleAddToCart}
-                disabled={isLoading}
-                className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-1"></div>
-                ) : (
-                    <ShoppingCart className="w-4 h-4 mr-1" />
-                )}
-                Add to Cart
-              </button>
+            <button
+              onClick={handleAddToCart}
+              disabled={isLoading}
+              className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-1"></div>
+              ) : (
+                <ShoppingCart className="w-4 h-4 mr-1" />
+              )}
+              Add to Cart
+            </button>
           )}
-          
-          <button 
+
+          <button
             onClick={handleWishlistToggle}
             disabled={isAddingToWishlist || isRemovingFromWishlist}
-            className={`ml-2 p-2 rounded-full border transition-colors ${isInWishlist 
-                ? 'bg-[#d4a674] border-[#d4a674] text-white' 
-                : 'border-gray-600 text-gray-400 hover:border-[#d4a674] hover:text-[#d4a674]'}`}
+            className={`ml-2 p-2 rounded-full border transition-colors ${isInWishlist
+              ? 'bg-[#d4a674] border-[#d4a674] text-white'
+              : 'border-gray-600 text-gray-400 hover:border-[#d4a674] hover:text-[#d4a674]'}`}
           >
-             <Heart className="w-5 h-5" fill={isInWishlist ? "currentColor" : "none"} />
+            <Heart className="w-5 h-5" fill={isInWishlist ? "currentColor" : "none"} />
           </button>
         </div>
       </div>
@@ -221,8 +221,8 @@ interface ProductsContentProps {
   collections: any[];
 }
 
-export default function ProductsContent({ 
-  title = "All Products", 
+export default function ProductsContent({
+  title = "All Products",
   description = "Discover our complete collection of premium beauty products",
   products,
   meta,
@@ -233,21 +233,21 @@ export default function ProductsContent({
   const searchParams = useSearchParams();
 
   const { data: settingsData } = useGetSettingsQuery({});
-  const settings = settingsData?.data?.productpage || {};
+  const settings = settingsData?.productpage || {};
 
   const displayTitle = settings.title || title;
   const displayDescription = settings.subtitle || description;
 
   // State for filters - Initialize from URL
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  
+
   const initialSort = searchParams.get('sort');
   const [sortBy, setSortBy] = useState(
-     initialSort === 'priceLowToHigh' ? 'price-low-high' :
-     initialSort === 'priceHighToLow' ? 'price-high-low' :
-     initialSort === 'bestRating' ? 'rating' :
-     initialSort === 'newest' ? 'newest' :
-     'best-selling'
+    initialSort === 'priceLowToHigh' ? 'price-low-high' :
+      initialSort === 'priceHighToLow' ? 'price-high-low' :
+        initialSort === 'bestRating' ? 'rating' :
+          initialSort === 'newest' ? 'newest' :
+            'best-selling'
   );
 
   const [filters, setFilters] = useState<FilterState>({
@@ -256,7 +256,7 @@ export default function ProductsContent({
     skinTypes: searchParams.getAll('skintype') || [],
     ingredients: searchParams.getAll('ingredients') || [],
   });
-  
+
   // Debounce filters to avoid excessive URL updates
   const debouncedFilters = useDebounce(filters, 500);
   const debouncedSortBy = useDebounce(sortBy, 500);
@@ -284,7 +284,7 @@ export default function ProductsContent({
   // Sync state with URL using router.push
   useEffect(() => {
     const params = new URLSearchParams();
-    
+
     params.set('page', currentPage.toString());
     params.set('limit', productsPerPage.toString());
     params.set('sort', getBackendSort(debouncedSortBy));
@@ -300,7 +300,7 @@ export default function ProductsContent({
     // Only push if the query string has actually changed to avoid redundant pushes
     const queryString = params.toString();
     if (searchParams.toString() !== queryString) {
-         router.push(`${pathname}?${queryString}`, { scroll: false });
+      router.push(`${pathname}?${queryString}`, { scroll: false });
     }
   }, [debouncedFilters, debouncedSortBy, currentPage, pathname, router]); // Intentionally removed searchParams from deps to avoid loops
 
@@ -397,31 +397,31 @@ export default function ProductsContent({
 
             {/* Products Grid */}
             {false ? ( // isLoading is no longer available here, handled by Suspense or just quick transition
-               <div className="flex justify-center items-center h-64">
-                   <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#D4A574]"></div>
-               </div>
+              <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#D4A574]"></div>
+              </div>
             ) : products && products.length > 0 ? (
               <div
-                className={`${viewMode === 'grid' 
-                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' 
+                className={`${viewMode === 'grid'
+                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
                   : 'space-y-4'}`}
               >
                 {products.map((product: any) => (
                   viewMode === 'grid' ? (
                     <ProductCard key={product._id} product={{
-                        id: product._id,
-                        name: product.name,
-                        price: product.price,
-                        image: product.images_urls?.[0] || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80',
-                        category: product.categories || [],
-                        rating: product.averageRating || 0,
-                        reviewCount: product.totalReviews || 0,
-                        isBestSeller: product.isFeatured,
-                        description: product.description,
-                        originalPrice: product.discountPrice,
-                        skinType: product.skintype ? [product.skintype] : [],
-                        ingredients: product.ingredients || [],
-                        product_link: product.product_link
+                      id: product._id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.images_urls?.[0] || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80',
+                      category: product.categories || [],
+                      rating: product.averageRating || 0,
+                      reviewCount: product.totalReviews || 0,
+                      isBestSeller: product.isFeatured,
+                      description: product.description,
+                      originalPrice: product.discountPrice,
+                      skinType: product.skintype ? [product.skintype] : [],
+                      ingredients: product.ingredients || [],
+                      product_link: product.product_link
                     }} />
                   ) : (
                     <ProductListItem key={product._id} product={product} />
@@ -436,7 +436,7 @@ export default function ProductsContent({
             )}
 
             {/* Pagination */}
-              {meta && meta.totalPage > 1 && (
+            {meta && meta.totalPage > 1 && (
               <div className="flex justify-center mt-10">
                 <nav className="flex items-center space-x-1">
                   <button
@@ -446,7 +446,7 @@ export default function ProductsContent({
                   >
                     &laquo;
                   </button>
-                  
+
                   {Array.from({ length: Math.min(5, meta.totalPage) }, (_, i) => {
                     // Show first page, last page, current page, and pages around current page
                     if (meta.totalPage <= 5) {
@@ -479,17 +479,16 @@ export default function ProductsContent({
                       <button
                         key={i}
                         onClick={() => paginate(Number(page))}
-                        className={`w-10 h-10 rounded-md flex items-center justify-center ${
-                          currentPage === page
+                        className={`w-10 h-10 rounded-md flex items-center justify-center ${currentPage === page
                             ? 'bg-[#d4a674] text-white'
                             : 'text-gray-400 hover:bg-gray-800'
-                        }`}
+                          }`}
                       >
                         {page}
                       </button>
                     )
                   )}
-                  
+
                   <button
                     onClick={() => paginate(Math.min(meta.totalPage, currentPage + 1))}
                     disabled={currentPage === meta.totalPage}
@@ -499,7 +498,7 @@ export default function ProductsContent({
                   </button>
                 </nav>
               </div>
-              )}
+            )}
 
           </div>
         </div>

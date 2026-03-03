@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { useGetSettingsQuery, useUpdateHomePageSection2Mutation, useUpdateSettingsMutation } from '@/app/store/api/settingsApi';
 import Swal from 'sweetalert2';
-import { FiSave, FiLoader, FiUpload, FiImage } from 'react-icons/fi';
+import { FiSave, FiLoader, FiUpload, FiImage, FiPlus, FiTrash2 } from 'react-icons/fi';
+import { NavbarLink } from '@/app/store/api/settingsApi';
 import { revalidateFeaturedProducts, revalidateProducts, revalidateSettings } from '@/app/actions/revalidate';
 
 const WebSettingsPage = () => {
@@ -37,13 +38,13 @@ const WebSettingsPage = () => {
     footertext: { logobelowtext: '', footerbottomtext: '' },
     productpage: { title: '', subtitle: '' },
     productdetails: { Gotodetailstext: '', relatedproducttext: '' },
+    navbarlinks: [] as NavbarLink[],
   });
 
   useEffect(() => {
-    if (settingsData?.data) {
-      // Merge with defaults to ensure all fields exist. Assuming data is in data.data or directly in data
-      // API response structure usually has 'data' property
-      setFormData(prev => ({ ...prev, ...settingsData.data }));
+    if (settingsData) {
+      // Merge with defaults to ensure all fields exist.
+      setFormData(prev => ({ ...prev, ...settingsData }));
     }
   }, [settingsData]);
 
@@ -58,6 +59,28 @@ const WebSettingsPage = () => {
         }
       }
     });
+  };
+
+  const handleNavbarLinkChange = (index: number, field: keyof NavbarLink, value: any) => {
+    setFormData(prev => {
+      const newLinks = [...prev.navbarlinks];
+      newLinks[index] = { ...newLinks[index], [field]: value };
+      return { ...prev, navbarlinks: newLinks };
+    });
+  };
+
+  const addNavbarLink = () => {
+    setFormData(prev => ({
+      ...prev,
+      navbarlinks: [...prev.navbarlinks, { title: '', url: '', isActive: true }]
+    }));
+  };
+
+  const removeNavbarLink = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      navbarlinks: prev.navbarlinks.filter((_, i) => i !== index)
+    }));
   };
 
   const handleFileChange = (field: 'imageone' | 'imagetwo' | 'imagethree', file: File) => {
@@ -170,6 +193,83 @@ const WebSettingsPage = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
+
+        {/* Navbar Links Section */}
+        <section className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 shadow-sm">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h2 className="text-lg font-semibold text-neutral-200">Navbar Links</h2>
+              <p className="text-sm text-neutral-400">Configure the main navigation menu items.</p>
+            </div>
+            <button
+              type="button"
+              onClick={addNavbarLink}
+              className="flex items-center gap-2 px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 rounded-lg border border-neutral-700 transition-colors text-sm"
+            >
+              <FiPlus className="w-4 h-4" />
+              Add Link
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {formData.navbarlinks.length === 0 ? (
+              <div className="text-center py-8 border-2 border-dashed border-neutral-800 rounded-xl text-neutral-500">
+                No navbar links added yet. Click "Add Link" to start.
+              </div>
+            ) : (
+              formData.navbarlinks.map((link, index) => (
+                <div key={index} className="flex flex-col sm:flex-row gap-4 p-4 bg-neutral-950 border border-neutral-800 rounded-xl items-end sm:items-center">
+                  <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium text-neutral-500 mb-1 uppercase tracking-wider">Title</label>
+                      <input
+                        type="text"
+                        value={link.title}
+                        onChange={(e) => handleNavbarLinkChange(index, 'title', e.target.value)}
+                        placeholder="e.g. Products"
+                        className="w-full bg-neutral-900 border border-neutral-800 text-neutral-200 rounded-lg px-3 py-2 focus:outline-none focus:border-[#D4A574] text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-neutral-500 mb-1 uppercase tracking-wider">URL</label>
+                      <input
+                        type="text"
+                        value={link.url}
+                        onChange={(e) => handleNavbarLinkChange(index, 'url', e.target.value)}
+                        placeholder="e.g. /products"
+                        className="w-full bg-neutral-900 border border-neutral-800 text-neutral-200 rounded-lg px-3 py-2 focus:outline-none focus:border-[#D4A574] text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 h-full">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-neutral-500">{link.isActive ? 'Active' : 'Inactive'}</span>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={link.isActive}
+                          onChange={(e) => handleNavbarLinkChange(index, 'isActive', e.target.checked)}
+                          className="sr-only peer"
+                        />
+                        <div className="w-9 h-5 bg-neutral-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#D4A574]"></div>
+                      </label>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => removeNavbarLink(index)}
+                      className="p-2 text-neutral-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                      title="Remove Link"
+                    >
+                      <FiTrash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
 
         {/* Social Media Section */}
         <section>

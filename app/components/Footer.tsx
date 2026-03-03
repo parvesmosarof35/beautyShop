@@ -40,30 +40,30 @@ const footerLinks = [
 
 const Footer = () => {
     const { data: settingsData } = useGetSettingsQuery({});
-    const settings = settingsData?.data || {};
+    const settings = settingsData || {};
 
     const socialLinks = [
-        { 
-            name: 'Instagram', 
-            href: settings.instagram?.url || '#', 
+        {
+            name: 'Instagram',
+            href: settings.instagram?.url || '#',
             icon: <FaInstagram />,
             isActive: settings.instagram?.isActive ?? true
         },
-        { 
-            name: 'Facebook', 
-            href: settings.facebook?.url || '#', 
+        {
+            name: 'Facebook',
+            href: settings.facebook?.url || '#',
             icon: <FaFacebookF />,
             isActive: settings.facebook?.isActive ?? true
         },
-        { 
-            name: 'TikTok', 
-            href: settings.tiktok?.url || '#', 
+        {
+            name: 'TikTok',
+            href: settings.tiktok?.url || '#',
             icon: <FaTiktok />,
             isActive: settings.tiktok?.isActive ?? false
         },
-        { 
-            name: 'X', 
-            href: settings.twitterx?.url || '#', 
+        {
+            name: 'X',
+            href: settings.twitterx?.url || '#',
             icon: <FaXTwitter />,
             isActive: settings.twitterx?.isActive ?? true
         },
@@ -79,16 +79,16 @@ const Footer = () => {
                     <div className="lg:col-span-2">
                         <div className="flex items-center mb-6">
                             <Link href="/">
-                            <div className="relative w-40 h-14 md:w-48 md:h-16 mr-3">
-                                    
-                                <Image
-                                    src="/images/logo.png"
-                                    alt="Lunel Beauty"
-                                    fill
-                                    sizes="(max-width: 768px) 10rem, 12rem"
-                                    className="object-contain"
-                                />
-                            </div>
+                                <div className="relative w-40 h-14 md:w-48 md:h-16 mr-3">
+
+                                    <Image
+                                        src="/images/logo.png"
+                                        alt="Lunel Beauty"
+                                        fill
+                                        sizes="(max-width: 768px) 10rem, 12rem"
+                                        className="object-contain"
+                                    />
+                                </div>
                             </Link>
                         </div>
                         <p className="text-gray-400 mb-6">
@@ -97,16 +97,16 @@ const Footer = () => {
                         <div className="flex space-x-4">
                             {socialLinks.map((social) => (
                                 social.isActive && (
-                                <a
-                                    key={social.name}
-                                    href={social.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center justify-center w-10 h-10 rounded-full border border-white text-white hover:bg-white hover:text-gray-900 transition-colors"
-                                    aria-label={social.name}
-                                >
-                                    {social.icon}
-                                </a>
+                                    <a
+                                        key={social.name}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center justify-center w-10 h-10 rounded-full border border-white text-white hover:bg-white hover:text-gray-900 transition-colors"
+                                        aria-label={social.name}
+                                    >
+                                        {social.icon}
+                                    </a>
                                 )
                             ))}
                         </div>

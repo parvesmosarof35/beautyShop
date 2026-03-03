@@ -55,9 +55,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const [addToCart, { isLoading }] = useAddToCartMutation();
   const [addToWishlist, { isLoading: isAddingToWishlist }] = useAddToWishlistMutation();
   const { data: wishlistData } = useGetMyWishlistQuery({});
-  
+
   const { data: settingsData } = useGetSettingsQuery({});
-  const settings = settingsData?.data?.productdetails || {};
+  const settings = settingsData?.productdetails || {};
   const goToDetailsText = settings.Gotodetailstext || "Go to Details";
 
   const router = useRouter();
@@ -117,9 +117,9 @@ export function ProductCard({ product }: ProductCardProps) {
     e.stopPropagation();
 
     if (!isAuthenticated) {
-        const returnUrl = encodeURIComponent(pathname + window.location.search);
-        router.push(`/login?redirect=${returnUrl}`);
-        return;
+      const returnUrl = encodeURIComponent(pathname + window.location.search);
+      router.push(`/login?redirect=${returnUrl}`);
+      return;
     }
 
     if (isInWishlist) {
@@ -274,31 +274,31 @@ export function ProductCard({ product }: ProductCardProps) {
                 </span>
               )}
             </div>
-              {product.product_link ? (
-                <a
-                  href={product.product_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full hover:bg-[#b88b5c] transition-colors flex items-center"
-                >
-                  {goToDetailsText}
-                </a>
-              ) : (
-                <button
-                  onClick={handleAddToCart}
-                  disabled={isLoading}
-                  className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isLoading ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-1"></div>
-                  ) : (
-                    <ShoppingCart className="w-4 h-4 mr-1" />
-                  )}
-                  Add to Cart
-                </button>
-              )}
-            </div>
+            {product.product_link ? (
+              <a
+                href={product.product_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full hover:bg-[#b88b5c] transition-colors flex items-center"
+              >
+                {goToDetailsText}
+              </a>
+            ) : (
+              <button
+                onClick={handleAddToCart}
+                disabled={isLoading}
+                className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-1"></div>
+                ) : (
+                  <ShoppingCart className="w-4 h-4 mr-1" />
+                )}
+                Add to Cart
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </Link>

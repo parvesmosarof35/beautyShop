@@ -6,7 +6,7 @@ import { useGetSettingsQuery } from '@/app/store/api/settingsApi';
 
 const ArtOfPureBeauty = () => {
   const { data: settingsData } = useGetSettingsQuery({});
-  const { title, subtitle, imageone, imagetwo, imagethree } = settingsData?.data?.homepagesection2 || {};
+  const { title, subtitle, imageone, imagetwo, imagethree } = settingsData?.homepagesection2 || {};
 
   return (
     <section className="py-12 md:py-16 bg-[#3b3b3b]">
