@@ -161,7 +161,7 @@ const ProductCard = ({ product, viewMode = 'grid' }: { product: any, viewMode?: 
                   <span className="text-xs text-gray-400 line-through">${product.discountPrice.toFixed(2)}</span>
               )}
           </div>
-          <button 
+          {/* <button 
               onClick={handleAddToCart}
               disabled={isLoading}
               className="bg-[#D4A574] text-white px-3 py-1 rounded-full text-sm font-medium transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
@@ -172,7 +172,7 @@ const ProductCard = ({ product, viewMode = 'grid' }: { product: any, viewMode?: 
                 <FaShoppingCart className="mr-1" />
             )}
              Add
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

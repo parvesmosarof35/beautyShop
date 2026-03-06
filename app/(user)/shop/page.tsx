@@ -32,13 +32,13 @@ async function getProducts(searchParams: any) {
       next: { tags: ['product'] },
       cache: 'force-cache'
     });
-    
+
     if (!res.ok) return { products: [], meta: null };
-    
+
     const data = await res.json();
     return {
-        products: data?.data || [],
-        meta: data?.meta
+      products: data?.data || [],
+      meta: data?.meta
     };
   } catch (error) {
     console.error('Failed to fetch products:', error);
@@ -49,12 +49,12 @@ async function getProducts(searchParams: any) {
 async function getCollections() {
   try {
     const res = await fetch(`${getBaseUrl()}collection`, {
-      next: { tags: ['collection'] },
+      next: { tags: ['collections'] },
       cache: 'force-cache'
     });
-    
+
     if (!res.ok) return [];
-    
+
     const data = await res.json();
     return data?.data || [];
   } catch (error) {
@@ -85,11 +85,11 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const resolvedSearchParams = await searchParams;
   const { products, meta } = await getProducts(resolvedSearchParams);
   const collections = await getCollections();
-  
+
   return (
-    <ShopContent 
-      initialProducts={products} 
-      initialMeta={meta} 
+    <ShopContent
+      initialProducts={products}
+      initialMeta={meta}
       collections={collections}
       initialParams={resolvedSearchParams}
     />
