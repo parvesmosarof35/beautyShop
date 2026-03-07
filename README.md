@@ -1,4 +1,4 @@
-# beauty Shop - E-Commerce Frontend
+# beauty Shop - Full-Stack E-Commerce
 
 live : https://lunel-beauty.vercel.app/
 
