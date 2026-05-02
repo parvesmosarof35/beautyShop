@@ -5,17 +5,20 @@ import { FaStar, FaStarHalfAlt, FaRegStar, FaShoppingCart, FaTh, FaThList } from
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 // import { useGetAllProductsQuery } from '@/app/store/api/productsApi';
-// import { useGetAllCollectionsQuery } from '@/app/store/api/collectionApi';
 import { useAddToCartMutation } from '@/app/store/api/cartApi';
 import { useAuthState } from '@/app/store/hooks';
+import { useRecordAddToCartMutation, useRecordProductClickMutation } from '@/app/store/api/analyticsApi';
 import Swal from 'sweetalert2';
 
 const ProductCard = ({ product, viewMode = 'grid' }: { product: any, viewMode?: 'grid' | 'list' }) => {
   const router = useRouter();
   const pathname = usePathname();
   const { isAuthenticated } = useAuthState();
+  const [recordProductClick] = useRecordProductClickMutation();
+  const [recordAddToCartAnalytics] = useRecordAddToCartMutation();
 
   const handleCardClick = () => {
+    recordProductClick(product._id).catch(() => {});
     router.push(`/products/${product._id}`);
   };
 
@@ -38,6 +41,8 @@ const ProductCard = ({ product, viewMode = 'grid' }: { product: any, viewMode?: 
       }).unwrap();
 
       if (res?.success) {
+        recordAddToCartAnalytics(product._id).catch(() => {});
+        
         Swal.fire({
           position: "top-end",
           icon: "success",

@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { FiPackage, FiUsers, FiDollarSign, FiPieChart } from 'react-icons/fi';
+import { FiPackage, FiUsers, FiDollarSign, FiPieChart, FiEye, FiMousePointer } from 'react-icons/fi';
 // @ts-ignore
 import UserGrowthChart from '@/app/components/dashboard/UserGrowthChart';
+import { useGetAnalyticsOverviewQuery, useGetProductAnalyticsQuery } from '@/app/store/api/analyticsApi';
 import {
   useGetDashboardStatsQuery,
   useGetRecentOrdersQuery,
@@ -136,6 +137,49 @@ const RecentUsersList = ({ users, isLoading }: { users: RecentUser[] | undefined
   </div>
 );
 
+const TopProductsList = ({ products, title, subtitle, countKey, isLoading }: { products: any[] | undefined, title: string, subtitle: string, countKey: string, isLoading: boolean }) => (
+  <div className="bg-neutral-900 shadow-lg border border-neutral-800 sm:rounded-lg overflow-hidden h-[450px] flex flex-col">
+    <div className="px-4 py-5 sm:px-6 border-b border-neutral-800">
+      <h3 className="text-lg leading-6 font-medium text-neutral-200">{title}</h3>
+      <p className="mt-1 text-sm text-neutral-400">{subtitle}</p>
+    </div>
+    <div className="flex-1 overflow-y-auto">
+      {isLoading ? (
+        <div className="flex items-center justify-center h-full">
+          <Spin />
+        </div>
+      ) : (
+        <ul className="divide-y divide-neutral-800">
+          {products?.map((product, idx) => (
+            <li key={idx} className="px-6 py-4 hover:bg-neutral-800/50 transition-colors">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-neutral-800 rounded flex items-center justify-center overflow-hidden">
+                  {product.images_urls?.[0] ? (
+                    <img src={product.images_urls[0]} alt={product.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <FiPackage className="text-[#D4A574]" />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-neutral-200 truncate">{product.name}</p>
+                </div>
+                <div className="text-right text-sm font-medium text-[#D4A574]">
+                  {product[countKey]} {countKey.includes('click') ? 'Clicks' : 'Visits'}
+                </div>
+              </div>
+            </li>
+          ))}
+          {(!products || products.length === 0) && (
+            <li className="px-6 py-4 text-center text-neutral-500 text-sm">
+              No data available
+            </li>
+          )}
+        </ul>
+      )}
+    </div>
+  </div>
+);
+
 export default function DashboardPage() {
   const [year, setYear] = useState(new Date().getFullYear());
 
@@ -144,10 +188,16 @@ export default function DashboardPage() {
   const { data: usersData, isLoading: isUsersLoading } = useGetRecentUsersQuery(7);
   const { data: growthData, isLoading: isGrowthLoading } = useGetUserGrowthQuery(year);
 
+  const { data: analyticsOverviewData, isLoading: isAnalyticsOverviewLoading } = useGetAnalyticsOverviewQuery();
+  const { data: productAnalyticsData, isLoading: isProductAnalyticsLoading } = useGetProductAnalyticsQuery();
+
   const stats = statsData?.data?.summary;
   const recentOrders = ordersData?.data;
   const recentUsers = usersData?.data;
   const growth = growthData?.data;
+
+  const analyticsOverview = analyticsOverviewData?.data;
+  const productAnalytics = productAnalyticsData?.data;
 
   return (
     <>
@@ -184,6 +234,22 @@ export default function DashboardPage() {
         />
       </div>
 
+      {/* Analytics Stats */}
+      <div className="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-2 font-inter">
+        <StatCard
+          title="Total Site Visits"
+          value={analyticsOverview?.total?.totalVisits?.toLocaleString() || "0"}
+          icon={<FiEye className="h-6 w-6" />}
+          isLoading={isAnalyticsOverviewLoading}
+        />
+        <StatCard
+          title="Unique Visitors"
+          value={analyticsOverview?.total?.uniqueVisitors?.toLocaleString() || "0"}
+          icon={<FiUsers className="h-6 w-6" />}
+          isLoading={isAnalyticsOverviewLoading}
+        />
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
         {/* Chart Section */}
         <div className="lg:col-span-2">
@@ -204,6 +270,24 @@ export default function DashboardPage() {
       {/* Recent Users */}
       <div className="mt-8">
         <RecentUsersList users={recentUsers} isLoading={isUsersLoading} />
+      </div>
+
+      {/* Product Analytics */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+        <TopProductsList 
+          title="Most Visited Products"
+          subtitle="Products with the highest number of page visits"
+          products={productAnalytics?.mostVisited}
+          countKey="visitCount"
+          isLoading={isProductAnalyticsLoading}
+        />
+        <TopProductsList 
+          title="Most Clicked Products"
+          subtitle="Products with the highest number of clicks from listings"
+          products={productAnalytics?.mostClicked}
+          countKey="clickCount"
+          isLoading={isProductAnalyticsLoading}
+        />
       </div>
     </>
   );

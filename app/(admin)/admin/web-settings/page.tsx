@@ -38,6 +38,7 @@ const WebSettingsPage = () => {
     footertext: { logobelowtext: '', footerbottomtext: '' },
     productpage: { title: '', subtitle: '' },
     productdetails: { Gotodetailstext: '', relatedproducttext: '' },
+    popuptext: { title: '', subtitle: '', isActive: true },
     navbarlinks: [] as NavbarLink[],
   });
 
@@ -476,6 +477,48 @@ const WebSettingsPage = () => {
                   className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2 focus:outline-none focus:border-[#D4A574]"
                 />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Subscriber Popup Settings */}
+        <section className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 shadow-sm">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-neutral-200">Subscriber Popup Settings</h2>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-neutral-500">{formData.popuptext?.isActive ? 'Active' : 'Inactive'}</span>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.popuptext?.isActive ?? true}
+                  onChange={(e) => handleChange('popuptext', 'isActive', e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-9 h-5 bg-neutral-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#D4A574]"></div>
+              </label>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-neutral-400 mb-1">Popup Title</label>
+              <input
+                type="text"
+                value={formData.popuptext?.title || ''}
+                onChange={(e) => handleChange('popuptext', 'title', e.target.value)}
+                placeholder="Subscribe to our newsletter"
+                className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2 focus:outline-none focus:border-[#D4A574]"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-neutral-400 mb-1">Popup Subtitle</label>
+              <input
+                type="text"
+                value={formData.popuptext?.subtitle || ''}
+                onChange={(e) => handleChange('popuptext', 'subtitle', e.target.value)}
+                placeholder="Get the latest updates and offers."
+                className="w-full bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg px-4 py-2 focus:outline-none focus:border-[#D4A574]"
+              />
             </div>
           </div>
         </section>

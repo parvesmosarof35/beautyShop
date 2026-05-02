@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 import { Filter, Grid, List, Star, ShoppingCart, Heart } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { ProductCard } from '@/app/components/ProductCard';
 import { useAddToCartMutation } from '@/app/store/api/cartApi';
 import { useAddToWishlistMutation, useGetMyWishlistQuery, useRemoveFromWishlistMutation } from '@/app/store/api/wishlistApi';
+import { useRecordAddToCartMutation, useRecordProductClickMutation, useRecordAddToWishlistMutation } from '@/app/store/api/analyticsApi';
 import { useAuthState } from '@/app/store/hooks';
 import FilterComponent from '@/app/components/FilterComponent';
+import { ProductCard } from '@/app/components/ProductCard';
 import Swal from 'sweetalert2';
 
 // Debounce hook
@@ -21,6 +22,15 @@ const ProductListItem = ({ product }: { product: any }) => {
   const { data: settingsData } = useGetSettingsQuery({});
   const settings = settingsData?.productdetails || {};
   const goToDetailsText = settings.Gotodetailstext || "Go to Details";
+
+  const [recordProductClick] = useRecordProductClickMutation();
+  const [recordAddToCartAnalytics] = useRecordAddToCartMutation();
+  const [recordAddToWishlistAnalytics] = useRecordAddToWishlistMutation();
+
+  const handleProductClick = () => {
+    recordProductClick(product._id).catch(() => {});
+    router.push(`/products/${product._id}`);
+  };
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -39,6 +49,8 @@ const ProductListItem = ({ product }: { product: any }) => {
       }).unwrap();
 
       if (res?.success) {
+        recordAddToCartAnalytics(product._id).catch(() => {});
+        
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -86,6 +98,9 @@ const ProductListItem = ({ product }: { product: any }) => {
         await addToWishlist({
           product_id: product._id
         }).unwrap();
+        
+        recordAddToWishlistAnalytics(product._id).catch(() => {});
+
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -103,7 +118,7 @@ const ProductListItem = ({ product }: { product: any }) => {
   };
 
   return (
-    <div className="bg-[#383838] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row h-64 w-full border border-gray-700">
+    <div onClick={handleProductClick} className="bg-[#383838] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row h-64 w-full border border-gray-700 cursor-pointer">
       {/* Image - Left side */}
       <div className="relative h-48 sm:h-full w-full sm:w-64 flex-shrink-0">
         <Image
@@ -152,14 +167,20 @@ const ProductListItem = ({ product }: { product: any }) => {
               href={product.product_link}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                recordProductClick(product._id).catch(() => {});
+              }}
               className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center hover:bg-[#b88b5c]"
             >
               {goToDetailsText}
             </a>
           ) : (
             <button
-              onClick={handleAddToCart}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddToCart(e);
+              }}
               disabled={isLoading}
               className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -173,7 +194,10 @@ const ProductListItem = ({ product }: { product: any }) => {
           )}
 
           <button
-            onClick={handleWishlistToggle}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleWishlistToggle(e);
+            }}
             disabled={isAddingToWishlist || isRemovingFromWishlist}
             className={`ml-2 p-2 rounded-full border transition-colors ${isInWishlist
               ? 'bg-[#d4a674] border-[#d4a674] text-white'

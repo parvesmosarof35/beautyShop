@@ -7,6 +7,7 @@ import { useAuthState } from '@/app/store/hooks';
 import { ShoppingCart, Eye, Star, Heart } from 'lucide-react';
 import { useAddToCartMutation } from '@/app/store/api/cartApi';
 import { useAddToWishlistMutation, useGetMyWishlistQuery } from '@/app/store/api/wishlistApi';
+import { useRecordAddToCartMutation, useRecordProductClickMutation, useRecordAddToWishlistMutation } from '@/app/store/api/analyticsApi';
 import { useState, useEffect, useMemo } from 'react';
 import Swal from 'sweetalert2';
 
@@ -56,6 +57,10 @@ export function ProductCard({ product }: ProductCardProps) {
   const [addToWishlist, { isLoading: isAddingToWishlist }] = useAddToWishlistMutation();
   const { data: wishlistData } = useGetMyWishlistQuery({});
 
+  const [recordAddToCart] = useRecordAddToCartMutation();
+  const [recordProductClick] = useRecordProductClickMutation();
+  const [recordAddToWishlist] = useRecordAddToWishlistMutation();
+
   const { data: settingsData } = useGetSettingsQuery({});
   const settings = settingsData?.productdetails || {};
   const goToDetailsText = settings.Gotodetailstext || "Go to Details";
@@ -89,6 +94,9 @@ export function ProductCard({ product }: ProductCardProps) {
       }).unwrap();
 
       if (res?.success) {
+        // Record analytics silently
+        recordAddToCart(String(product.id)).catch(() => {});
+
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -143,6 +151,9 @@ export function ProductCard({ product }: ProductCardProps) {
       }).unwrap();
 
       if (res?.success) {
+        // Record analytics silently
+        recordAddToWishlist(String(product.id)).catch(() => {});
+
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -195,8 +206,12 @@ export function ProductCard({ product }: ProductCardProps) {
     );
   };
 
+  const handleProductClick = () => {
+    recordProductClick(String(product.id)).catch(() => {});
+  };
+
   return (
-    <Link href={`/products/${product.id}`} className="block h-full" aria-label={`View details for ${product.name}, price $${product.price}`}>
+    <Link href={`/products/${product.id}`} onClick={handleProductClick} className="block h-full" aria-label={`View details for ${product.name}, price $${product.price}`}>
       <div className="bg-[#383838] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 h-full flex flex-col w-full max-w-sm mx-auto border border-gray-700">
         {/* Product Image */}
         <div className="relative h-72 bg-gray-100 group">
@@ -279,7 +294,10 @@ export function ProductCard({ product }: ProductCardProps) {
                 href={product.product_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  recordProductClick(String(product.id)).catch(() => {});
+                }}
                 className="bg-[#d4a674] text-white text-sm px-4 py-2 rounded-full hover:bg-[#b88b5c] transition-colors flex items-center"
               >
                 {goToDetailsText}

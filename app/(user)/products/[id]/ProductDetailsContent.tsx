@@ -6,9 +6,11 @@ import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { useAddToCartMutation } from '@/app/store/api/cartApi';
 import { useAddToWishlistMutation, useGetMyWishlistQuery, useRemoveFromWishlistMutation } from '@/app/store/api/wishlistApi';
+import { useRecordProductVisitMutation, useRecordAddToCartMutation, useRecordAddToWishlistMutation } from '@/app/store/api/analyticsApi';
 import { useAuthState } from '@/app/store/hooks';
 import { ProductCard } from '@/app/components/ProductCard';
 import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 
 interface ProductDetailsContentProps {
   product: any;
@@ -33,6 +35,16 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
   const [addToWishlist, { isLoading: isAddingToWishlist }] = useAddToWishlistMutation();
   const [removeFromWishlist, { isLoading: isRemovingFromWishlist }] = useRemoveFromWishlistMutation();
 
+  const [recordProductVisit] = useRecordProductVisitMutation();
+  const [recordAddToCartAnalytics] = useRecordAddToCartMutation();
+  const [recordAddToWishlistAnalytics] = useRecordAddToWishlistMutation();
+
+  useEffect(() => {
+    if (product?._id) {
+      recordProductVisit(product._id).catch(() => {});
+    }
+  }, [product?._id, recordProductVisit]);
+
   const isInWishlist = wishlistData?.data?.some((item: any) =>
     (item.product_id?._id || item.product_id) === product?._id
   );
@@ -54,6 +66,9 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
         await addToWishlist({
           product_id: product._id
         }).unwrap();
+        
+        recordAddToWishlistAnalytics(product._id).catch(() => {});
+
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -88,6 +103,8 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
       }).unwrap();
 
       if (res?.success) {
+        recordAddToCartAnalytics(product._id).catch(() => {});
+
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -246,7 +263,10 @@ export default function ProductDetailsContent({ product, relatedProducts }: Prod
             {product.product_link ? (
               <div className="flex flex-col gap-3 mb-8">
                 <button
-                  onClick={() => window.open(product.product_link, '_blank')}
+                  onClick={() => {
+                    recordProductVisit(product._id).catch(() => {});
+                    window.open(product.product_link, '_blank');
+                  }}
                   className="w-full bg-[#D4A574] hover:bg-[#c29563] text-black font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {goToDetailsText}

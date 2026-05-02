@@ -84,5 +84,7 @@ export const baseApi = createApi({
     "reviews",
     "Hero",
     "settings",
+    "analytics",
+    "subscriber",
   ],
 });

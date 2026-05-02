@@ -41,6 +41,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }: SidebarProps) => {
     { icon: <BsCollection className="w-5 h-5" />, label: "Collections", path: "/admin/collections" },
     { icon: <FiPackage className="w-5 h-5" />, label: "Products", path: "/admin/products" },
     { icon: <FiUsers className="w-5 h-5" />, label: "All Users", path: "/admin/customers" },
+    { icon: <FiUsers className="w-5 h-5" />, label: "Subscribers", path: "/admin/subscribers" },
     { icon: <FiShoppingCart className="w-5 h-5" />, label: "Orders", path: "/admin/orders" },
     { icon: <FiStar className="w-5 h-5" />, label: "Reviews", path: "/admin/reviews" },
     { icon: <FiShield className="w-5 h-5" />, label: "Admins", path: "/admin/admins" },
